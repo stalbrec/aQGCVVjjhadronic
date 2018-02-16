@@ -4,9 +4,10 @@ when adding to fresh UHH2 Installation, add following line to Makefile.local:
 dirs += aQGCVVjjhadronic
 ```
 
-works in UHH2/RunII_80X_v3 (old version, currently testing if new version works out of the box) with a few additions:
+works in UHH2/RunII_80X_v3 ~(old version, currently testing if new version works out of the box) with a few additions:~
+works out of the box
 
-~```
+```
 git status:
 
 #       modified:   common/include/JetCorrections.h
@@ -17,7 +18,7 @@ git status:
 #       common/data/Spring16_25nsV10_MC_PtResolution_AK4PFchs.txt
 #       common/data/Spring16_25nsV10_MC_PtResolution_AK8PFPuppi.txt
 #       common/data/Spring16_25nsV10_MC_PtResolution_AK8PFchs.txt
-```~
+```
 stuff for sampleproduction (i.e. ntuplewriting)
 ```
 #       core/python/NTUPLE_WORK/
