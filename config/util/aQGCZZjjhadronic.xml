@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
+
+	  <!--                   Background                   -->
+
+	  <!ENTITY MC_QCD_HT300to500 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT300to500.xml">
+	  <!ENTITY MC_QCD_HT500to700 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT500to700.xml">
+	  <!ENTITY MC_QCD_HT700to1000 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT700to1000.xml">
+	  <!ENTITY MC_QCD_HT1000to1500 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT1000to1500.xml">
+	  <!ENTITY MC_QCD_HT1500to2000 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT1500to2000.xml">
+	  <!ENTITY MC_QCD_HT2000toInf SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT2000toInf.xml">
+	  ]>
+
+<!--
+   <ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="1" />
+   <ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir"/>
+-->
+
+<!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
+<JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
+  <Library Name="libSUHH2aQGCVVjjhadronic"/>
+  <Package Name="SUHH2aQGCVVjjhadronic.par" />
+
+  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/" PostFix="" TargetLumi="36814.0" >
+    <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
+
+    <!-- <InputData Lumi="6250" NEventsMax="-1" Type="MC" Version="aQGC_ZZjj_hadronic" Cacheable="False"> -->
+    <!--   <In FileName="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/core/python/Ntuple.root" Lumi="0.0"/> -->
+    <!--   <InputTree Name="AnalysisTree" />  -->
+    <!-- </InputData> -->
+
+
+    <InputData Lumi="6250" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic" Cacheable="False">
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_0.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_1.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_2.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_3.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_4.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_5.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_6.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_7.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_8.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_9.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_10.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_11.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_12.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_13.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_14.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_15.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_16.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_17.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_18.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_19.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_20.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_21.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_22.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_23.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_24.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_25.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_26.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_27.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_28.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_29.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_30.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_31.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_32.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_33.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_34.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_35.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_36.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_37.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_38.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_39.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_40.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_41.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_42.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_43.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_44.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_45.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_46.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_47.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_48.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_49.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_50.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_51.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_52.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_53.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_54.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_55.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_56.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_57.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_58.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_59.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_60.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_61.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_62.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_63.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_64.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_65.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_66.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_67.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_68.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_69.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_70.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_71.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_72.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_73.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_74.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_75.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_76.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_77.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_78.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_79.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_80.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_81.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_82.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_83.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_84.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_85.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_86.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_87.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_88.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_89.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_90.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_91.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_92.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_93.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_94.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_95.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_96.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_97.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_98.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_ZZ/Ntuple_ZZ_99.root" Lumi="0.0"/>
+      <InputTree Name="AnalysisTree" />
+    </InputData>
+
+    <!--                    Background                   -->
+
+    <!-- <InputData Version="MC_QCD_HT300to500" Lumi="107.894" Type="MC" NEventsMax="-1" Cacheable="False"> -->
+    <!--   &MC_QCD_HT300to500; <InputTree Name="AnalysisTree"/> -->
+    <!-- </InputData> -->
+    <!-- <InputData Version="MC_QCD_HT500to700" Lumi="1938.622" Type="MC" NEventsMax="-1" Cacheable="False"> -->
+    <!--   &MC_QCD_HT500to700; <InputTree Name="AnalysisTree"/> -->
+    <!-- </InputData> -->
+    <!-- <InputData Version="MC_QCD_HT700to1000" Lumi="6625.750" Type="MC" NEventsMax="-1" Cacheable="False"> -->
+    <!--   &MC_QCD_HT700to1000; <InputTree Name="AnalysisTree"/> -->
+    <!-- </InputData> -->
+    <!-- <InputData Version="MC_QCD_HT1000to1500" Lumi="12531.316" Type="MC" NEventsMax="-1" Cacheable="False"> -->
+    <!--   &MC_QCD_HT1000to1500; <InputTree Name="AnalysisTree"/> -->
+    <!-- </InputData> -->
+    <!-- <InputData Version="MC_QCD_HT1500to2000" Lumi="98190.300" Type="MC" NEventsMax="-1" Cacheable="False"> -->
+    <!--   &MC_QCD_HT1500to2000; <InputTree Name="AnalysisTree"/> -->
+    <!-- </InputData> -->
+    <!-- <InputData Version="MC_QCD_HT2000toInf" Lumi="239129.279" Type="MC" NEventsMax="-1" Cacheable="False"> -->
+    <!--   &MC_QCD_HT2000toInf; <InputTree Name="AnalysisTree"/> -->
+    <!-- </InputData> -->
+
+    
+    <UserConfig>
+      <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" />
+      <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
+      <Item Name="MuonCollection" Value="slimmedMuonsUSER" />
+      <Item Name="TauCollection" Value="slimmedTaus" />
+      
+      <Item Name="JetCollection" Value="slimmedJetsPuppi" />
+      <Item Name="TopJetCollection" Value="patJetsAk8PuppiJetsSoftDropPacked_daughters" />
+      <Item Name="GenJetCollection" Value="slimmedGenJets" />
+      <Item Name="GenTopJetCollection" Value="ak8GenJetsSoftDrop" />
+      
+      <Item Name="METName" Value="slimmedMETsPuppi" />
+      <Item Name="GenParticleCollection" Value="GenParticles" />
+      <Item Name="GenInfoName" Value="genInfo" />
+      <Item Name="channel" Value="signal" />
+      <!-- The list of available collections to read in corresponds to the pointer members in event. The 'Name's to use here in the configuration are:
+           
+           PrimaryVertexCollection
+           ElectronCollection
+           MuonCollection
+           TauCollection
+           PhotonCollection
+           JetCollection
+           TopJetCollection
+           METName
+           
+           GenInfoName
+           GenJetCollection
+           GenTopJetCollection
+           GenParticleCollection
+           
+           Note that the last four are only read in for MC (InputData Type="MC"), so it is save to specify
+           them for real data, although those branches do not exist.
+           
+           As 'Value', always use the branch name (if in doubt, open the input file in ROOT).
+           
+           By default, triggers are read. To explicitly disable reading triggers, use:
+           <Item Name="readTrigger" Value="false" />
+           -->
+      
+      <!-- the class name of the AnalysisModule subclasses to run: -->
+      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicModule" /> 
+      
+      <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
+           MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
+           event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
+      <Item Name="use_sframe_weight" Value="false" />
+      
+      <!-- configuration for MCPileupReweight (run as part of CommonModules): -->
+      <Item Name="pileup_directory" Value="" />
+      <!-- <Item Name="pileup_directory_data" Value="" /> -->
+      <!-- <Item Name="pileup_directory_25ns" Value="" /> -->
+      
+      <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/data/MyDataPileupHistogram.root" />
+      <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/data/MyMCPileupHistogram.root" />
+
+      
+      <!-- Some test configuration; see aQGCVVjjhadronicModule.cxx for how to access it: -->
+      <Item Name="TestKey" Value="TestKeyValue" />
+    </UserConfig>
+  </Cycle>
+</JobConfiguration>
