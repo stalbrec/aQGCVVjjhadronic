@@ -36,10 +36,10 @@ namespace uhh2examples {
      * This is the central class which calls other AnalysisModules, Hists or Selection classes.
      * This AnalysisModule, in turn, is called (via AnalysisModuleRunner) by SFrame.
      */
-    class aQGCVVjjhadronicModule: public AnalysisModule {
+    class aQGCVVjjhadronicParameterscanModule: public AnalysisModule {
     public:
     
-	explicit aQGCVVjjhadronicModule(Context & ctx);
+	explicit aQGCVVjjhadronicParameterscanModule(Context & ctx);
 	virtual bool process(Event & event) override;
 
     private:
@@ -154,9 +154,9 @@ namespace uhh2examples {
 	// std::unique_ptr<Hists> h_MjjHistsdetaAk8sel_WMZ;
 	// std::unique_ptr<Hists> h_MjjHistsdetaAk8sel_ZZ;
 
-	// std::unique_ptr<Hists> h_MjjHistsdetaAk8sel_WPWPRange;
-	// std::unique_ptr<Hists> h_MjjHistsdetaAk8sel_WPMWMRange;
-	// std::unique_ptr<Hists> h_MjjHistsdetaAk8sel_ZRange;
+	std::unique_ptr<Hists> h_MjjHistsdetaAk8sel_WPWPRange;
+	std::unique_ptr<Hists> h_MjjHistsdetaAk8sel_WPMWMRange;
+	std::unique_ptr<Hists> h_MjjHistsdetaAk8sel_ZRange;
 
 
 
@@ -177,9 +177,9 @@ namespace uhh2examples {
 	// std::unique_ptr<Hists> h_MjjHistsdetaAk4sel_WMZ;
 	// std::unique_ptr<Hists> h_MjjHistsdetaAk4sel_ZZ;
 
-	// std::unique_ptr<Hists> h_MjjHistsdetaAk4sel_WPWPRange;
-	// std::unique_ptr<Hists> h_MjjHistsdetaAk4sel_WPMWMRange;
-	// std::unique_ptr<Hists> h_MjjHistsdetaAk4sel_ZRange;
+	std::unique_ptr<Hists> h_MjjHistsdetaAk4sel_WPWPRange;
+	std::unique_ptr<Hists> h_MjjHistsdetaAk4sel_WPMWMRange;
+	std::unique_ptr<Hists> h_MjjHistsdetaAk4sel_ZRange;
 
 	std::unique_ptr<Hists> h_AK8jets_detaAk4sel;
 	std::unique_ptr<Hists> h_AK4jets_detaAk4sel;
@@ -199,9 +199,9 @@ namespace uhh2examples {
 	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p0_WMZ;
 	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p0_ZZ;
 
-	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p0_WPWPRange;
-	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p0_WPMWMRange;
-	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p0_ZRange;
+	std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p0_WPWPRange;
+	std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p0_WPMWMRange;
+	std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p0_ZRange;
 
 
 	std::unique_ptr<Hists> h_AK8jets_invMAk4sel_1p0;
@@ -222,9 +222,9 @@ namespace uhh2examples {
 	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p2_WMZ;
 	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p2_ZZ;
 
-	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p2_WPWPRange;
-	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p2_WPMWMRange;
-	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p2_ZRange;
+	std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p2_WPWPRange;
+	std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p2_WPMWMRange;
+	std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p2_ZRange;
 
 
 	std::unique_ptr<Hists> h_AK8jets_invMAk4sel_1p2;
@@ -245,9 +245,9 @@ namespace uhh2examples {
 	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p5_WMZ;
 	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p5_ZZ;
 
-	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p5_WPWPRange;
-	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p5_WPMWMRange;
-	// std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p5_ZRange;
+	std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p5_WPWPRange;
+	std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p5_WPMWMRange;
+	std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p5_ZRange;
 
 
 	std::unique_ptr<Hists> h_AK8jets_invMAk4sel_1p5;
@@ -289,13 +289,13 @@ namespace uhh2examples {
     };
 
 
-    aQGCVVjjhadronicModule::aQGCVVjjhadronicModule(Context & ctx){
+    aQGCVVjjhadronicParameterscanModule::aQGCVVjjhadronicParameterscanModule(Context & ctx){
 	// In the constructor, the typical tasks are to initialize the
 	// member variables, in particular the AnalysisModules such as
 	// CommonModules or some cleaner module, Selections and Hists.
 	// But you can do more and e.g. access the configuration, as shown below.
     
-	cout << "Hello World from aQGCVVjjhadronicModule!" << endl;
+	cout << "Hello World from aQGCVVjjhadronicParameterscanModule!" << endl;
     
 	// If needed, access the configuration of the module here, e.g.:
 	string testvalue = ctx.get("TestKey", "<not set>");
@@ -463,9 +463,9 @@ namespace uhh2examples {
 	// h_MjjHistsdetaAk8sel_WMZ.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk8selVV_WMZ"));
 	// h_MjjHistsdetaAk8sel_ZZ.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk8selVV_ZZ"));
 
-	// h_MjjHistsdetaAk8sel_WPWPRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk8selVV_WPWPRange"));
-	// h_MjjHistsdetaAk8sel_WPMWMRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk8selVV_WPMWMRange"));
-	// h_MjjHistsdetaAk8sel_ZRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk8selVV_ZRange"));
+	h_MjjHistsdetaAk8sel_WPWPRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk8selVV_WPWPRange"));
+	h_MjjHistsdetaAk8sel_WPMWMRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk8selVV_WPMWMRange"));
+	h_MjjHistsdetaAk8sel_ZRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk8selVV_ZRange"));
 
 
 
@@ -488,9 +488,9 @@ namespace uhh2examples {
 	// h_MjjHistsdetaAk4sel_WMZ.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk4sel_WMZ"));
 	// h_MjjHistsdetaAk4sel_ZZ.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk4sel_ZZ"));
 
-	// h_MjjHistsdetaAk4sel_WPWPRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk4sel_WPWPRange"));
-	// h_MjjHistsdetaAk4sel_WPMWMRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk4sel_WPMWMRange"));
-	// h_MjjHistsdetaAk4sel_ZRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk4sel_ZRange"));
+	h_MjjHistsdetaAk4sel_WPWPRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk4sel_WPWPRange"));
+	h_MjjHistsdetaAk4sel_WPMWMRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk4sel_WPMWMRange"));
+	h_MjjHistsdetaAk4sel_ZRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_detaAk4sel_ZRange"));
 
       
 	h_AK8jets_detaAk4sel.reset(new TopJetHists(ctx,"AK8_detaAk4sel"));
@@ -510,9 +510,9 @@ namespace uhh2examples {
 	// h_MjjHistsinvMAk4sel_1p0_WMZ.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0_WMZ"));
 	// h_MjjHistsinvMAk4sel_1p0_ZZ.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0_ZZ"));
 
-	// h_MjjHistsinvMAk4sel_1p0_WPWPRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0_WPWPRange"));
-	// h_MjjHistsinvMAk4sel_1p0_WPMWMRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0_WPMWMRange"));
-	// h_MjjHistsinvMAk4sel_1p0_ZRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0_ZRange"));
+	h_MjjHistsinvMAk4sel_1p0_WPWPRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0_WPWPRange"));
+	h_MjjHistsinvMAk4sel_1p0_WPMWMRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0_WPMWMRange"));
+	h_MjjHistsinvMAk4sel_1p0_ZRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0_ZRange"));
 
 	h_AK8jets_invMAk4sel_1p0.reset(new TopJetHists(ctx,"AK8_invMAk4sel_1p0"));
 	h_AK4jets_invMAk4sel_1p0.reset(new JetHists(ctx,"AK4_invMAk4sel_1p0"));
@@ -538,9 +538,9 @@ namespace uhh2examples {
 	// h_MjjHistsinvMAk4sel_1p2_WMZ.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p2_WMZ"));
 	// h_MjjHistsinvMAk4sel_1p2_ZZ.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p2_ZZ"));
 
-	// h_MjjHistsinvMAk4sel_1p2_WPWPRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p2_WPWPRange"));
-	// h_MjjHistsinvMAk4sel_1p2_WPMWMRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p2_WPMWMRange"));
-	// h_MjjHistsinvMAk4sel_1p2_ZRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p2_ZRange"));
+	h_MjjHistsinvMAk4sel_1p2_WPWPRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p2_WPWPRange"));
+	h_MjjHistsinvMAk4sel_1p2_WPMWMRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p2_WPMWMRange"));
+	h_MjjHistsinvMAk4sel_1p2_ZRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p2_ZRange"));
 
 	h_AK8jets_invMAk4sel_1p2.reset(new TopJetHists(ctx,"AK8_invMAk4sel_1p2"));
 	h_AK4jets_invMAk4sel_1p2.reset(new JetHists(ctx,"AK4_invMAk4sel_1p2"));
@@ -566,9 +566,9 @@ namespace uhh2examples {
 	// h_MjjHistsinvMAk4sel_1p5_WMZ.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p5_WMZ"));
 	// h_MjjHistsinvMAk4sel_1p5_ZZ.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p5_ZZ"));
 
-	// h_MjjHistsinvMAk4sel_1p5_WPWPRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p5_WPWPRange"));
-	// h_MjjHistsinvMAk4sel_1p5_WPMWMRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p5_WPMWMRange"));
-	// h_MjjHistsinvMAk4sel_1p5_ZRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p5_ZRange"));
+	h_MjjHistsinvMAk4sel_1p5_WPWPRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p5_WPWPRange"));
+	h_MjjHistsinvMAk4sel_1p5_WPMWMRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p5_WPMWMRange"));
+	h_MjjHistsinvMAk4sel_1p5_ZRange.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p5_ZRange"));
 
 
 	h_AK8jets_invMAk4sel_1p5.reset(new TopJetHists(ctx,"AK8_invMAk4sel_1p5"));
@@ -612,7 +612,7 @@ namespace uhh2examples {
     }
 
 
-    bool aQGCVVjjhadronicModule::process(Event & event) {
+    bool aQGCVVjjhadronicParameterscanModule::process(Event & event) {
 	// This is the main procedure, called for each event. Typically,
 	// do some pre-processing by calling the modules' process method
 	// of the modules constructed in the constructor (1).
@@ -623,7 +623,7 @@ namespace uhh2examples {
 	// returns true, the event is kept; if it returns false, the event
 	// is thrown away.
     
-	//cout << "aQGCVVjjhadronicModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
+	//cout << "aQGCVVjjhadronicParameterscanModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
     
 	// 1. run all modules other modules.
 	// if(!event.isRealData){
@@ -831,22 +831,22 @@ namespace uhh2examples {
 	if(VBFVeto){
 	    h_detaAk8sel->fill(event);
 	    h_AK8jets_detaAk8sel->fill(event);
-	    // if(channel_=="signal"){
-	    // 	// if(version_.find("WPWP") != std::string::npos) h_MjjHistsdetaAk8sel_WPWP->fill(event);
-	    // 	// if(version_.find("WPWM") != std::string::npos) h_MjjHistsdetaAk8sel_WPWM->fill(event);
-	    // 	// if(version_.find("WMWM") != std::string::npos) h_MjjHistsdetaAk8sel_WMWM->fill(event);
-	    // 	// if(version_.find("WPZ") != std::string::npos) h_MjjHistsdetaAk8sel_WPZ->fill(event);
-	    // 	// if(version_.find("WMZ") != std::string::npos) h_MjjHistsdetaAk8sel_WMZ->fill(event);
-	    // 	// if(version_.find("ZZ") != std::string::npos) h_MjjHistsdetaAk8sel_ZZ->fill(event);
+	    if(channel_=="signal"){
+		// if(version_.find("WPWP") != std::string::npos) h_MjjHistsdetaAk8sel_WPWP->fill(event);
+		// if(version_.find("WPWM") != std::string::npos) h_MjjHistsdetaAk8sel_WPWM->fill(event);
+		// if(version_.find("WMWM") != std::string::npos) h_MjjHistsdetaAk8sel_WMWM->fill(event);
+		// if(version_.find("WPZ") != std::string::npos) h_MjjHistsdetaAk8sel_WPZ->fill(event);
+		// if(version_.find("WMZ") != std::string::npos) h_MjjHistsdetaAk8sel_WMZ->fill(event);
+		// if(version_.find("ZZ") != std::string::npos) h_MjjHistsdetaAk8sel_ZZ->fill(event);
 	    
-	    // 	if(version_.find("WPWP") != std::string::npos) h_MjjHistsdetaAk8sel_WPWPRange->fill(event);
-	    // 	if(version_.find("WPWM") != std::string::npos) h_MjjHistsdetaAk8sel_WPMWMRange->fill(event);
-	    // 	if(version_.find("WMWM") != std::string::npos) h_MjjHistsdetaAk8sel_WPMWMRange->fill(event);
-	    // 	if(version_.find("WPZ") != std::string::npos) h_MjjHistsdetaAk8sel_ZRange->fill(event);
-	    // 	if(version_.find("WMZ") != std::string::npos) h_MjjHistsdetaAk8sel_ZRange->fill(event);
-	    // 	if(version_.find("ZZ") != std::string::npos) h_MjjHistsdetaAk8sel_ZRange->fill(event);
+		if(version_.find("WPWP") != std::string::npos) h_MjjHistsdetaAk8sel_WPWPRange->fill(event);
+		if(version_.find("WPWM") != std::string::npos) h_MjjHistsdetaAk8sel_WPMWMRange->fill(event);
+		if(version_.find("WMWM") != std::string::npos) h_MjjHistsdetaAk8sel_WPMWMRange->fill(event);
+		if(version_.find("WPZ") != std::string::npos) h_MjjHistsdetaAk8sel_ZRange->fill(event);
+		if(version_.find("WMZ") != std::string::npos) h_MjjHistsdetaAk8sel_ZRange->fill(event);
+		if(version_.find("ZZ") != std::string::npos) h_MjjHistsdetaAk8sel_ZRange->fill(event);
 	    
-	    // }
+	    }
 	}
 	if(EXTRAOUT)std::cout << "deltaEta AK8 Cut done!"<<std::endl;
 
@@ -865,22 +865,22 @@ namespace uhh2examples {
 	//After deltaEta Ak4 Cut	
 	if(!deltaEtaAK4_selection) return false;
 	h_detaAk4sel->fill(event);
-	// if(channel_=="signal"){
-	//     // if(version_.find("WPWP") != std::string::npos) h_MjjHistsdetaAk4sel_WPWP->fill(event);
-	//     // if(version_.find("WPWM") != std::string::npos) h_MjjHistsdetaAk4sel_WPWM->fill(event);
-	//     // if(version_.find("WMWM") != std::string::npos) h_MjjHistsdetaAk4sel_WMWM->fill(event);
-	//     // if(version_.find("WPZ") != std::string::npos) h_MjjHistsdetaAk4sel_WPZ->fill(event);
-	//     // if(version_.find("WMZ") != std::string::npos) h_MjjHistsdetaAk4sel_WMZ->fill(event);
-	//     // if(version_.find("ZZ") != std::string::npos) h_MjjHistsdetaAk4sel_ZZ->fill(event);
+	if(channel_=="signal"){
+	    // if(version_.find("WPWP") != std::string::npos) h_MjjHistsdetaAk4sel_WPWP->fill(event);
+	    // if(version_.find("WPWM") != std::string::npos) h_MjjHistsdetaAk4sel_WPWM->fill(event);
+	    // if(version_.find("WMWM") != std::string::npos) h_MjjHistsdetaAk4sel_WMWM->fill(event);
+	    // if(version_.find("WPZ") != std::string::npos) h_MjjHistsdetaAk4sel_WPZ->fill(event);
+	    // if(version_.find("WMZ") != std::string::npos) h_MjjHistsdetaAk4sel_WMZ->fill(event);
+	    // if(version_.find("ZZ") != std::string::npos) h_MjjHistsdetaAk4sel_ZZ->fill(event);
 
-	//     if(version_.find("WPWP") != std::string::npos) h_MjjHistsdetaAk4sel_WPWPRange->fill(event);
-	//     if(version_.find("WPWM") != std::string::npos) h_MjjHistsdetaAk4sel_WPMWMRange->fill(event);
-	//     if(version_.find("WMWM") != std::string::npos) h_MjjHistsdetaAk4sel_WPMWMRange->fill(event);
-	//     if(version_.find("WPZ") != std::string::npos) h_MjjHistsdetaAk4sel_ZRange->fill(event);
-	//     if(version_.find("WMZ") != std::string::npos) h_MjjHistsdetaAk4sel_ZRange->fill(event);
-	//     if(version_.find("ZZ") != std::string::npos) h_MjjHistsdetaAk4sel_ZRange->fill(event);
+	    if(version_.find("WPWP") != std::string::npos) h_MjjHistsdetaAk4sel_WPWPRange->fill(event);
+	    if(version_.find("WPWM") != std::string::npos) h_MjjHistsdetaAk4sel_WPMWMRange->fill(event);
+	    if(version_.find("WMWM") != std::string::npos) h_MjjHistsdetaAk4sel_WPMWMRange->fill(event);
+	    if(version_.find("WPZ") != std::string::npos) h_MjjHistsdetaAk4sel_ZRange->fill(event);
+	    if(version_.find("WMZ") != std::string::npos) h_MjjHistsdetaAk4sel_ZRange->fill(event);
+	    if(version_.find("ZZ") != std::string::npos) h_MjjHistsdetaAk4sel_ZRange->fill(event);
 
-	// }
+	}
 	h_AK8jets_detaAk4sel->fill(event);
 	h_AK4jets_detaAk4sel->fill(event);
    
@@ -892,22 +892,22 @@ namespace uhh2examples {
 	//After invariant Mass Ak4 Cut	
 	if(!invMassAK4_1p0_selection) return false;
 	h_invMAk4sel_1p0->fill(event);
-	// if(channel_=="signal"){
-	//     // if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPWP->fill(event);
-	//     // if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPWM->fill(event);
-	//     // if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WMWM->fill(event);
-	//     // if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPZ->fill(event);
-	//     // if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WMZ->fill(event);
-	//     // if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_ZZ->fill(event);
+	if(channel_=="signal"){
+	    // if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPWP->fill(event);
+	    // if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPWM->fill(event);
+	    // if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WMWM->fill(event);
+	    // if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPZ->fill(event);
+	    // if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WMZ->fill(event);
+	    // if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_ZZ->fill(event);
 
-	//     if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPWPRange->fill(event);
-	//     if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPMWMRange->fill(event);
-	//     if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPMWMRange->fill(event);
-	//     if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_ZRange->fill(event);
-	//     if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_ZRange->fill(event);
-	//     if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_ZRange->fill(event);
+	    if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPWPRange->fill(event);
+	    if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPMWMRange->fill(event);
+	    if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_WPMWMRange->fill(event);
+	    if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_ZRange->fill(event);
+	    if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_ZRange->fill(event);
+	    if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p0_ZRange->fill(event);
 
-	// }
+	}
 	h_AK8jets_invMAk4sel_1p0->fill(event);
 	h_AK4jets_invMAk4sel_1p0->fill(event);
    
@@ -921,22 +921,22 @@ namespace uhh2examples {
 	//After invariant Mass Ak4 Cut	
 	if(!invMassAK4_1p2_selection) return false;
 	h_invMAk4sel_1p2->fill(event);
-	// if(channel_=="signal"){
-	//     // if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPWP->fill(event);
-	//     // if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPWM->fill(event);
-	//     // if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WMWM->fill(event);
-	//     // if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPZ->fill(event);
-	//     // if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WMZ->fill(event);
-	//     // if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_ZZ->fill(event);
+	if(channel_=="signal"){
+	    // if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPWP->fill(event);
+	    // if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPWM->fill(event);
+	    // if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WMWM->fill(event);
+	    // if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPZ->fill(event);
+	    // if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WMZ->fill(event);
+	    // if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_ZZ->fill(event);
 
-	//     if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPWPRange->fill(event);
-	//     if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPMWMRange->fill(event);
-	//     if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPMWMRange->fill(event);
-	//     if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_ZRange->fill(event);
-	//     if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_ZRange->fill(event);
-	//     if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_ZRange->fill(event);
+	    if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPWPRange->fill(event);
+	    if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPMWMRange->fill(event);
+	    if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_WPMWMRange->fill(event);
+	    if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_ZRange->fill(event);
+	    if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_ZRange->fill(event);
+	    if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p2_ZRange->fill(event);
 
-	// }
+	}
 	h_AK8jets_invMAk4sel_1p2->fill(event);
 	h_AK4jets_invMAk4sel_1p2->fill(event);
    
@@ -950,22 +950,22 @@ namespace uhh2examples {
 	//After invariant Mass Ak4 Cut	
 	if(!invMassAK4_1p5_selection) return false;
 	h_invMAk4sel_1p5->fill(event);
-	// if(channel_=="signal"){
-	//     // if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPWP->fill(event);
-	//     // if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPWM->fill(event);
-	//     // if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WMWM->fill(event);
-	//     // if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPZ->fill(event);
-	//     // if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WMZ->fill(event);
-	//     // if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_ZZ->fill(event);
+	if(channel_=="signal"){
+	    // if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPWP->fill(event);
+	    // if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPWM->fill(event);
+	    // if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WMWM->fill(event);
+	    // if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPZ->fill(event);
+	    // if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WMZ->fill(event);
+	    // if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_ZZ->fill(event);
 
-	//     if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPWPRange->fill(event);
-	//     if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPMWMRange->fill(event);
-	//     if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPMWMRange->fill(event);
-	//     if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_ZRange->fill(event);
-	//     if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_ZRange->fill(event);
-	//     if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_ZRange->fill(event);
+	    if(version_.find("WPWP") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPWPRange->fill(event);
+	    if(version_.find("WPWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPMWMRange->fill(event);
+	    if(version_.find("WMWM") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_WPMWMRange->fill(event);
+	    if(version_.find("WPZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_ZRange->fill(event);
+	    if(version_.find("WMZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_ZRange->fill(event);
+	    if(version_.find("ZZ") != std::string::npos) h_MjjHistsinvMAk4sel_1p5_ZRange->fill(event);
 
-	// }
+	}
 	h_AK8jets_invMAk4sel_1p5->fill(event);
 	h_AK4jets_invMAk4sel_1p5->fill(event);
    
@@ -1004,7 +1004,7 @@ namespace uhh2examples {
     }
 
     // as we want to run the ExampleCycleNew directly with AnalysisModuleRunner,
-    // make sure the aQGCVVjjhadronicModule is found by class name. This is ensured by this macro:
-    UHH2_REGISTER_ANALYSIS_MODULE(aQGCVVjjhadronicModule)
+    // make sure the aQGCVVjjhadronicParameterscanModule is found by class name. This is ensured by this macro:
+    UHH2_REGISTER_ANALYSIS_MODULE(aQGCVVjjhadronicParameterscanModule)
 
 }

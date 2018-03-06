@@ -21,6 +21,7 @@ public:
     private:
     std::vector<std::string> reweight_names;
     std::string BosonChannel;
+    std::string dirname_var;
     
 };
 

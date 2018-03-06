@@ -24,8 +24,8 @@
   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/" PostFix="" TargetLumi="36814.0" >
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
-    <InputData Version="MC_QCD_HT500to700" Lumi="1938.622" Type="MC" NEventsMax="-1" Cacheable="False">
-      &MC_QCD_HT500to700; <InputTree Name="AnalysisTree"/>
+    <InputData Version="MC_QCD_HT300to500" Lumi="107.894" Type="MC" NEventsMax="-1" Cacheable="False">
+      &MC_QCD_HT300to500; <InputTree Name="AnalysisTree"/>
     </InputData>
     
     <UserConfig>
@@ -69,7 +69,7 @@
            -->
       
       <!-- the class name of the AnalysisModule subclasses to run: -->
-      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicModule" /> 
+      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicParameterscanModule" /> 
       
       <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
            MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC

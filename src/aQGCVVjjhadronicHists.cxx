@@ -13,9 +13,18 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
 
     // primary vertices
     book<TH1F>("N_pv", "N^{PV}", 50, 0, 50);
-
-
     book<TH1F>("pdgID", "pdgID", 50, -25,25);
+
+
+    // double mjjBins[] = {99,112,125,138,151,164,177,190, 203, 216, 229, 243, 257, 272, 287, 303, 319, 335, 352, 369, 387, 405, 424, 443, 462, 482, 502, 523, 544, 566, 588, 611, 634, 657, 681, 705, 730, 755, 781, 807, 834, 861, 889, 917, 946, 976, 1006, 1037, 1068, 1100, 1133, 1166, 1200, 1234, 1269, 1305, 1341, 1378, 1416, 1454, 1493, 1533, 1573, 1614, 1656, 1698, 1741, 1785, 1830, 1875, 1921, 1968, 2016, 2065, 2114, 2164, 2215, 2267, 2320, 2374, 2429, 2485, 2542, 2600, 2659, 2719, 2780, 2842, 2905, 2969, 3034, 3100, 3167, 3235, 3305, 3376, 3448, 3521, 3596, 3672, 3749, 3827, 3907, 3988, 4070, 4154, 4239, 4326, 4414, 4504, 4595, 4688, 4782, 4878, 4975, 5074, 5175, 5277, 5381, 5487, 5595, 5705, 5817, 5931, 6047, 6165, 6285, 6407, 6531, 6658, 6787, 6918, 7052, 7188, 7326, 7467, 7610, 7756, 7904, 8055, 8208, 8364, 8523, 8685, 8850, 9019, 9191, 9366, 9544, 9726, 9911, 10100, 10292, 10488, 10688, 10892}; 
+    // const int nBins = sizeof(mjjBins)/sizeof(double);
+    // double xbins[nBins];
+    // for (int j=0; j<nBins; j++){xbins[j]=mjjBins[j];};
+
+    const int NBINS=104;
+    Double_t BOUNDARIES[NBINS] = {1, 3, 6, 10, 16, 23, 31, 40, 50, 61, 74, 88, 103, 119, 137, 156, 176, 197, 220, 244, 270, 296, 325, 354, 386, 419, 453, 489, 526, 565, 606, 649, 693, 740, 788, 838, 890, 944, 1000, 1058, 1118, 1181, 1246, 1313, 1383, 1455, 1530, 1607, 1687, 1770, 1856, 1945, 2037, 2132, 2231, 2332, 2438, 2546, 2659, 2775, 2895, 3019, 3147, 3279, 3416, 3558, 3704, 3854, 4010, 4171, 4337, 4509, 4686, 4869, 5058, 5253, 5455, 5663, 5877, 6099, 6328, 6564, 6808, 7060, 7320, 7589, 7866, 8152, 8447, 8752, 9067, 9391, 9726, 10072, 10430, 10798, 11179, 11571, 11977, 12395, 12827, 13272, 13732, 14000};
+
+    // TH1F* mass=new TH1F("dijet_mass","M_{jj}",NBINS-1,BOUNDARIES);
 
 
     // jets
@@ -36,7 +45,10 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
 
     book<TH1F>("prodeta_AK4_12", "#eta^{1st AK4 jet} #cdot #eta^{2nd AK4 jet}", 87, -43, 43);
 
-    book<TH1F>("M_jj_AK4", "M_{jj-AK4} [GeV/c^{2}]",100,0,10000);
+
+    book<TH1F>("M_jj_AK4", "M_{jj-AK4} [GeV/c^{2}]",NBINS-1,BOUNDARIES);
+    book<TH1F>("M_jj_AK4_highbin", "M_{jj-AK4} [GeV/c^{2}]",14000,0,14000);
+    // book<TH1F>("M_jj_AK4", "M_{jj-AK4} [GeV/c^{2}]",nBins,xbins);
 
    
     book<TH1F>("pT_AK8_1", "p_{T}^{1st AK8 jet} [GeV/c]", 80 ,0 ,8000);
@@ -47,7 +59,9 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
     book<TH1F>("eta_AK8_12", "#eta^{leading AK8 jets}", 40, -6.5, 6.5);
 
 
-    book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",100,0,10000);
+    book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",NBINS-1,BOUNDARIES);
+    book<TH1F>("M_jj_AK8_highbin", "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
+    // book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",nBins-1,xbins);
     
 
     // book<TH1F>("eta_VBFJet", "#eta^{VBF-Jets}", 40, -6.5,6.5);
@@ -100,6 +114,7 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 	hist("prodeta_AK4_12")->Fill(AK4Jets->at(0).eta()*AK4Jets->at(1).eta(),weight);
 
 	hist("M_jj_AK4")->Fill((AK4Jets->at(0).v4()+AK4Jets->at(1).v4()).M(),weight);
+	hist("M_jj_AK4_highbin")->Fill((AK4Jets->at(0).v4()+AK4Jets->at(1).v4()).M(),weight);
     }
 
     for(const TopJet & thisjet : *AK8Jets){
@@ -117,6 +132,7 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
     	hist("pT_AK8_12")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).pt(),weight);
     	hist("eta_AK8_12")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).eta(),weight);
 	hist("M_jj_AK8")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight);
+	hist("M_jj_AK8_highbin")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight);
     }
     
     // int Nmuons = event.muons->size();

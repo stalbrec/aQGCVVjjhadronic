@@ -195,7 +195,7 @@
            -->
       
       <!-- the class name of the AnalysisModule subclasses to run: -->
-      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicModule" /> 
+      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicParameterscanModule" /> 
       
       <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
            MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
