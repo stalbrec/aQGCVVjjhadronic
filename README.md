@@ -4,7 +4,7 @@ when adding to fresh UHH2 Installation, add following line to Makefile.local:
 dirs += aQGCVVjjhadronic
 ```
 
-works in UHH2/RunII_80X_v3 (old version, currently testing if new version works out of the box) with a few additions:
+works in UHH2/RunII_80X_v3 ~(old version, currently testing if new version works out of the box) with a few additions:~
 
 ```
 git status:
