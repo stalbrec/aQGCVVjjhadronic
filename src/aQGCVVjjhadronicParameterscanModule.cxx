@@ -99,6 +99,7 @@ namespace uhh2examples {
 	std::unique_ptr<Selection> deltaEtaAK8_sel;
 	std::unique_ptr<Selection> softdropAK8_sel;
 	std::unique_ptr<Selection> tau21_sel;
+
 	std::unique_ptr<Selection> nAK4_sel;
 	std::unique_ptr<Selection> EtaSignAK4_sel;
 	std::unique_ptr<Selection> deltaEtaAK4_sel;
@@ -158,8 +159,12 @@ namespace uhh2examples {
 	std::unique_ptr<Hists> h_tau21sel;
 	std::unique_ptr<Hists> h_AK8jets_tau21sel;
 	std::unique_ptr<Hists> h_AK4jets_tau21sel;
-	std::unique_ptr<Hists> h_MjjHiststau21sel;
 	
+	//VV REGION
+	std::unique_ptr<Hists> h_VVRegion;
+	std::unique_ptr<Hists> h_AK8jets_VVRegion;
+	std::unique_ptr<Hists> h_AK4jets_VVRegion;
+	std::unique_ptr<Hists> h_MjjHistsVVRegion;
 
 
 	//After N_AL4>2 Cut
@@ -345,7 +350,7 @@ namespace uhh2examples {
 	invMassAK8_sel.reset(new invMassAK8JetSelection(1050.0f));
 	deltaEtaAK8_sel.reset(new deltaEtaAk8Selection(1.3f));
 	softdropAK8_sel.reset(new VVSoftDropMassSelection(65.f,105.f));
-	tau21_sel.reset(new NSubjettinessTau21Selection(0.45f));
+	tau21_sel.reset(new NSubjettinessTau21Selection(0.0f,0.45f));
    
 	nAK4_sel.reset(new NJetSelection(2));
 	EtaSignAK4_sel.reset(new OppositeEtaAK4Selection());
@@ -412,7 +417,12 @@ namespace uhh2examples {
 	h_tau21sel.reset(new aQGCVVjjhadronicHists(ctx,"tau21sel"));
 	h_AK8jets_tau21sel.reset(new TopJetHists(ctx,"AK8_tau21sel"));
 	h_AK4jets_tau21sel.reset(new JetHists(ctx,"AK4_tau21sel"));
-	h_MjjHiststau21sel.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_tau21sel"));
+
+	//VV REGION
+	h_VVRegion.reset(new aQGCVVjjhadronicHists(ctx,"VVRegion"));
+	h_AK8jets_VVRegion.reset(new TopJetHists(ctx,"AK8_VVRegion"));
+	h_AK4jets_VVRegion.reset(new JetHists(ctx,"AK4_VVRegion"));
+	h_MjjHistsVVRegion.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_VVRegion"));
 
 
 	//After N_AL4>2 Cut
@@ -740,6 +750,10 @@ namespace uhh2examples {
 
 	bool tau21_selection = tau21_sel->passes(event);
 	if(!tau21_selection) return false;
+	h_tau21sel->fill(event);
+	h_AK8jets_tau21sel->fill(event);
+	h_AK4jets_tau21sel->fill(event);
+	if(EXTRAOUT)std::cout << "nsubjettines AK8 Cut done!"<<std::endl;
 	
 	//VBF Selection && VBFVeto
 	bool nAK4_selection = nAK4_sel->passes(event);
@@ -752,15 +766,16 @@ namespace uhh2examples {
 	bool VBFVeto=!(nAK4_selection && EtaSignAK4_selection && deltaEtaAK4_selection && invMassAK4_1p0_selection);
 
 	if(VBFVeto){
-	    h_tau21sel->fill(event);
-	    h_AK8jets_tau21sel->fill(event);
-	    h_AK4jets_tau21sel->fill(event);
 	    if(channel_=="signal"){
+		h_VVRegion->fill(event);
+		h_AK8jets_VVRegion->fill(event);
+		h_AK4jets_VVRegion->fill(event);
+		
 		// if(version_.find("ZZ") != std::string::npos)
-		h_MjjHiststau21sel->fill(event);
+		h_MjjHistsVVRegion->fill(event);
 	    }
 	}
-	if(EXTRAOUT)std::cout << "deltaEta AK8 Cut done!"<<std::endl;
+	if(EXTRAOUT)std::cout << "VV done!"<<std::endl;
 
 	//After N_AL4>2 Cut
 	if(!nAK4_selection) return false;

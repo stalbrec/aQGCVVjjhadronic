@@ -50,8 +50,24 @@ VVSoftDropMassSelection::VVSoftDropMassSelection(float MSD_min_,float MSD_max_):
 bool VVSoftDropMassSelection::passes(const Event & event){
     assert(event.topjets);
     if(event.topjets->size()<2) return false;
-    auto MSD1=event.topjets->at(1).softdropmass();
-    auto MSD2=event.topjets->at(2).softdropmass();
+
+    const auto & AK8_1=event.topjets->at(0); 
+    const auto & AK8_2=event.topjets->at(1); 
+    LorentzVector subjetsum_1,subjetsum_2;
+    for (const auto subjet1:AK8_1.subjets()){
+	subjetsum_1+=subjet1.v4();
+    }
+    for (const auto subjet2:AK8_2.subjets()){
+	subjetsum_2+=subjet2.v4();
+    }
+    auto MSD1=subjetsum_1.M();
+    auto MSD2=subjetsum_2.M();
+    
+
+    //dont know if correct
+    // auto MSD1=event.topjets->at(1).softdropmass();
+    // auto MSD2=event.topjets->at(2).softdropmass();
+
     //demand 65GeV<M_SD<105GeV
     if( (MSD1<MSD_min) || (MSD1>MSD_max) || (MSD2<MSD_min) || (MSD2>MSD_max) ){
 	return false;
@@ -60,7 +76,7 @@ bool VVSoftDropMassSelection::passes(const Event & event){
     }
 }
 
-NSubjettinessTau21Selection::NSubjettinessTau21Selection(float tau21_min_): tau21_min(tau21_min_){}
+NSubjettinessTau21Selection::NSubjettinessTau21Selection(float tau21_min_,float tau21_max_): tau21_min(tau21_min_),tau21_max(tau21_max_){}
 
 bool NSubjettinessTau21Selection::passes(const Event & event){
     assert(event.topjets);
@@ -75,8 +91,11 @@ bool NSubjettinessTau21Selection::passes(const Event & event){
     if(!std::isfinite(tau1_2) || tau1_2 == 0.0) return false;
     auto tau2_2= event.topjets->at(1).tau2();
     if(!std::isfinite(tau2_2)) return false;
-
-    if( (tau2_1 / tau1_1 > tau21_min) || (tau2_2 / tau1_2 > tau21_min) ){
+    
+    auto tau21_1=tau2_1/tau1_1;
+    auto tau21_2=tau2_2/tau1_2;
+    
+    if( (tau21_1 <= tau21_min) || (tau21_1 > tau21_max) || (tau21_2 <= tau21_min) || (tau21_2 > tau21_max) ){    
 	return false;
     }else{
 	return true;

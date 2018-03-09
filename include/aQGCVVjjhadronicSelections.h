@@ -41,10 +41,11 @@ namespace uhh2examples {
     };
     class NSubjettinessTau21Selection: public uhh2::Selection {
     public:
-	NSubjettinessTau21Selection(float tau21_min);
+	NSubjettinessTau21Selection(float tau21_min,float tau21_max);
 	virtual bool passes(const uhh2::Event & event) override;
     private:
 	float tau21_min;
+	float tau21_max;
     };
 
     class OppositeEtaAK4Selection: public uhh2::Selection {
