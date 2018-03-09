@@ -256,10 +256,10 @@ void aQGCVVjjhadronicMjjHists::fill(const Event & event){
     int N_systweights=event.genInfo->systweights().size();
     int N_reweight=reweight_names.size();
     int N_pdfwgt=0;
-    if(dirname_var.find("Z") != std::string::npos){
-	N_pdfwgt=1080;
-    }else{
+    if(dirname_var.find("WPWPl") != std::string::npos){
 	N_pdfwgt=882;
+    }else{
+	N_pdfwgt=1080;
     }
     // std::cout <<"Npwdfwgt= "<<N_pdfwgt<<std::endl;
     if(N_systweights==N_reweight+N_pdfwgt){

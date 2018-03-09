@@ -38,9 +38,50 @@ bool invMassAK8JetSelection::passes(const Event & event){
     assert(event.topjets);
     if(event.topjets->size()<2) return false;
     auto invMass = (event.topjets->at(0).v4()+event.topjets->at(1).v4()).M();
-    if(invMass<invMass_min) return false;
-    else return true;
+    if(invMass<invMass_min){
+	return false;
+    }else{
+	return true;
+    }
 }
+
+VVSoftDropMassSelection::VVSoftDropMassSelection(float MSD_min_,float MSD_max_): MSD_min(MSD_min_),MSD_max(MSD_max_){}
+
+bool VVSoftDropMassSelection::passes(const Event & event){
+    assert(event.topjets);
+    if(event.topjets->size()<2) return false;
+    auto MSD1=event.topjets->at(1).softdropmass();
+    auto MSD2=event.topjets->at(2).softdropmass();
+    //demand 65GeV<M_SD<105GeV
+    if( (MSD1<MSD_min) || (MSD1>MSD_max) || (MSD2<MSD_min) || (MSD2>MSD_max) ){
+	return false;
+    }else{
+	return true;
+    }
+}
+
+NSubjettinessTau21Selection::NSubjettinessTau21Selection(float tau21_min_): tau21_min(tau21_min_){}
+
+bool NSubjettinessTau21Selection::passes(const Event & event){
+    assert(event.topjets);
+    if(event.topjets->size()<2)return false;
+    
+    auto tau1_1 = event.topjets->at(0).tau1();
+    if(tau1_1 == 0.0) return false;
+    auto tau2_1= event.topjets->at(0).tau2();
+    if(!std::isfinite(tau2_1)) return false;
+
+    auto tau1_2 = event.topjets->at(1).tau1();
+    if(!std::isfinite(tau1_2) || tau1_2 == 0.0) return false;
+    auto tau2_2= event.topjets->at(1).tau2();
+    if(!std::isfinite(tau2_2)) return false;
+
+    if( (tau2_1 / tau1_1 > tau21_min) || (tau2_2 / tau1_2 > tau21_min) ){
+	return false;
+    }else{
+	return true;
+    }
+}   
 
 
 OppositeEtaAK4Selection::OppositeEtaAK4Selection( ){}

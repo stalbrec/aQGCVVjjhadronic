@@ -32,6 +32,21 @@ namespace uhh2examples {
     private:
 	float deta_max;
     };
+    class VVSoftDropMassSelection: public uhh2::Selection {
+    public:
+	VVSoftDropMassSelection(float MSD_min=65.f,float MSD_max=105.f);
+	virtual bool passes(const uhh2::Event & event) override;
+    private:
+	float MSD_min,MSD_max;
+    };
+    class NSubjettinessTau21Selection: public uhh2::Selection {
+    public:
+	NSubjettinessTau21Selection(float tau21_min);
+	virtual bool passes(const uhh2::Event & event) override;
+    private:
+	float tau21_min;
+    };
+
     class OppositeEtaAK4Selection: public uhh2::Selection {
     public:
 	OppositeEtaAK4Selection();

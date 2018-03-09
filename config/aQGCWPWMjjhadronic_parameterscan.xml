@@ -29,7 +29,7 @@
     <!--   <InputTree Name="AnalysisTree" />  -->
     <!-- </InputData> -->
 
-    <InputData Lumi="489" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWMjj_hadronic" Cacheable="False">
+    <InputData Lumi="489" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWMjj_hadronic_parameterscan" Cacheable="False">
       <!-- <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_WPWM/Ntuple_WPWM_0.root" Lumi="0.0"/> -->
       <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_WPWM/Ntuple_WPWM_1.root" Lumi="0.0"/>
       <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_WPWM/Ntuple_WPWM_2.root" Lumi="0.0"/>

@@ -28,7 +28,7 @@
     <!--   <In FileName="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/core/python/Ntuple.root" Lumi="0.0"/> -->
     <!--   <InputTree Name="AnalysisTree" />  -->
     <!-- </InputData> -->
-    <InputData Lumi="37004" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMWMjj_hadronic" Cacheable="False">
+    <InputData Lumi="37004" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMWMjj_hadronic_parameterscan" Cacheable="False">
       <!-- <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_WMWM/Ntuple_WMWM_0.root" Lumi="0.0"/> -->
       <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_WMWM/Ntuple_WMWM_1.root" Lumi="0.0"/>
       <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_WMWM/Ntuple_WMWM_2.root" Lumi="0.0"/>
