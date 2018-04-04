@@ -279,6 +279,10 @@ namespace uhh2examples {
 	common->disable_jersmear();
 	common->disable_jec();
 
+	if(EXTRAOUT){
+		std::cout << "CommonModules set up"<<std::endl;
+	}
+	
 	std::vector<std::string> JEC_AK4, JEC_AK8,JEC_AK4_BCD,JEC_AK4_EF,JEC_AK4_G,JEC_AK4_H,JEC_AK8_BCD,JEC_AK8_EF,JEC_AK8_G,JEC_AK8_H;
 	if(isMC)
 	    {
@@ -329,6 +333,9 @@ namespace uhh2examples {
 		subjet_corrector_H.reset(new SubJetCorrector(ctx,JEC_AK4_H ));
 	    }
 
+	if(EXTRAOUT){
+		std::cout << "Custom Jet-Corrections added to CommonModules"<<std::endl;
+	}
 	common->init(ctx);
     
     
@@ -336,6 +343,8 @@ namespace uhh2examples {
 	ak8cleaner.reset(new TopJetCleaner(ctx,TopJetId(PtEtaCut(200.0,2.5))));
 	ak4cleaner.reset(new JetCleaner(ctx, 30.0, 5.0)); 
 
+	
+	
 
 	/////////////////////////////////////////
 	////////////////SELECTIONS///////////////
@@ -360,7 +369,12 @@ namespace uhh2examples {
 	invMassAK4_1p2_sel.reset(new invMassAK4JetSelection(1200.0f));    
 	invMassAK4_1p5_sel.reset(new invMassAK4JetSelection(1500.0f));    
 	// invMassAK4_2p0_sel.reset(new invMassAK4JetSelection(2000.0f));    
-    
+
+	if(EXTRAOUT){
+		std::cout << "Selections set up" <<std::endl;
+	}
+
+		
 	/////////////////////////////////////////
 	/////////////////HISTS///////////////////
 	/////////////////////////////////////////  
@@ -501,6 +515,9 @@ namespace uhh2examples {
 	    h_genparticle_invMAk4sel_1p5.reset(new aQGCVVjjhadronicGenHists(ctx,"genpart_invMAk4sel_1p5"));
 	}
 
+	if(EXTRAOUT){
+		std::cout << "Hists set up"<<std::endl;
+	}
 	// //After invarian Mass AK4 Cut 2TeV	
 	// h_invMAk4sel_2p0.reset(new aQGCVVjjhadronicHists(ctx,"invMAk4sel_2p0"));
 
@@ -604,12 +621,14 @@ namespace uhh2examples {
 	h_nocuts->fill(event);
 	h_AK8jets_nocuts->fill(event);
 	h_AK4jets_nocuts->fill(event);
-   
+	
 	h_ele_nocuts->fill(event);
 	h_muon_nocuts->fill(event);
+
 	if(version_=="MC_aQGC_WPWPjj_hadronic_newrange_genplots"){
 	    h_genparticle_nocuts->fill(event);
 	}
+
 	if(EXTRAOUT)std::cout << "Input Hists done!"<<std::endl;	
 
 	bool common_pass=common->process(event);
@@ -766,11 +785,10 @@ namespace uhh2examples {
 	bool VBFVeto=!(nAK4_selection && EtaSignAK4_selection && deltaEtaAK4_selection && invMassAK4_1p0_selection);
 
 	if(VBFVeto){
-	    if(channel_=="signal"){
-		h_VVRegion->fill(event);
-		h_AK8jets_VVRegion->fill(event);
-		h_AK4jets_VVRegion->fill(event);
-		
+	    h_VVRegion->fill(event);
+	    h_AK8jets_VVRegion->fill(event);
+	    h_AK4jets_VVRegion->fill(event);
+	    if(channel_=="signal"){		
 		// if(version_.find("ZZ") != std::string::npos)
 		h_MjjHistsVVRegion->fill(event);
 	    }
