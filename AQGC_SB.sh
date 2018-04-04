@@ -1,6 +1,7 @@
 #!/bin/bash
-cd /nfs/dust/cms/user/albrechs
-source setup.sh
+# cd /nfs/dust/cms/user/albrechs
+/afs/desy.de/user/a/albrechs
+source setup_UHH2.sh
 cd aQGCVVjjhadronic
 
 processes=(WPWP WMWM WPWM WPZ WMZ ZZ)

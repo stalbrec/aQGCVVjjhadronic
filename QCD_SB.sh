@@ -1,6 +1,7 @@
 #!/bin/bash
-cd /nfs/dust/cms/user/albrechs
-source setup.sh
+# cd /nfs/dust/cms/user/albrechs
+cd /afs/desy.de/user/a/albrechs
+source setup_UHH2.sh
 cd aQGCVVjjhadronic
 
 dataset=(QCD_HT300to500 QCD_HT500to700 QCD_HT700to1000 QCD_HT1000to1500 QCD_HT1500to2000 QCD_HT2000toInf)
