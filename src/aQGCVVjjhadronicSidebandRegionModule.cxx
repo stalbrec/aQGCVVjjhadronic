@@ -363,7 +363,7 @@ namespace uhh2examples {
 	nAK8_sel.reset(new NTopJetSelection(2));
 	invMassAK8_sel.reset(new invMassAK8JetSelection(1050.0f));
 	deltaEtaAK8_sel.reset(new deltaEtaAk8Selection(1.3f));
-	softdropAK8_sel.reset(new SideBandVVSoftDropMassSelection(65.f,105.f,105.f));
+	softdropAK8_sel.reset(new SidebandVVSoftDropMassSelection(65.f,105.f,105.f));
 	tau21_sel.reset(new NSubjettinessTau21Selection(0.0f,0.45f));
    
 	nAK4_sel.reset(new NJetSelection(2));
