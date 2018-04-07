@@ -76,7 +76,7 @@ bool VVSoftDropMassSelection::passes(const Event & event){
     }
 }
 
-SideBandVVSoftDropMassSelection::SideBandVVSoftDropMassSelection(float Signal_min_,float Signal_max_,float Sideband_min_): Signal_min(Signal_min_),Signal_max(Signal_max_),Sideband_min(Sideband_min_){}
+SidebandVVSoftDropMassSelection::SidebandVVSoftDropMassSelection(float Signal_min_,float Signal_max_,float Sideband_min_): Signal_min(Signal_min_),Signal_max(Signal_max_),Sideband_min(Sideband_min_){}
 
 bool SidebandVVSoftDropMassSelection::passes(const Event & event){
     assert(event.topjets);
