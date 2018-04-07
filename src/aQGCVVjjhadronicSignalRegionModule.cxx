@@ -454,8 +454,8 @@ namespace uhh2examples {
 	
 	//OppositeEtaSign_Ak4 Cut
 	h_OpSignsel.reset(new aQGCVVjjhadronicHists(ctx,"OpSignsel"));
-	h_AK8jets_OpSignsel.reset(new TopJetHists(ctx,"AK8_AK4N2sel"));
-	h_AK4jets_OpSignsel.reset(new JetHists(ctx,"AK4_AK4N2sel"));
+	h_AK8jets_OpSignsel.reset(new TopJetHists(ctx,"AK8_OpSignsel"));
+	h_AK4jets_OpSignsel.reset(new JetHists(ctx,"AK4_OpSignsel"));
 
 	//After deltaEta Ak4 Cut	
 	h_detaAk4sel.reset(new aQGCVVjjhadronicHists(ctx,"detaAk4sel"));
