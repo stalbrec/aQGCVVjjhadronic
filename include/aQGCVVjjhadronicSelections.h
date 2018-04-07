@@ -39,6 +39,13 @@ namespace uhh2examples {
     private:
 	float MSD_min,MSD_max;
     };
+	class SidebandVVSoftDropMassSelection: public uhh2::Selection {
+    public:
+	SidebandVVSoftDropMassSelection(float Signal_min=65.f,float Signal_max=105.f,float Sideband_min=105.f);
+	virtual bool passes(const uhh2::Event & event) override;
+    private:
+	float Signal_min, Signal_max, Sideband_min;
+    };
     class NSubjettinessTau21Selection: public uhh2::Selection {
     public:
 	NSubjettinessTau21Selection(float tau21_min,float tau21_max);

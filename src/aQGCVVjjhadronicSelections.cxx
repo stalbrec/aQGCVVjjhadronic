@@ -76,6 +76,37 @@ bool VVSoftDropMassSelection::passes(const Event & event){
     }
 }
 
+SideBandVVSoftDropMassSelection::SideBandVVSoftDropMassSelection(float Signal_min_,float Signal_max_,float Sideband_min_): Signal_min(Signal_min_),Signal_max(Signal_max_),Sideband_min(Sideband_min_){}
+
+bool SidebandVVSoftDropMassSelection::passes(const Event & event){
+    assert(event.topjets);
+    if(event.topjets->size()<2) return false;
+
+    const auto & AK8_1=event.topjets->at(0); 
+    const auto & AK8_2=event.topjets->at(1); 
+    LorentzVector subjetsum_1,subjetsum_2;
+    for (const auto subjet1:AK8_1.subjets()){
+	subjetsum_1+=subjet1.v4();
+    }
+    for (const auto subjet2:AK8_2.subjets()){
+	subjetsum_2+=subjet2.v4();
+    }
+    auto MSD1=subjetsum_1.M();
+    auto MSD2=subjetsum_2.M();
+    
+
+    //dont know if correct
+    // auto MSD1=event.topjets->at(1).softdropmass();
+    // auto MSD2=event.topjets->at(2).softdropmass();
+
+    //demand 65GeV<M_SD<105GeV
+    if( (MSD1<Sideband_min) || (MSD2<Signal_min) || (MSD2>Signal_max) ){
+	return false;
+    }else{
+	return true;
+    }
+}
+
 NSubjettinessTau21Selection::NSubjettinessTau21Selection(float tau21_min_,float tau21_max_): tau21_min(tau21_min_),tau21_max(tau21_max_){}
 
 bool NSubjettinessTau21Selection::passes(const Event & event){

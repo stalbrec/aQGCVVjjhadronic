@@ -36,10 +36,10 @@ namespace uhh2examples {
      * This is the central class which calls other AnalysisModules, Hists or Selection classes.
      * This AnalysisModule, in turn, is called (via AnalysisModuleRunner) by SFrame.
      */
-    class aQGCVVjjhadronicParameterscanModule: public AnalysisModule {
+    class aQGCVVjjhadronicSignalRegionModule: public AnalysisModule {
     public:
     
-	explicit aQGCVVjjhadronicParameterscanModule(Context & ctx);
+	explicit aQGCVVjjhadronicSignalRegionModule(Context & ctx);
 	virtual bool process(Event & event) override;
 
     private:
@@ -135,6 +135,7 @@ namespace uhh2examples {
 	//After N_AK8>2 Cut
 	std::unique_ptr<Hists> h_AK8N2sel;
 	std::unique_ptr<Hists> h_AK8jets_AK8N2sel;
+	std::unique_ptr<Hists> h_AK4jets_AK8N2sel;
 
 	//After deltaR(AK4,AK8) Cut
 	std::unique_ptr<Hists> h_deltaR48;
@@ -144,10 +145,12 @@ namespace uhh2examples {
 	//After invariant Mass AK8 Cut
 	std::unique_ptr<Hists> h_invMAk8sel;
 	std::unique_ptr<Hists> h_AK8jets_invMAk8sel;
+	std::unique_ptr<Hists> h_AK4jets_invMAk8sel;
 	    
 	//After deltaEta AK8 Cut
 	std::unique_ptr<Hists> h_detaAk8sel;
 	std::unique_ptr<Hists> h_AK8jets_detaAk8sel;
+	std::unique_ptr<Hists> h_AK4jets_detaAk8sel;
 
 	
 	//After softdropMass AK8 Cut
@@ -169,9 +172,11 @@ namespace uhh2examples {
 
 	//After N_AL4>2 Cut
 	std::unique_ptr<Hists> h_AK4N2sel;
+	std::unique_ptr<Hists> h_AK8jets_AK4N2sel;
 	std::unique_ptr<Hists> h_AK4jets_AK4N2sel;
 	//OppositeEtaSign_Ak4 Cut
 	std::unique_ptr<Hists> h_OpSignsel;
+	std::unique_ptr<Hists> h_AK8jets_OpSignsel;
 	std::unique_ptr<Hists> h_AK4jets_OpSignsel;
 
 	//After deltaEta Ak4 Cut	
@@ -239,13 +244,13 @@ namespace uhh2examples {
     };
 
 
-    aQGCVVjjhadronicParameterscanModule::aQGCVVjjhadronicParameterscanModule(Context & ctx){
+    aQGCVVjjhadronicSignalRegionModule::aQGCVVjjhadronicSignalRegionModule(Context & ctx){
 	// In the constructor, the typical tasks are to initialize the
 	// member variables, in particular the AnalysisModules such as
 	// CommonModules or some cleaner module, Selections and Hists.
 	// But you can do more and e.g. access the configuration, as shown below.
     
-	cout << "Hello World from aQGCVVjjhadronicParameterscanModule!" << endl;
+	cout << "Hello World from aQGCVVjjhadronicSignalRegionModule!" << endl;
     
 	// If needed, access the configuration of the module here, e.g.:
 	string testvalue = ctx.get("TestKey", "<not set>");
@@ -273,7 +278,7 @@ namespace uhh2examples {
 	//  calling common->set_*_id or common->disable_*
 
 	//disableing pileup reweighting for now
-	common->disable_mcpileupreweight();
+	//common->disable_mcpileupreweight();
 
 	common->switch_jetlepcleaner(false);
 	common->disable_jersmear();
@@ -408,6 +413,7 @@ namespace uhh2examples {
 	//After N_AK8>=2 Cut
 	h_AK8N2sel.reset(new aQGCVVjjhadronicHists(ctx,"AK8N2sel"));
 	h_AK8jets_AK8N2sel.reset(new TopJetHists(ctx,"AK8_AK8N2sel"));
+	h_AK4jets_AK8N2sel.reset(new JetHists(ctx,"AK4_AK8N2sel"));
 
 	//After deltaR(AK4,AK8) Cut
 	h_deltaR48.reset(new aQGCVVjjhadronicHists(ctx,"deltaR48"));
@@ -417,10 +423,12 @@ namespace uhh2examples {
 	//After invariant Mass AK8 Cut
 	h_invMAk8sel.reset(new aQGCVVjjhadronicHists(ctx,"invMAk8sel"));
 	h_AK8jets_invMAk8sel.reset(new TopJetHists(ctx,"AK8_invMAk8sel"));
+	h_AK4jets_invMAk8sel.reset(new JetHists(ctx,"AK4_invMAk8sel"));
 	    
 	//After deltaEta AK8 Cut
 	h_detaAk8sel.reset(new aQGCVVjjhadronicHists(ctx,"detaAk8sel"));
 	h_AK8jets_detaAk8sel.reset(new TopJetHists(ctx,"AK8_detaAk8sel"));
+	h_AK4jets_detaAk8sel.reset(new JetHists(ctx,"AK4_detaAk8sel"));
 
 	//SoftdropMass Cut
 	h_softdropAK8sel.reset(new aQGCVVjjhadronicHists(ctx,"softdropAK8sel"));
@@ -441,11 +449,13 @@ namespace uhh2examples {
 
 	//After N_AL4>2 Cut
 	h_AK4N2sel.reset(new aQGCVVjjhadronicHists(ctx,"AK4N2sel"));
+	h_AK8jets_AK4N2sel.reset(new TopJetHists(ctx,"AK8_AK4N2sel"));
 	h_AK4jets_AK4N2sel.reset(new JetHists(ctx,"AK4_AK4N2sel"));
 	
 	//OppositeEtaSign_Ak4 Cut
 	h_OpSignsel.reset(new aQGCVVjjhadronicHists(ctx,"OpSignsel"));
-	h_AK4jets_OpSignsel.reset(new JetHists(ctx,"AK4_OpSignsel"));
+	h_AK8jets_AK4N2sel.reset(new TopJetHists(ctx,"AK8_AK4N2sel"));
+	h_AK4jets_AK4N2sel.reset(new JetHists(ctx,"AK4_AK4N2sel"));
 
 	//After deltaEta Ak4 Cut	
 	h_detaAk4sel.reset(new aQGCVVjjhadronicHists(ctx,"detaAk4sel"));
@@ -546,7 +556,7 @@ namespace uhh2examples {
     }
 
 
-    bool aQGCVVjjhadronicParameterscanModule::process(Event & event) {
+    bool aQGCVVjjhadronicSignalRegionModule::process(Event & event) {
 	// This is the main procedure, called for each event. Typically,
 	// do some pre-processing by calling the modules' process method
 	// of the modules constructed in the constructor (1).
@@ -557,7 +567,7 @@ namespace uhh2examples {
 	// returns true, the event is kept; if it returns false, the event
 	// is thrown away.
     
-	//cout << "aQGCVVjjhadronicParameterscanModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
+	//cout << "aQGCVVjjhadronicSignalRegionModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
     
 	// 1. run all modules other modules.
 	// if(!event.isRealData){
@@ -710,6 +720,7 @@ namespace uhh2examples {
 	if(!nAK8_selection) return false;
 	h_AK8N2sel->fill(event);
 	h_AK8jets_AK8N2sel->fill(event);
+	h_AK4jets_AK8N2sel->fill(event);
 	if(EXTRAOUT)std::cout << "N_AK8 Sel done!"<<std::endl;
 
 	//Removing AK4 Jets with deltaR(AK4,AK8_1,2)<1.3
@@ -748,6 +759,7 @@ namespace uhh2examples {
 	if(!invMassAK8_selection) return false;
 	h_invMAk8sel->fill(event);
 	h_AK8jets_invMAk8sel->fill(event);
+	h_AK4jets_invMAk8sel->fill(event);
 	if(EXTRAOUT)std::cout << "invMass Cut done!"<<std::endl;
 
 	//After deltaEta AK8 Cut
@@ -755,6 +767,7 @@ namespace uhh2examples {
 	if(!deltaEtaAK8_selection) return false;
 	h_detaAk8sel->fill(event);
 	h_AK8jets_detaAk8sel->fill(event);
+	h_AK4jets_detaAk8sel->fill(event);
 	if(EXTRAOUT)std::cout << "deltaEta AK8 Cut done!"<<std::endl;
 
 	//SoftdropMass Cut
@@ -798,12 +811,14 @@ namespace uhh2examples {
 	//After N_AL4>2 Cut
 	if(!nAK4_selection) return false;
 	h_AK4N2sel->fill(event);
+	h_AK8jets_AK4N2sel->fill(event);
 	h_AK4jets_AK4N2sel->fill(event);
 	if(EXTRAOUT)std::cout << "N_AK4 Cut done!"<<std::endl;
 
 	//OppositeEtaSign_Ak4 Cut
 	if(!EtaSignAK4_selection) return false;
 	h_OpSignsel->fill(event);
+	h_AK8jets_OpSignsel->fill(event);
 	h_AK4jets_OpSignsel->fill(event);
 	if(EXTRAOUT)std::cout << "AK4 EtaSign Selection done!"<<std::endl;
 
@@ -876,7 +891,7 @@ namespace uhh2examples {
     }
 
     // as we want to run the ExampleCycleNew directly with AnalysisModuleRunner,
-    // make sure the aQGCVVjjhadronicParameterscanModule is found by class name. This is ensured by this macro:
-    UHH2_REGISTER_ANALYSIS_MODULE(aQGCVVjjhadronicParameterscanModule)
+    // make sure the aQGCVVjjhadronicSignalRegionModule is found by class name. This is ensured by this macro:
+    UHH2_REGISTER_ANALYSIS_MODULE(aQGCVVjjhadronicSignalRegionModule)
 
 }

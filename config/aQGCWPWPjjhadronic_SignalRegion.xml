@@ -21,7 +21,7 @@
   <Library Name="libSUHH2aQGCVVjjhadronic"/>
   <Package Name="SUHH2aQGCVVjjhadronic.par" />
 
-  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/" PostFix="" TargetLumi="36814.0" >
+  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/SignalRegion/" PostFix="" TargetLumi="36814.0" >
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
     <!-- <InputData Lumi="6250" NEventsMax="-1" Type="MC" Version="aQGC_WPWPjj_hadronic" Cacheable="False"> -->
@@ -194,7 +194,7 @@
            -->
       
       <!-- the class name of the AnalysisModule subclasses to run: -->
-      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicModule" /> 
+      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicSignalRegionModule" /> 
       
       <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
            MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
@@ -202,9 +202,7 @@
       <Item Name="use_sframe_weight" Value="false" />
       
       <!-- configuration for MCPileupReweight (run as part of CommonModules): -->
-      <Item Name="pileup_directory" Value="" />
-      <!-- <Item Name="pileup_directory_data" Value="" /> -->
-      <!-- <Item Name="pileup_directory_25ns" Value="" /> -->
+
       
       <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/data/MyDataPileupHistogram.root" />
       <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/data/MyMCPileupHistogram.root" />
