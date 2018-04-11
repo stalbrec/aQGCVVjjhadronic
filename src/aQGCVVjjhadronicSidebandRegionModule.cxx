@@ -281,6 +281,7 @@ namespace uhh2examples {
 	//common->disable_mcpileupreweight();
 
 	common->switch_jetlepcleaner(false);
+	common->change_pf_id(JetPFID::WP_LOOSE_PUPPI);
 	common->disable_jersmear();
 	common->disable_jec();
 
