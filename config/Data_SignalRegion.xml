@@ -14,7 +14,7 @@
 
 <!--
 <ConfigParse NEventsBreak="0" FileSplit="40" />
-<ConfigSGE RAM ="8" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_data"/>
+<ConfigSGE RAM ="8" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_data_signal"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->

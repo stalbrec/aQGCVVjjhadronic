@@ -26,7 +26,8 @@
 
     <!-- <InputData Lumi="6250" NEventsMax="-1" Type="MC" Version="aQGC_WMZjj_hadronic" Cacheable="False"> -->
     <!--   <In FileName="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/core/python/Ntuple.root" Lumi="0.0"/> -->
-    <!--   <InputTree Name="AnalysisTree" />  -->
+    <!--         <InputTree Name="AnalysisTree" />
+      <OutputTree Name="AnalysisTree" />  -->
     <!-- </InputData> -->
 
 
@@ -131,7 +132,8 @@
       <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_WMZ/Ntuple_WMZ_97.root" Lumi="0.0"/>
       <!-- <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_WMZ/Ntuple_WMZ_98.root" Lumi="0.0"/> -->
       <In FileName="/nfs/dust/cms/user/albrechs/production/ntuples/NT_WMZ/Ntuple_WMZ_99.root" Lumi="0.0"/>
-      <InputTree Name="AnalysisTree" />
+            <InputTree Name="AnalysisTree" />
+      <OutputTree Name="AnalysisTree" />
     </InputData>
     <!--                    Background                   -->
 

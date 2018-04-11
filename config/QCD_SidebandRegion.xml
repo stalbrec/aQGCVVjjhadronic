@@ -13,7 +13,7 @@
 
 <!--
    <ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="50" />
-   <ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir"/>
+   <ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_sideband"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
