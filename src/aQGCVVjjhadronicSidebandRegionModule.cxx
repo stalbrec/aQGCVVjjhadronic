@@ -75,9 +75,9 @@ namespace uhh2examples {
 	std::unique_ptr<SubJetCorrector> subjet_corrector_H;
 
 	//AK4JERSmearer 
-	// std::unique_ptr<JetResolutionSmearer> jetER_smearer;
-	// //AK8JERSmearer
-	// std::unique_ptr<GenericJetResolutionSmearer> topjetER_smearer;
+	std::unique_ptr<JetResolutionSmearer> jetER_smearer;
+	//AK8JERSmearer
+	std::unique_ptr<GenericJetResolutionSmearer> topjetER_smearer;
 
 	std::unique_ptr<JetCleaner> ak4cleaner;
 	std::unique_ptr<TopJetCleaner> ak8cleaner;
@@ -315,10 +315,10 @@ namespace uhh2examples {
 		subjet_corrector.reset(new SubJetCorrector(ctx,JEC_AK4));
 		if(channel_=="signal")
 		    {
-			// jetER_smearer.reset(new JetResolutionSmearer(ctx));
-			// if(EXTRAOUT)std::cout << "AK4jetER_smearer set up!" << std::endl;
-			// topjetER_smearer.reset(new GenericJetResolutionSmearer(ctx,"topjets","gentopjets",true,JERSmearing::SF_13TeV_2016,"Spring16_25nsV10_MC_PtResolution_AK8PFPuppi.txt"));
-			// if(EXTRAOUT)std::cout << "AK8jetER_smearer set up!" << std::endl;
+			jetER_smearer.reset(new JetResolutionSmearer(ctx));
+			if(EXTRAOUT)std::cout << "AK4jetER_smearer set up!" << std::endl;
+			topjetER_smearer.reset(new GenericJetResolutionSmearer(ctx,"topjets","gentopjets",true,JERSmearing::SF_13TeV_2016,"Spring16_25nsV10_MC_PtResolution_AK8PFPuppi.txt"));
+			if(EXTRAOUT)std::cout << "AK8jetER_smearer set up!" << std::endl;
 		    }
 	    }
 	else 
@@ -672,10 +672,10 @@ namespace uhh2examples {
 	    jet_corrector->process(event);
 	    if(EXTRAOUT)std::cout << "MC jet done!"<<std::endl;	
 	    if(channel_=="signal"){
-		// jetER_smearer->process(event);
-		// if(EXTRAOUT)std::cout << "MC sigjet done!"<<std::endl;	
-		// topjetER_smearer->process(event);
-		// if(EXTRAOUT)std::cout << "MC sigtopjet done!"<<std::endl;	
+				jetER_smearer->process(event);
+				if(EXTRAOUT)std::cout << "MC sigjet done!"<<std::endl;	
+				topjetER_smearer->process(event);
+				if(EXTRAOUT)std::cout << "MC sigtopjet done!"<<std::endl;	
 	    }
 	}else{
 	    if(event.run <= runNR_BCD){
