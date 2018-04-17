@@ -61,6 +61,10 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
 	book<TH1F>("M_softdrop_2","M_{softdrop,2nd AK8 jet} [GeV/c^{2}]",100,0,300);
 	book<TH1F>("M_softdrop_12","M_{softdrop, leading AK8 jets} [GeV/c^{2}]",100,0,300);
 
+  book<TH1F>("tau21_1", "#tau_{2}/#tau_{1} (1st AK8 jet)", 50, 0, 1.0);
+  book<TH1F>("tau21_2", "#tau_{2}/#tau_{1} (2nd AK8 jet)", 50, 0, 1.0);
+  book<TH1F>("tau21_12", "#tau_{2}/#tau_{1} (leading AK8 jets)", 50, 0, 1.0);
+
 	book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",NBINS-1,BOUNDARIES);
 	book<TH1F>("M_jj_AK8_highbin", "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
 	// book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",nBins-1,xbins);
@@ -157,6 +161,11 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 		hist("M_softdrop_2")->Fill(MSD2,weight);
 		hist("M_softdrop_12")->Fill(MSD1,weight);
 		hist("M_softdrop_12")->Fill(MSD2,weight);
+
+		hist("tau21_1")->Fill(AK8_1.tau2()/AK8_1.tau1(),weight);
+		hist("tau21_2")->Fill(AK8_2.tau2()/AK8_2.tau1(),weight); 
+		hist("tau21_12")->Fill(AK8_1.tau2()/AK8_1.tau1(),weight);
+		hist("tau21_12")->Fill(AK8_2.tau2()/AK8_2.tau1(),weight);
 	}
 
 	//Check for Noise from Calorimeter
