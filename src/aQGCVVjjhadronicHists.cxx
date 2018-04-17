@@ -64,7 +64,10 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
 	book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",NBINS-1,BOUNDARIES);
 	book<TH1F>("M_jj_AK8_highbin", "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
 	// book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",nBins-1,xbins);
-    
+
+	//Check for Noise from Calorimeter
+	book<TH1F>("met_pt_over_mjjAK8","MET/M_{jj-AK8}",40,0,4);
+	// book<TH1F>("met_pt_over_mETSig","MET/ETsig",100,0,200);
 
 	// book<TH1F>("eta_VBFJet", "#eta^{VBF-Jets}", 40, -6.5,6.5);
 	// book<TH1F>("eta_WWJet", "#eta^{WW-Jets}", 40, -6.5,6.5);
@@ -155,6 +158,16 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 		hist("M_softdrop_12")->Fill(MSD1,weight);
 		hist("M_softdrop_12")->Fill(MSD2,weight);
 	}
+
+	//Check for Noise from Calorimeter
+	
+	assert(event.met);
+
+	if(N_AK8>=2){
+		hist("met_pt_over_mjjAK8")->Fill(event.met->pt()/(AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight); 
+	}
+	
+	// hist("met_pt_over_mETSig")->Fill(event.met->pt()/event.met->mEtSig(),weight);
     
 	// int Nmuons = event.muons->size();
 	// hist("N_mu")->Fill(Nmuons, weight);
