@@ -2,17 +2,17 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
 <!--                   Signal                   -->
-<!ENTITY WPWP SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPWP.xml">
-<!ENTITY WPWM SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPWM.xml">
-<!ENTITY WMWM SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWMWM.xml">
-<!ENTITY WPZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPZ.xml">
-<!ENTITY WMZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWMZ.xml">
-<!ENTITY ZZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCZZ.xml">
+<!ENTITY aQGCWPWP SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPWP.xml">
+<!ENTITY aQGCWPWM SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPWM.xml">
+<!ENTITY aQGCWMWM SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWMWM.xml">
+<!ENTITY aQGCWPZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPZ.xml">
+<!ENTITY aQGCWMZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWMZ.xml">
+<!ENTITY aQGCZZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCZZ.xml">
 ]>
 
 <!--
-<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="1" />
-<ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir"/>
+<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="100" />
+<ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_LOWsideband"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->

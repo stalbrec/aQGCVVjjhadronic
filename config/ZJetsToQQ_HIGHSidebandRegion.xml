@@ -6,8 +6,8 @@
 ]>
 
 <!--
-<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="50" />
-<ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_sideband"/>
+<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="10" />
+<ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_HIGHsideband"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
@@ -18,7 +18,7 @@
 	<Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/HIGHSidebandRegion/" PostFix="" TargetLumi="36814.0" >
 		<!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
-		<InputData Version="MC_ZJetsToQQ_HT600ToInf" Lumi="???" Type="MC" NEventsMax="-1" Cacheable="False">
+		<InputData Version="MC_ZJetsToQQ_HT600ToInf" Lumi="170354.67" Type="MC" NEventsMax="-1" Cacheable="False">
 			&MC_ZJetsToQQ_HT600ToInf; <InputTree Name="AnalysisTree"/>
 		</InputData>
 

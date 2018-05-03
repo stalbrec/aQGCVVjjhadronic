@@ -13,8 +13,8 @@
 ]>
 
 <!--
-<ConfigParse NEventsBreak="0" FileSplit="40" />
-<ConfigSGE RAM ="8" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_data"/>
+<ConfigParse NEventsBreak="0" FileSplit="1" />
+<ConfigSGE RAM ="1" DISK ="1" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_test"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
@@ -25,11 +25,17 @@
   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/" PostFix="" TargetLumi="36814.0" >
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
-		<InputData Version="DATA_JetHT_Run2016B" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
+		<InputData Version="DATA_JetHT_Run2016B_sframebatch_test" Lumi="1" Type="Data" NEventsMax="1000" Cacheable="False">
 			<In FileName="/pnfs/desy.de/cms/tier2/store/user/jmulthau/CMSSW80v3/JetHT/DATA_JetHT_Run2016B_03Feb2017/DATA_JetHT_Run2016B_03Feb2017_990_Ntuple.root" Lumi="0.0"/>
+			<In FileName="/pnfs/desy.de/cms/tier2/store/user/jmulthau/CMSSW80v3/JetHT/DATA_JetHT_Run2016B_03Feb2017/DATA_JetHT_Run2016B_03Feb2017_991_Ntuple.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree"/>
-      <OutputTree Name="AnalysisTree"/> 
-		</InputData> 
+      <OutputTree Name="AnalysisTree"/>
+		</InputData>
+
+		<!-- 		<InputData Version="DATA_JetHT_Run2016B_Ntest" Lumi="1" Type="Data" NEventsMax="1000" Cacheable="False"> -->
+    <!--   &DATA_JetHT_Run2016B; <InputTree Name="AnalysisTree"/>  -->
+    <!--   <OutputTree Name="AnalysisTree"/>  -->
+		<!-- </InputData>  -->
 
 		<!-- <InputData Version="DATA_JetHT_Run2016C" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False"> -->
     <!--   &DATA_JetHT_Run2016C; <InputTree Name="AnalysisTree"/>  -->
@@ -109,7 +115,7 @@
       -->
       
       <!-- the class name of the AnalysisModule subclasses to run: -->
-      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicParameterscanModule" /> 
+      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicHIGHSidebandRegionModule" /> 
       
       <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
            MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC

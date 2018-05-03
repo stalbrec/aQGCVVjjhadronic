@@ -11,9 +11,10 @@
 	  <!ENTITY MC_QCD_HT2000toInf SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT2000toInf.xml">
 	  ]>
 
+
 <!--
-   <ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="50" />
-   <ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_signal"/>
+   <ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="40" />
+   <ConfigSGE RAM ="10" DISK ="10" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_signal"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->

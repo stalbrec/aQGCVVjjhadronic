@@ -12,8 +12,8 @@
 	  ]>
 
 <!--
-   <ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="50" />
-   <ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_sideband"/>
+   <ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="40" />
+   <ConfigSGE RAM ="10" DISK ="10" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_HIGHsideband"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
