@@ -42,6 +42,7 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
 	book<TH1F>("eta_AK4_2", "#eta^{2nd AK4 jet}", 40, -6.5, 6.5);
 	book<TH1F>("pT_AK4_12", "p_{T}^{leading AK4 jets} [GeV/c]", 40 ,0 ,4000);
 	book<TH1F>("eta_AK4_12", "#eta^{leading AK4 jets}", 40, -6.5, 6.5);
+	book<TH1F>("deta_AK4_12", "#Delta #eta^{leading AK4 jets}", 40, 0, 13.0);
 
 	book<TH1F>("prodeta_AK4_12", "#eta^{1st AK4 jet} #cdot #eta^{2nd AK4 jet}", 87, -43, 43);
 
@@ -61,6 +62,8 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
 	book<TH1F>("M_softdrop_2","M_{softdrop,2nd AK8 jet} [GeV/c^{2}]",100,0,300);
 	book<TH1F>("M_softdrop_12","M_{softdrop, leading AK8 jets} [GeV/c^{2}]",100,0,300);
 
+	book<TH1F>("deta_AK8_12", "#Delta #eta^{leading AK8 jets}", 40, 0, 13.0);
+	
   book<TH1F>("tau21_1", "#tau_{2}/#tau_{1} (1st AK8 jet)", 50, 0, 1.0);
   book<TH1F>("tau21_2", "#tau_{2}/#tau_{1} (2nd AK8 jet)", 50, 0, 1.0);
   book<TH1F>("tau21_12", "#tau_{2}/#tau_{1} (leading AK8 jets)", 50, 0, 1.0);
@@ -70,7 +73,18 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
 	// book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",nBins-1,xbins);
 
 	//Check for Noise from Calorimeter
-	book<TH1F>("met_pt_over_mjjAK8","MET/M_{jj-AK8}",40,0,4);
+	book<TH1F>("met_pt_over_mjjAK8_2","MET/M_{jj-AK8}",40,0,2);
+	book<TH1F>("met_pt_over_mjjAK8_4","MET/M_{jj-AK8}",40,0,4);
+
+	book<TH1F>("met_pt_over_sumptAK8_2","MET/#Sigma_{AK8-Jets} p_{T}",40,0,2);
+	book<TH1F>("met_pt_over_sumptAK8_4","MET/#Sigma_{AK8-Jets} p_{T}",40,0,4);
+
+	book<TH1F>("met_pt_over_sumptAK4_2","MET/#Sigma_{AK4-Jets} p_{T}",40,0,2);
+	book<TH1F>("met_pt_over_sumptAK4_4","MET/#Sigma_{AK4-Jets} p_{T}",40,0,4);
+
+	book<TH1F>("met_pt_over_sumptJets_2","MET/#Sigma_{Jets} p_{T}",40,0,2);
+	book<TH1F>("met_pt_over_sumptJets_4","MET/#Sigma_{Jets} p_{T}",40,0,4);
+
 	// book<TH1F>("met_pt_over_mETSig","MET/ETsig",100,0,200);
 
 	// book<TH1F>("eta_VBFJet", "#eta^{VBF-Jets}", 40, -6.5,6.5);
@@ -117,9 +131,14 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 	if(N_AK4>=2){
 		hist("pT_AK4_2")->Fill(AK4Jets->at(1).pt(),weight); 
 		hist("eta_AK4_2")->Fill(AK4Jets->at(1).eta(),weight);
-		hist("pT_AK4_12")->Fill((AK4Jets->at(0).v4()+AK4Jets->at(1).v4()).pt(),weight);
-		hist("eta_AK4_12")->Fill((AK4Jets->at(0).v4()+AK4Jets->at(1).v4()).eta(),weight);
+		hist("pT_AK4_12")->Fill(AK4Jets->at(0).pt(),weight);
+		hist("pT_AK4_12")->Fill(AK4Jets->at(1).pt(),weight);
+		hist("eta_AK4_12")->Fill(AK4Jets->at(0).eta(),weight);
+		hist("eta_AK4_12")->Fill(AK4Jets->at(1).eta(),weight);
 
+		auto detaAK4 = fabs(event.jets->at(0).eta()-event.jets->at(1).eta());
+		hist("deta_AK4_12")->Fill(detaAK4,weight);
+				
 		hist("prodeta_AK4_12")->Fill(AK4Jets->at(0).eta()*AK4Jets->at(1).eta(),weight);
 
 		hist("M_jj_AK4")->Fill((AK4Jets->at(0).v4()+AK4Jets->at(1).v4()).M(),weight);
@@ -138,12 +157,15 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 	if(N_AK8>=2){
 		hist("pT_AK8_2")->Fill(AK8Jets->at(1).pt(),weight); 
 		hist("eta_AK8_2")->Fill(AK8Jets->at(1).eta(),weight);
-		hist("pT_AK8_12")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).pt(),weight);
-		hist("eta_AK8_12")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).eta(),weight);
+		hist("pT_AK8_12")->Fill(AK8Jets->at(0).pt(),weight);
+		hist("pT_AK8_12")->Fill(AK8Jets->at(1).pt(),weight);
+		hist("eta_AK8_12")->Fill(AK8Jets->at(0).eta(),weight);
+		hist("eta_AK8_12")->Fill(AK8Jets->at(1).eta(),weight);
 		hist("M_jj_AK8")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight);
 		hist("M_jj_AK8_highbin")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight);
 
-
+    auto detaAK8 = fabs(event.topjets->at(0).eta()-event.topjets->at(1).eta());
+		hist("deta_AK8_12")->Fill(detaAK8,weight);
 
 		const auto & AK8_1=event.topjets->at(0); 
 		const auto & AK8_2=event.topjets->at(1); 
@@ -173,8 +195,28 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 	assert(event.met);
 
 	if(N_AK8>=2){
-		hist("met_pt_over_mjjAK8")->Fill(event.met->pt()/(AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight); 
+		hist("met_pt_over_mjjAK8_2")->Fill(event.met->pt()/(AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight);
+		hist("met_pt_over_mjjAK8_4")->Fill(event.met->pt()/(AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight);
 	}
+	float Sum_ptAK8=0.0;
+	for(const TopJet & thisjet : *AK8Jets){
+		Sum_ptAK8+=thisjet.pt();
+	}
+	hist("met_pt_over_sumptAK8_2")->Fill(event.met->pt()/Sum_ptAK8,weight);
+	hist("met_pt_over_sumptAK8_4")->Fill(event.met->pt()/Sum_ptAK8,weight);
+
+
+	float Sum_ptAK4=0.0;
+	for(const Jet & thisjet : *AK4Jets){
+		Sum_ptAK4+=thisjet.pt();
+	}
+	hist("met_pt_over_sumptAK4_2")->Fill(event.met->pt()/Sum_ptAK4,weight);
+	hist("met_pt_over_sumptAK4_4")->Fill(event.met->pt()/Sum_ptAK4,weight);
+
+	hist("met_pt_over_sumptJets_2")->Fill(event.met->pt()/(Sum_ptAK4+Sum_ptAK8),weight);
+	hist("met_pt_over_sumptJets_4")->Fill(event.met->pt()/(Sum_ptAK4+Sum_ptAK8),weight);
+
+	
 	
 	// hist("met_pt_over_mETSig")->Fill(event.met->pt()/event.met->mEtSig(),weight);
     
@@ -189,7 +231,7 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 	int Npvs = event.pvs->size();
 	hist("N_pv")->Fill(Npvs, weight);
   
-	int NW=0;
+	// int NW=0;
 	// Took out for Data!!!
 	// for (const GenParticle & thisgen : *event.genparticles){
 	// 	if(abs(thisgen.pdgId())==24) NW++;
