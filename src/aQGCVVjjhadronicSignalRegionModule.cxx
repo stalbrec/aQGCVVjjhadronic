@@ -671,6 +671,8 @@ namespace uhh2examples {
 	    if(EXTRAOUT)std::cout << "MC subjet done!"<<std::endl;	
 	    jet_corrector->process(event);
 	    if(EXTRAOUT)std::cout << "MC jet done!"<<std::endl;	
+			jet_corrector->correct_met(event);
+			if(EXTRAOUT)std::cout << "MC METCorrector done!"<<std::endl;	
 	    if(channel_=="signal"){
 				jetER_smearer->process(event);
 				if(EXTRAOUT)std::cout << "MC sigjet done!"<<std::endl;	
