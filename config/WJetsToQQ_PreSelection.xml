@@ -2,12 +2,12 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
 <!--                   Background                   -->
-<!ENTITY MC_ZJetsToQQ_HT600ToInf SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_ZJetsToQQ_HT600ToInf.xml">
+<!ENTITY MC_WJetsToQQ_HT600ToInf SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/MC_WJetsToQQ_HT600ToInf.xml">
 ]>
 
 <!--
-   <ConfigParse NEventsBreak="400000" LastBreak="0" FileSplit="0" />
-   <ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_signal"/>
+   <ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="10" />
+   <ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_preselection"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
@@ -15,11 +15,11 @@
   <Library Name="libSUHH2aQGCVVjjhadronic"/>
   <Package Name="SUHH2aQGCVVjjhadronic.par" />
 
-  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/SignalRegion/" PostFix="" TargetLumi="36814.0" >
+  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/" PostFix="" TargetLumi="36814.0" >
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
-		<InputData Version="MC_ZJetsToQQ_HT600ToInf" Lumi="23365.046" Type="MC" NEventsMax="-1" Cacheable="False">
-      &MC_ZJetsToQQ_HT600ToInf; <InputTree Name="AnalysisTree"/>
+		<InputData Version="MC_WJetsToQQ_HT600ToInf" Lumi="10129.024" Type="MC" NEventsMax="-1" Cacheable="False">
+      &MC_WJetsToQQ_HT600ToInf; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
     </InputData>
 
@@ -40,7 +40,7 @@
       <Item Name="channel" Value="background" />
 
       <!-- the class name of the AnalysisModule subclasses to run: -->
-      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicSignalRegionModule" />
+      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicPreSelectionModule" />
 
       <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
            MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC

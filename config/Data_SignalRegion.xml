@@ -2,18 +2,18 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
 <!--Data-->
-<!ENTITY DATA_JetHT_Run2016B SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/DATA_JetHT_Run2016B_03Feb.xml" >
-<!ENTITY DATA_JetHT_Run2016C SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/DATA_JetHT_Run2016C_03Feb.xml" >
-<!ENTITY DATA_JetHT_Run2016D SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/DATA_JetHT_Run2016D_03Feb.xml" >
-<!ENTITY DATA_JetHT_Run2016E SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/DATA_JetHT_Run2016E_03Feb.xml" >
-<!ENTITY DATA_JetHT_Run2016F SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/DATA_JetHT_Run2016F_03Feb.xml" >
-<!ENTITY DATA_JetHT_Run2016G SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/DATA_JetHT_Run2016G_03Feb.xml" >
-<!ENTITY DATA_JetHT_Run2016H_ver2 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/DATA_JetHT_Run2016H_ver2_03Feb.xml" >
-<!ENTITY DATA_JetHT_Run2016H_ver3 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/DATA_JetHT_Run2016H_ver3_03Feb.xml" >
+<!ENTITY DATA_JetHT_Run2016B SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/DATA_JetHT_Run2016B.xml" >
+<!ENTITY DATA_JetHT_Run2016C SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/DATA_JetHT_Run2016C.xml" >
+<!ENTITY DATA_JetHT_Run2016D SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/DATA_JetHT_Run2016D.xml" >
+<!ENTITY DATA_JetHT_Run2016E SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/DATA_JetHT_Run2016E.xml" >
+<!ENTITY DATA_JetHT_Run2016F SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/DATA_JetHT_Run2016F.xml" >
+<!ENTITY DATA_JetHT_Run2016G SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/DATA_JetHT_Run2016G.xml" >
+<!ENTITY DATA_JetHT_Run2016H_ver2 SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/DATA_JetHT_Run2016H_ver2.xml" >
+<!ENTITY DATA_JetHT_Run2016H_ver3 SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/DATA_JetHT_Run2016H_ver3.xml" >
 ]>
 
 <!--
-<ConfigParse NEventsBreak="0" FileSplit="30" />
+<ConfigParse NEventsBreak="400000" LastBreak="0" FileSplit="0" />
 <ConfigSGE RAM ="10" DISK ="10" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_signal"/>
 -->
 

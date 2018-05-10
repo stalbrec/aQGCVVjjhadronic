@@ -2,11 +2,11 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
 <!--                   Background                   -->
-<!ENTITY MC_WJetsToQQ_HT600ToInf SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/MC_WJetsToQQ_HT600ToInf.xml">
+<!ENTITY MC_WJetsToQQ_HT600ToInf SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_WJetsToQQ_HT600ToInf.xml">
 ]>
 
 <!--
-   <ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="10" />
+   <ConfigParse NEventsBreak="400000" LastBreak="0" FileSplit="0" />
    <ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_signal"/>
 -->
 
@@ -20,6 +20,7 @@
 
 		<InputData Version="MC_WJetsToQQ_HT600ToInf" Lumi="10129.024" Type="MC" NEventsMax="-1" Cacheable="False">
       &MC_WJetsToQQ_HT600ToInf; <InputTree Name="AnalysisTree"/>
+      <OutputTree Name="AnalysisTree"/>
     </InputData>
 
     <UserConfig>
