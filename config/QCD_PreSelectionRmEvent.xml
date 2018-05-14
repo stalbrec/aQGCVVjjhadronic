@@ -3,17 +3,18 @@
 
 	  <!--                   Background                   -->
 
-	  <!ENTITY MC_QCD_HT300to500 SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_QCD_HT300to500.xml">
-	  <!ENTITY MC_QCD_HT500to700 SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_QCD_HT500to700.xml">
-	  <!ENTITY MC_QCD_HT700to1000 SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_QCD_HT700to1000.xml">
-	  <!ENTITY MC_QCD_HT1000to1500 SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_QCD_HT1000to1500.xml">
-	  <!ENTITY MC_QCD_HT1500to2000 SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_QCD_HT1500to2000.xml">
-	  <!ENTITY MC_QCD_HT2000toInf SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_QCD_HT2000toInf.xml">
+	  <!ENTITY MC_QCD_HT300to500 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT300to500.xml">
+	  <!ENTITY MC_QCD_HT500to700 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT500to700.xml">
+	  <!ENTITY MC_QCD_HT700to1000 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT700to1000.xml">
+	  <!ENTITY MC_QCD_HT1000to1500 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT1000to1500.xml">
+	  <!ENTITY MC_QCD_HT1500to2000 SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT1500to2000.xml">
+	  <!ENTITY MC_QCD_HT2000toInf SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/datasets/RunII_80X_v3/MC_QCD_HT2000toInf.xml">
 	  ]>
 
+
 <!--
-   <ConfigParse NEventsBreak="400000" LastBreak="0" FileSplit="0" />
-   <ConfigSGE RAM ="10" DISK ="10" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_HIGHsideband"/>
+   <ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="40" />
+   <ConfigSGE RAM ="10" DISK ="10" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_preselectionrmevent"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
@@ -21,59 +22,59 @@
   <Library Name="libSUHH2aQGCVVjjhadronic"/>
   <Package Name="SUHH2aQGCVVjjhadronic.par" />
 
-  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/HIGHSidebandRegion/" PostFix="" TargetLumi="36814.0" >
+  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelectionRmEvent/" PostFix="" TargetLumi="36814.0" >
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
     <InputData Version="MC_QCD_HT300to500" Lumi="107.894" Type="MC" NEventsMax="-1" Cacheable="False">
       &MC_QCD_HT300to500; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
     </InputData>
-
+	
     <InputData Version="MC_QCD_HT500to700" Lumi="1938.622" Type="MC" NEventsMax="-1" Cacheable="False">
       &MC_QCD_HT500to700; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
-    </InputData>
+    </InputData> 
 
     <InputData Version="MC_QCD_HT700to1000" Lumi="6625.750" Type="MC" NEventsMax="-1" Cacheable="False">
       &MC_QCD_HT700to1000; <InputTree Name="AnalysisTree"/>
-      <OutputTree Name="AnalysisTree"/>
-    </InputData>
+      <OutputTree Name="AnalysisTree"/> 
+    </InputData> 
 
     <InputData Version="MC_QCD_HT1000to1500" Lumi="12531.316" Type="MC" NEventsMax="-1" Cacheable="False">
       &MC_QCD_HT1000to1500; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
-    </InputData>
+    </InputData> 
 
     <InputData Version="MC_QCD_HT1500to2000" Lumi="98190.300" Type="MC" NEventsMax="-1" Cacheable="False">
       &MC_QCD_HT1500to2000; <InputTree Name="AnalysisTree"/>
-      <OutputTree Name="AnalysisTree"/>
-    </InputData>
-
+      <OutputTree Name="AnalysisTree"/> 
+    </InputData> 
+    
     <InputData Version="MC_QCD_HT2000toInf" Lumi="239129.279" Type="MC" NEventsMax="-1" Cacheable="False">
       &MC_QCD_HT2000toInf; <InputTree Name="AnalysisTree"/>
-      <OutputTree Name="AnalysisTree"/>
-    </InputData>
-
+      <OutputTree Name="AnalysisTree"/> 
+    </InputData> 
+	
     <UserConfig>
       <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" />
       <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
       <Item Name="MuonCollection" Value="slimmedMuonsUSER" />
       <Item Name="TauCollection" Value="slimmedTaus" />
-
+      
       <Item Name="JetCollection" Value="slimmedJetsPuppi" />
       <Item Name="TopJetCollection" Value="patJetsAk8PuppiJetsSoftDropPacked_daughters" />
 	  <Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
       <Item Name="GenJetCollection" Value="slimmedGenJets" />
       <Item Name="GenTopJetCollection" Value="ak8GenJetsSoftDrop" />
-
+      
       <Item Name="METName" Value="slimmedMETsPuppi" />
       <Item Name="GenParticleCollection" Value="GenParticles" />
       <Item Name="GenInfoName" Value="genInfo" />
       <Item Name="channel" Value="background" />
 
       <!-- the class name of the AnalysisModule subclasses to run: -->
-      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicHIGHSidebandRegionModule" />
-
+      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicPreSelectionRmEventModule" /> 
+      
       <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
            MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
            event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
@@ -83,7 +84,7 @@
       <Item Name="pileup_directory_data" Value="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/data/MyDataPileupHistogram.root" />
       <Item Name="pileup_directory_25ns" Value="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/data/MyMCPileupHistogram.root" />
 
-
+      
       <!-- Some test configuration; see aQGCVVjjhadronicModule.cxx for how to access it: -->
       <Item Name="TestKey" Value="TestKeyValue" />
     </UserConfig>

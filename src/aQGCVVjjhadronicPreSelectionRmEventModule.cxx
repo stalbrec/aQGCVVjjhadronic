@@ -2,7 +2,6 @@
 #include <iostream>
 #include <memory>
 #include <string>
-#include <algorithm>
 
 #include "UHH2/core/include/AnalysisModule.h"
 #include "UHH2/core/include/Event.h"
@@ -34,26 +33,26 @@ using namespace uhh2;
 namespace uhh2examples {
 
     /** \brief Basic analysis example of an AnalysisModule (formerly 'cycle') in UHH2
-     *
+     * 
      * This is the central class which calls other AnalysisModules, Hists or Selection classes.
      * This AnalysisModule, in turn, is called (via AnalysisModuleRunner) by SFrame.
      */
-    class aQGCVVjjhadronicPreSelectionModule: public AnalysisModule {
+    class aQGCVVjjhadronicPreSelectionRmEventModule: public AnalysisModule {
     public:
-
-	explicit aQGCVVjjhadronicPreSelectionModule(Context & ctx);
+    
+	explicit aQGCVVjjhadronicPreSelectionRmEventModule(Context & ctx);
 	virtual bool process(Event & event) override;
 
     private:
 	std::string channel_;
 	std::string version_;
 
-	Event::Handle<vector<Jet>> h_IdCriteriaJets;
-
+ Event::Handle<vector<Jet>> h_IdCriteriaJets;
+			
 	std::unique_ptr<CommonModules> common;
-
-	std::unique_ptr<AnalysisModule> genparticle_printer;
-
+  
+	std::unique_ptr<AnalysisModule> genparticle_printer; 
+    
 	//AK4JetCorrection MC:
 	std::unique_ptr<JetCorrector> jet_corrector;
 	//AK4JetCorrection Data:
@@ -69,16 +68,16 @@ namespace uhh2examples {
 	std::unique_ptr<TopJetCorrector> topjet_corrector_EF;
 	std::unique_ptr<TopJetCorrector> topjet_corrector_G;
 	std::unique_ptr<TopJetCorrector> topjet_corrector_H;
-
-	//AK8JetCorrection MC:
+    
+	//AK8JetCorrection MC:  
 	std::unique_ptr<SubJetCorrector> subjet_corrector;
-	//AK8JetCorrection Data:
+	//AK8JetCorrection Data:     
 	std::unique_ptr<SubJetCorrector> subjet_corrector_BCD;
 	std::unique_ptr<SubJetCorrector> subjet_corrector_EF;
 	std::unique_ptr<SubJetCorrector> subjet_corrector_G;
 	std::unique_ptr<SubJetCorrector> subjet_corrector_H;
 
-	//AK4JERSmearer
+	//AK4JERSmearer 
 	std::unique_ptr<JetResolutionSmearer> jetER_smearer;
 	//AK8JERSmearer
 	std::unique_ptr<GenericJetResolutionSmearer> topjetER_smearer;
@@ -87,7 +86,7 @@ namespace uhh2examples {
 	std::unique_ptr<TopJetCleaner> ak8cleaner;
 	std::unique_ptr<JetCleaner> ak4pfidfilter;
 	std::unique_ptr<TopJetCleaner> ak8pfidfilter;
-
+    
 	//TODO
 	// Data/MC scale factors
 	std::unique_ptr<uhh2::AnalysisModule> pileup_SF;
@@ -104,20 +103,20 @@ namespace uhh2examples {
 	std::shared_ptr<Selection> invMassAK8_sel;
 	std::shared_ptr<Selection> deltaEtaAK8_sel;
 
-	// std::shared_ptr<Selection> AK4PFIDSelection;
-	// std::shared_ptr<Selection> AK8PFIDSelection;
+	std::shared_ptr<Selection> AK4PFIDSelection;
+	std::shared_ptr<Selection> AK8PFIDSelection;
 
 	AndSelection cutflow_selections;
 	/////////////////////////////////////////
 	/////////////////HISTS///////////////////
-	/////////////////////////////////////////
+	/////////////////////////////////////////  
 	// store the Hists collection as member variables. Again, use unique_ptr to avoid memory leaks.
 
 	//INPUT
 	std::unique_ptr<Hists> h_nocuts;
 	std::unique_ptr<Hists> h_AK8jets_nocuts;
 	std::unique_ptr<Hists> h_AK4jets_nocuts;
-
+   
 	std::unique_ptr<Hists> h_ele_nocuts;
 	std::unique_ptr<Hists> h_muon_nocuts;
 
@@ -130,7 +129,7 @@ namespace uhh2examples {
 	std::unique_ptr<Hists> h_AK4jets_cleaner;
 
 	std::unique_ptr<Hists> h_pfidfilter;
-
+			
 	//After N_AK8>2 Cut
 	std::unique_ptr<Hists> h_AK8N2sel;
 	std::unique_ptr<Hists> h_AK8jets_AK8N2sel;
@@ -140,7 +139,7 @@ namespace uhh2examples {
 	std::unique_ptr<Hists> h_invMAk8sel;
 	std::unique_ptr<Hists> h_AK8jets_invMAk8sel;
 	std::unique_ptr<Hists> h_AK4jets_invMAk8sel;
-
+	    
 	//After deltaEta AK8 Cut
 	std::unique_ptr<Hists> h_detaAk8sel;
 	std::unique_ptr<Hists> h_AK8jets_detaAk8sel;
@@ -161,18 +160,18 @@ namespace uhh2examples {
     };
 
 
-	aQGCVVjjhadronicPreSelectionModule::aQGCVVjjhadronicPreSelectionModule(Context & ctx): cutflow_selections(ctx,"cutflow_selections"){
+	aQGCVVjjhadronicPreSelectionRmEventModule::aQGCVVjjhadronicPreSelectionRmEventModule(Context & ctx): cutflow_selections(ctx,"cutflow_selections"){
 	// In the constructor, the typical tasks are to initialize the
 	// member variables, in particular the AnalysisModules such as
 	// CommonModules or some cleaner module, Selections and Hists.
 	// But you can do more and e.g. access the configuration, as shown below.
-
-	cout << "Hello World from aQGCVVjjhadronicPreSelectionModule!" << endl;
-
+    
+	cout << "Hello World from aQGCVVjjhadronicPreSelectionRmEventModule!" << endl;
+    
 	// If needed, access the configuration of the module here, e.g.:
 	string testvalue = ctx.get("TestKey", "<not set>");
 	cout << "TestKey in the configuration was: " << testvalue << endl;
-
+    
 	//MetaData from XML:
 	isMC = (ctx.get("dataset_type") == "MC");
 	channel_ = ctx.get("channel");
@@ -185,16 +184,16 @@ namespace uhh2examples {
 	}
 
 	h_IdCriteriaJets = ctx.get_handle<vector<Jet>>("patJetsAK8PFPUPPI");
-
-
+	
+	
 	MuId = AndId<Muon>(MuonIDTight(), PtEtaCut(30.,2.4));
 	EleId = AndId<Electron>(ElectronID_HEEP_RunII_25ns, PtEtaCut(30.,2.5));
-
+    
 	genparticle_printer.reset(new GenParticlesPrinter(ctx));
 
 	// 1. setup other modules. CommonModules and the JetCleaner:
 	common.reset(new CommonModules());
-	// TODO: configure common here, e.g. by
+	// TODO: configure common here, e.g. by 
 	//  calling common->set_*_id or common->disable_*
 
 	//disableing pileup reweighting for now
@@ -209,7 +208,7 @@ namespace uhh2examples {
 	if(EXTRAOUT){
 		std::cout << "CommonModules set up"<<std::endl;
 	}
-
+	
 	std::vector<std::string> JEC_AK4, JEC_AK8,JEC_AK4_BCD,JEC_AK4_EF,JEC_AK4_G,JEC_AK4_H,JEC_AK8_BCD,JEC_AK8_EF,JEC_AK8_G,JEC_AK8_H;
 	if(isMC)
 	    {
@@ -222,7 +221,7 @@ namespace uhh2examples {
 		JEC_AK4_EF = JERFiles::Summer16_23Sep2016_V4_EF_L123_AK4PFPuppi_DATA;
 		JEC_AK4_G =  JERFiles::Summer16_23Sep2016_V4_G_L123_AK4PFPuppi_DATA;
 		JEC_AK4_H =  JERFiles::Summer16_23Sep2016_V4_H_L123_AK4PFPuppi_DATA;
-
+	
 		JEC_AK8_BCD =  JERFiles::Summer16_23Sep2016_V4_BCD_L123_AK8PFPuppi_DATA;
 		JEC_AK8_EF =  JERFiles::Summer16_23Sep2016_V4_EF_L123_AK8PFPuppi_DATA;
 		JEC_AK8_G =  JERFiles::Summer16_23Sep2016_V4_G_L123_AK8PFPuppi_DATA;
@@ -230,7 +229,7 @@ namespace uhh2examples {
 	    }
 
 	if(isMC)
-	    {
+	    { 
 		jet_corrector.reset(new JetCorrector(ctx, JEC_AK4));
 		topjet_corrector.reset(new TopJetCorrector(ctx, JEC_AK8));
 		subjet_corrector.reset(new SubJetCorrector(ctx,JEC_AK4));
@@ -242,7 +241,7 @@ namespace uhh2examples {
 			if(EXTRAOUT)std::cout << "AK8jetER_smearer set up!" << std::endl;
 		    }
 	    }
-	else
+	else 
 	    {
 		jet_corrector_BCD.reset(new JetCorrector(ctx, JEC_AK4_BCD));
 		jet_corrector_EF.reset(new JetCorrector(ctx, JEC_AK4_EF));
@@ -253,7 +252,7 @@ namespace uhh2examples {
 		topjet_corrector_EF.reset(new TopJetCorrector(ctx, JEC_AK8_EF));
 		topjet_corrector_G.reset(new TopJetCorrector(ctx,JEC_AK8_G ));
 		topjet_corrector_H.reset(new TopJetCorrector(ctx,JEC_AK8_H ));
-
+	
 		subjet_corrector_BCD.reset(new SubJetCorrector(ctx, JEC_AK4_BCD));
 		subjet_corrector_EF.reset(new SubJetCorrector(ctx, JEC_AK4_EF));
 		subjet_corrector_G.reset(new SubJetCorrector(ctx,JEC_AK4_G ));
@@ -264,25 +263,25 @@ namespace uhh2examples {
 		std::cout << "Custom Jet-Corrections added to CommonModules"<<std::endl;
 	}
 	common->init(ctx);
-
-
+    
+    
 
 	ak8cleaner.reset(new TopJetCleaner(ctx,TopJetId(PtEtaCut(200.0,2.5))));
-	ak4cleaner.reset(new JetCleaner(ctx, 30.0, 5.0));
+	ak4cleaner.reset(new JetCleaner(ctx, 30.0, 5.0)); 
 
 
 	AK4PFID=JetPFID(JetPFID::WP_LOOSE_PUPPI);
 	AK8PFID=JetPFID(JetPFID::WP_LOOSE_PUPPI);
 
-
+	
 	ak8pfidfilter.reset(new TopJetCleaner(ctx,AK8PFID));
 	ak4pfidfilter.reset(new JetCleaner(ctx,AK4PFID));
-
+	
 
 	/////////////////////////////////////////
 	////////////////SELECTIONS///////////////
 	/////////////////////////////////////////
-
+    
 	// 2. set up selections
 
 	nAK8_sel.reset(new NTopJetSelection(2));
@@ -291,45 +290,45 @@ namespace uhh2examples {
 
 	// AK4PFIDFilter.reset(new NJetSelection(0,-1,JetPFID(JetPFID::WP_LOOSE_PUPPI)));
 	// AK8PFIDFilter.reset(new NTopJetSelection(0,-1,JetPFID(JetPFID::WP_LOOSE_PUPPI)));
-	// AK4PFIDSelection.reset(new JetIdSelection(AK4PFID));
-	// AK8PFIDSelection.reset(new TopJetIdSelection(AK8PFID));
+	AK4PFIDSelection.reset(new JetIdSelection(AK4PFID));
+	AK8PFIDSelection.reset(new TopJetIdSelection(AK8PFID));
 
 	cutflow_selections.add("N_{AK8}>2",nAK8_sel);
 	cutflow_selections.add("M_{jj-AK8}>1050 GeV",invMassAK8_sel);
 	cutflow_selections.add("#Delta#eta<1.3",deltaEtaAK8_sel);
-	// cutflow_selections.add("AK4PFIDFilter",AK4PFIDSelection);
-	// cutflow_selections.add("AK8PFIDFilter",AK8PFIDSelection);
-
+	cutflow_selections.add("AK4PFIDFilter",AK4PFIDSelection);
+	cutflow_selections.add("AK8PFIDFilter",AK8PFIDSelection);
+	
 	if(EXTRAOUT){
 		std::cout << "Selections set up" <<std::endl;
 	}
 
-
+		
 	/////////////////////////////////////////
 	/////////////////HISTS///////////////////
-	/////////////////////////////////////////
+	/////////////////////////////////////////  
 	// 3. Set up Hists classes:
 
 	//INPUT
 	h_nocuts.reset(new aQGCVVjjhadronicHists(ctx,"nocuts"));
 	h_AK8jets_nocuts.reset(new TopJetHists(ctx,"AK8_nocuts"));
 	h_AK4jets_nocuts.reset(new JetHists(ctx,"AK4_nocuts"));
-
+   
 	h_ele_nocuts.reset(new ElectronHists(ctx,"electron_nocuts"));
 	h_muon_nocuts.reset(new MuonHists(ctx,"muon_nocuts"));
 
 	h_common.reset(new aQGCVVjjhadronicHists(ctx,"common"));
 	h_corrections.reset(new aQGCVVjjhadronicHists(ctx,"corrections"));
 
-
+	
 	//After Cleaner
 	h_cleaner.reset(new aQGCVVjjhadronicHists(ctx,"cleaner"));
 	h_AK8jets_cleaner.reset(new TopJetHists(ctx,"AK8_cleaner"));
 	h_AK4jets_cleaner.reset(new JetHists(ctx,"AK4_cleaner"));
 
-
+	
 	h_pfidfilter.reset(new aQGCVVjjhadronicHists(ctx,"pfidfilter"));
-
+	
 	//After N_AK8>=2 Cut
 	h_AK8N2sel.reset(new aQGCVVjjhadronicHists(ctx,"AK8N2sel"));
 	h_AK8jets_AK8N2sel.reset(new TopJetHists(ctx,"AK8_AK8N2sel"));
@@ -339,7 +338,7 @@ namespace uhh2examples {
 	h_invMAk8sel.reset(new aQGCVVjjhadronicHists(ctx,"invMAk8sel"));
 	h_AK8jets_invMAk8sel.reset(new TopJetHists(ctx,"AK8_invMAk8sel"));
 	h_AK4jets_invMAk8sel.reset(new JetHists(ctx,"AK4_invMAk8sel"));
-
+	    
 	//After deltaEta AK8 Cut
 	h_detaAk8sel.reset(new aQGCVVjjhadronicHists(ctx,"detaAk8sel"));
 	h_AK8jets_detaAk8sel.reset(new TopJetHists(ctx,"AK8_detaAk8sel"));
@@ -352,7 +351,7 @@ namespace uhh2examples {
     }
 
 
-    bool aQGCVVjjhadronicPreSelectionModule::process(Event & event) {
+    bool aQGCVVjjhadronicPreSelectionRmEventModule::process(Event & event) {
 	// This is the main procedure, called for each event. Typically,
 	// do some pre-processing by calling the modules' process method
 	// of the modules constructed in the constructor (1).
@@ -362,9 +361,9 @@ namespace uhh2examples {
 	// this is controlled by the return value of this method: If it
 	// returns true, the event is kept; if it returns false, the event
 	// is thrown away.
-
-	//cout << "aQGCVVjjhadronicPreSelectionModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
-
+    
+	//cout << "aQGCVVjjhadronicPreSelectionRmEventModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
+    
 	// 1. run all modules other modules.
 	// if(!event.isRealData){
 	//     pileup_SF->process(event);
@@ -404,13 +403,14 @@ namespace uhh2examples {
 		event.topjets->at(i).set_chargedHadronEnergyFraction(chHFrac);
 		event.topjets->at(i).set_chargedMultiplicity(chMulti);
 	}
-
+	
+	
 	//INPUT Hists
 
 	h_nocuts->fill(event);
 	h_AK8jets_nocuts->fill(event);
 	h_AK4jets_nocuts->fill(event);
-
+	
 	h_ele_nocuts->fill(event);
 	h_muon_nocuts->fill(event);
 
@@ -418,13 +418,13 @@ namespace uhh2examples {
 	//     h_genparticle_nocuts->fill(event);
 	// }
 
-	if(EXTRAOUT)std::cout << "Input Hists done!"<<std::endl;
+	if(EXTRAOUT)std::cout << "Input Hists done!"<<std::endl;	
 
 	bool common_pass=common->process(event);
 	if(!common_pass) return false;
 	h_common->fill(event);
 	if(EXTRAOUT)std::cout << "common done!"<<std::endl;
-
+	
 	if(EXTRAOUT)genparticle_printer->process(event);
 
 	// 2. test selections and fill histograms
@@ -443,20 +443,20 @@ namespace uhh2examples {
 	// h_gendijets_nocuts;
 	// h_genparticle_nocuts;
 	if(isMC){
-	    if(EXTRAOUT)std::cout << "MC JEC and Smearing!"<<std::endl;
+	    if(EXTRAOUT)std::cout << "MC JEC and Smearing!"<<std::endl;	
 	    topjet_corrector->process(event);
-	    if(EXTRAOUT)std::cout << "MC topjet done!"<<std::endl;
+	    if(EXTRAOUT)std::cout << "MC topjet done!"<<std::endl;	
 	    subjet_corrector->process(event);
-	    if(EXTRAOUT)std::cout << "MC subjet done!"<<std::endl;
+	    if(EXTRAOUT)std::cout << "MC subjet done!"<<std::endl;	
 	    jet_corrector->process(event);
-	    if(EXTRAOUT)std::cout << "MC jet done!"<<std::endl;
+	    if(EXTRAOUT)std::cout << "MC jet done!"<<std::endl;	
 			jet_corrector->correct_met(event);
-			if(EXTRAOUT)std::cout << "MC METCorrector done!"<<std::endl;
+			if(EXTRAOUT)std::cout << "MC METCorrector done!"<<std::endl;	
 	    if(channel_=="signal"){
 				jetER_smearer->process(event);
-				if(EXTRAOUT)std::cout << "MC sigjet done!"<<std::endl;
+				if(EXTRAOUT)std::cout << "MC sigjet done!"<<std::endl;	
 				topjetER_smearer->process(event);
-				if(EXTRAOUT)std::cout << "MC sigtopjet done!"<<std::endl;
+				if(EXTRAOUT)std::cout << "MC sigtopjet done!"<<std::endl;	
 	    }
 	}else{
 	    if(event.run <= runNR_BCD){
@@ -484,7 +484,7 @@ namespace uhh2examples {
 		jet_corrector_H->correct_met(event);
 	    }
 	}
-	if(EXTRAOUT)std::cout << "JER/Smearer done!"<<std::endl;
+	if(EXTRAOUT)std::cout << "JER/Smearer done!"<<std::endl;	
 	sort_by_pt<Jet>(*event.jets);
 	sort_by_pt<TopJet>(*event.topjets);
 
@@ -496,13 +496,15 @@ namespace uhh2examples {
 	ak4cleaner->process(event);
 	ak8cleaner->process(event);
 	if(EXTRAOUT)std::cout << "Jet Cleaner done!"<<std::endl;
-	//After Cleaner Hists
+	//After Cleaner Hists 
 	h_cleaner->fill(event);
 	h_AK8jets_cleaner->fill(event);
 	h_AK4jets_cleaner->fill(event);
 
-	ak8pfidfilter->process(event);
-	ak4pfidfilter->process(event);
+	// ak8pfidfilter->process(event);
+	// ak4pfidfilter->process(event);
+	if(! AK4PFIDSelection->passes(event))return false;
+	if(! AK8PFIDSelection->passes(event))return false;
 	h_pfidfilter->fill(event);
 
 
@@ -512,7 +514,7 @@ namespace uhh2examples {
 	h_AK8N2sel->fill(event);
 	h_AK8jets_AK8N2sel->fill(event);
 	h_AK4jets_AK8N2sel->fill(event);
-	if(EXTRAOUT)std::cout << "N_AK8 Sel done!"<<std::endl;
+	if(EXTRAOUT)std::cout << "N_AK8 Sel done!"<<std::endl;  
 
 	//After invariant Mass AK8 Cut
 	bool invMassAK8_selection = invMassAK8_sel->passes(event);
@@ -536,7 +538,7 @@ namespace uhh2examples {
     }
 
     // as we want to run the ExampleCycleNew directly with AnalysisModuleRunner,
-    // make sure the aQGCVVjjhadronicPreSelectionModule is found by class name. This is ensured by this macro:
-    UHH2_REGISTER_ANALYSIS_MODULE(aQGCVVjjhadronicPreSelectionModule)
+    // make sure the aQGCVVjjhadronicPreSelectionRmEventModule is found by class name. This is ensured by this macro:
+    UHH2_REGISTER_ANALYSIS_MODULE(aQGCVVjjhadronicPreSelectionRmEventModule)
 
 }

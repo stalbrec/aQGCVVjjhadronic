@@ -202,20 +202,23 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 	for(const TopJet & thisjet : *AK8Jets){
 		Sum_ptAK8+=thisjet.pt();
 	}
-	hist("met_pt_over_sumptAK8_2")->Fill(event.met->pt()/Sum_ptAK8,weight);
-	hist("met_pt_over_sumptAK8_4")->Fill(event.met->pt()/Sum_ptAK8,weight);
-
+	if(Sum_ptAK8!=0.0){
+		hist("met_pt_over_sumptAK8_2")->Fill(event.met->pt()/Sum_ptAK8,weight);
+		hist("met_pt_over_sumptAK8_4")->Fill(event.met->pt()/Sum_ptAK8,weight);
+	}
 
 	float Sum_ptAK4=0.0;
 	for(const Jet & thisjet : *AK4Jets){
 		Sum_ptAK4+=thisjet.pt();
 	}
-	hist("met_pt_over_sumptAK4_2")->Fill(event.met->pt()/Sum_ptAK4,weight);
-	hist("met_pt_over_sumptAK4_4")->Fill(event.met->pt()/Sum_ptAK4,weight);
-
-	hist("met_pt_over_sumptJets_2")->Fill(event.met->pt()/(Sum_ptAK4+Sum_ptAK8),weight);
-	hist("met_pt_over_sumptJets_4")->Fill(event.met->pt()/(Sum_ptAK4+Sum_ptAK8),weight);
-
+	if(Sum_ptAK4!=0.0){
+		hist("met_pt_over_sumptAK4_2")->Fill(event.met->pt()/Sum_ptAK4,weight);
+		hist("met_pt_over_sumptAK4_4")->Fill(event.met->pt()/Sum_ptAK4,weight);
+	}
+	if(Sum_ptAK4!=0.0 && Sum_ptAK8!=0.0){
+		hist("met_pt_over_sumptJets_2")->Fill(event.met->pt()/(Sum_ptAK4+Sum_ptAK8),weight);
+		hist("met_pt_over_sumptJets_4")->Fill(event.met->pt()/(Sum_ptAK4+Sum_ptAK8),weight);
+	}
 	
 	
 	// hist("met_pt_over_mETSig")->Fill(event.met->pt()/event.met->mEtSig(),weight);

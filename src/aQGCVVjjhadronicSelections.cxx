@@ -163,3 +163,17 @@ bool invMassAK4JetSelection::passes(const Event & event){
     if(invMass<invMass_min) return false;
     else return true;
 }
+
+JetIdSelection::JetIdSelection(const JetId & jetid_): jetid(jetid_){}
+
+bool JetIdSelection::passes(const Event & event){
+	assert(event.jets);
+	return jetid(event.jets->at(0),event) && jetid(event.jets->at(1),event);
+}
+
+TopJetIdSelection::TopJetIdSelection(const TopJetId & topjetid_): topjetid(topjetid_){}
+
+bool TopJetIdSelection::passes(const Event & event){
+	assert(event.topjets);
+	return topjetid(event.topjets->at(0),event) && topjetid(event.topjets->at(1),event);
+}

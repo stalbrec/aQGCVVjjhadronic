@@ -88,17 +88,17 @@ namespace uhh2examples {
 	std::unique_ptr<Hists> h_tau21sel;
 	std::unique_ptr<Hists> h_AK8jets_tau21sel;
 	std::unique_ptr<Hists> h_AK4jets_tau21sel;
+			
+	//After deltaR(AK4,AK8) Cut
+	std::unique_ptr<Hists> h_deltaR48;
+	std::unique_ptr<Hists> h_AK8jets_deltaR48;
+	std::unique_ptr<Hists> h_AK4jets_deltaR48;
 
 	//VV REGION
 	std::unique_ptr<Hists> h_VVRegion;
 	std::unique_ptr<Hists> h_AK8jets_VVRegion;
 	std::unique_ptr<Hists> h_AK4jets_VVRegion;
 	std::unique_ptr<Hists> h_MjjHistsVVRegion;
-
-	//After deltaR(AK4,AK8) Cut
-	std::unique_ptr<Hists> h_deltaR48;
-	std::unique_ptr<Hists> h_AK8jets_deltaR48;
-	std::unique_ptr<Hists> h_AK4jets_deltaR48;
 
 	//After N_AL4>2 Cut
 	std::unique_ptr<Hists> h_AK4N2sel;
@@ -197,23 +197,21 @@ namespace uhh2examples {
 	h_AK8jets_tau21sel.reset(new TopJetHists(ctx,"AK8_tau21sel"));
 	h_AK4jets_tau21sel.reset(new JetHists(ctx,"AK4_tau21sel"));
 
+	//After deltaR(AK4,AK8) Cut
+	h_deltaR48.reset(new aQGCVVjjhadronicHists(ctx,"deltaR48"));
+	h_AK8jets_deltaR48.reset(new TopJetHists(ctx,"AK8_deltaR48"));
+	h_AK4jets_deltaR48.reset(new JetHists(ctx,"AK4_deltaR48"));
+
 	//VV REGION
 	h_VVRegion.reset(new aQGCVVjjhadronicHists(ctx,"VVRegion"));
 	h_AK8jets_VVRegion.reset(new TopJetHists(ctx,"AK8_VVRegion"));
 	h_AK4jets_VVRegion.reset(new JetHists(ctx,"AK4_VVRegion"));
 	h_MjjHistsVVRegion.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_VVRegion"));
 
-
 	//After N_AL4>2 Cut
 	h_AK4N2sel.reset(new aQGCVVjjhadronicHists(ctx,"AK4N2sel"));
 	h_AK8jets_AK4N2sel.reset(new TopJetHists(ctx,"AK8_AK4N2sel"));
 	h_AK4jets_AK4N2sel.reset(new JetHists(ctx,"AK4_AK4N2sel"));
-
-	//After deltaR(AK4,AK8) Cut
-	h_deltaR48.reset(new aQGCVVjjhadronicHists(ctx,"deltaR48"));
-	h_AK8jets_deltaR48.reset(new TopJetHists(ctx,"AK8_deltaR48"));
-	h_AK4jets_deltaR48.reset(new JetHists(ctx,"AK4_deltaR48"));
-
 
 	//OppositeEtaSign_Ak4 Cut
 	h_OpSignsel.reset(new aQGCVVjjhadronicHists(ctx,"OpSignsel"));
@@ -285,26 +283,6 @@ namespace uhh2examples {
 	h_AK4jets_tau21sel->fill(event);
 	if(EXTRAOUT)std::cout << "nsubjettines AK8 Cut done!"<<std::endl;
 
-	//VBF Selection && VBFVeto
-	bool nAK4_selection = nAK4_sel->passes(event);
-	bool EtaSignAK4_selection = EtaSignAK4_sel->passes(event);
-	bool deltaEtaAK4_selection = deltaEtaAK4_sel->passes(event);
-	bool invMassAK4_1p0_selection = invMassAK4_1p0_sel->passes(event);
-
-	bool VBFVeto=!(nAK4_selection && EtaSignAK4_selection && deltaEtaAK4_selection && invMassAK4_1p0_selection);
-
-	if(VBFVeto){
-	    h_VVRegion->fill(event);
-	    h_AK8jets_VVRegion->fill(event);
-	    h_AK4jets_VVRegion->fill(event);
-	    if(channel_=="signal"){
-		// if(version_.find("ZZ") != std::string::npos)
-		h_MjjHistsVVRegion->fill(event);
-	    }
-	}
-	if(EXTRAOUT)std::cout << "VV done!"<<std::endl;
-
-
 	//Removing AK4 Jets with deltaR(AK4,AK8_1,2)<1.3
 	std::vector<Jet>* AK4Jets(new std::vector<Jet> (*event.jets));
 	std::vector<TopJet> AK8Jets = *event.topjets;
@@ -335,6 +313,24 @@ namespace uhh2examples {
 	h_AK4jets_deltaR48->fill(event);
 	if(EXTRAOUT)std::cout << "deltaR Selection done!"<<std::endl;
 
+	//VBF Selection && VBFVeto
+	bool nAK4_selection = nAK4_sel->passes(event);
+	bool EtaSignAK4_selection = EtaSignAK4_sel->passes(event);
+	bool deltaEtaAK4_selection = deltaEtaAK4_sel->passes(event);
+	bool invMassAK4_1p0_selection = invMassAK4_1p0_sel->passes(event);
+
+	bool VBFVeto=!(nAK4_selection && EtaSignAK4_selection && deltaEtaAK4_selection && invMassAK4_1p0_selection);
+
+	if(VBFVeto){
+	    h_VVRegion->fill(event);
+	    h_AK8jets_VVRegion->fill(event);
+	    h_AK4jets_VVRegion->fill(event);
+	    if(channel_=="signal"){
+		// if(version_.find("ZZ") != std::string::npos)
+		h_MjjHistsVVRegion->fill(event);
+	    }
+	}
+	if(EXTRAOUT)std::cout << "VV done!"<<std::endl;
 
 	//After N_AL4>2 Cut
 	if(!nAK4_selection) return false;

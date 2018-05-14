@@ -2,17 +2,17 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
 <!--                   Signal                   -->
-<!ENTITY aQGCWPWP SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWPWP.xml">
-<!ENTITY aQGCWPWM SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWPWM.xml">
-<!ENTITY aQGCWMWM SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWMWM.xml">
-<!ENTITY aQGCWPZ SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWPZ.xml">
-<!ENTITY aQGCWMZ SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWMZ.xml">
-<!ENTITY aQGCZZ SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCZZ.xml">
+<!ENTITY aQGCWPWP SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPWP.xml">
+<!ENTITY aQGCWPWM SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPWM.xml">
+<!ENTITY aQGCWMWM SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWMWM.xml">
+<!ENTITY aQGCWPZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPZ.xml">
+<!ENTITY aQGCWMZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWMZ.xml">
+<!ENTITY aQGCZZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCZZ.xml">
 ]>
 
 <!--
-<ConfigParse NEventsBreak="400000" LastBreak="0" FileSplit="0" />
-<ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_HIGHsideband"/>
+<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="100" />
+<ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_preselectionrmevent"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
@@ -20,36 +20,37 @@
   <Library Name="libSUHH2aQGCVVjjhadronic"/>
   <Package Name="SUHH2aQGCVVjjhadronic.par" />
 
-  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/HIGHSidebandRegion/" PostFix="" TargetLumi="36814.0" >
+  <!-- <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelectionRmEvent/" PostFix="" TargetLumi="1" > -->
+  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelectionRmEvent/" PostFix="" TargetLumi="36814.0" >
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
     <InputData Lumi="5795.15" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWPjj_hadronic" Cacheable="False">
-		<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPWPjj_hadronic.root" Lumi="0.0"/>
+      &aQGCWPWP;
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
     <InputData Lumi="488.64" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWMjj_hadronic" Cacheable="False">
-		<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPWMjj_hadronic.root" Lumi="0.0"/>
+      &aQGCWPWM;
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
     <InputData Lumi="36573.91" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMWMjj_hadronic" Cacheable="False">
-		<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WMWMjj_hadronic.root" Lumi="0.0"/>
+      &aQGCWMWM;
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
     <InputData Lumi="5224.39" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPZjj_hadronic" Cacheable="False">
-		<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPZjj_hadronic.root" Lumi="0.0"/>
+      &aQGCWPZ;
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
     <InputData Lumi="12406.67" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMZjj_hadronic" Cacheable="False">
-		<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WMZjj_hadronic.root" Lumi="0.0"/>
+      &aQGCWMZ;
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
     <InputData Lumi="1624.87" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic" Cacheable="False">
-		<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic.root" Lumi="0.0"/>
+      &aQGCZZ;
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
@@ -72,7 +73,8 @@
       <Item Name="channel" Value="signal" />
 
       <!-- the class name of the AnalysisModule subclasses to run: -->
-      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicHIGHSidebandRegionModule" />
+      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicPreSelectionRmEventModule" />
+      <!-- <Item Name="AnalysisModule" Value="aQGCVVjjhadronicPreSelectionRmEventModule" /> -->
 
       <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
       MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
