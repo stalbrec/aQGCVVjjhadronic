@@ -89,7 +89,7 @@ namespace uhh2examples {
 	/////////////////HISTS///////////////////
 	/////////////////////////////////////////
 	// store the Hists collection as member variables. Again, use unique_ptr to avoid memory leaks.
-
+	std::unique_ptr<Hists> h_preselection;
 
 	//After softdropMass AK8 Cut
 	std::unique_ptr<Hists> h_softdropAK8sel;
@@ -213,6 +213,8 @@ namespace uhh2examples {
 	/////////////////HISTS///////////////////
 	/////////////////////////////////////////
 
+	h_preselection.reset(new aQGCVVjjhadronicHists(ctx,"preselection"));
+
 	//SoftdropMass Cut
 	h_softdropAK8sel.reset(new aQGCVVjjhadronicHists(ctx,"softdropAK8sel"));
 	h_AK8jets_softdropAK8sel.reset(new TopJetHists(ctx,"AK8_softdropAK8sel"));
@@ -289,6 +291,8 @@ namespace uhh2examples {
 		MCPileupReweightModule->process(event);
 	}
 
+	h_preselection->fill(event);
+	
 	bool passes_AK8sels=AK8_selections.passes(event);
 	
 	if(EXTRAOUT)genparticle_printer->process(event);

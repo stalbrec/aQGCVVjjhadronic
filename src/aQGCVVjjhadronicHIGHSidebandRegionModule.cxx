@@ -4,6 +4,7 @@
 
 #include "UHH2/core/include/AnalysisModule.h"
 #include "UHH2/core/include/Event.h"
+#include "UHH2/core/include/Selection.h"
 
 #include "UHH2/common/include/CommonModules.h"
 #include "UHH2/common/include/CleaningModules.h"
@@ -45,7 +46,7 @@ namespace uhh2examples {
     private:
 	std::string channel_;
 	std::string version_;
-
+			
 	std::vector<std::unique_ptr<AnalysisModule>> weight_modules;
 	std::unique_ptr<uhh2::AnalysisModule> MCWeightModule;
 	std::unique_ptr<uhh2::AnalysisModule> MCPileupReweightModule;
@@ -64,20 +65,31 @@ namespace uhh2examples {
 	// to avoid memory leaks.
 	//std::unique_ptr<Selection> njet_sel, dijet_sel;
 
-	std::unique_ptr<Selection> softdropAK8_sel;
-	std::unique_ptr<Selection> tau21_sel;
+	std::shared_ptr<Selection> softdropAK8_sel;
+	std::shared_ptr<Selection> tau21_sel;
 
-	std::unique_ptr<Selection> nAK4_sel;
-	std::unique_ptr<Selection> EtaSignAK4_sel;
-	std::unique_ptr<Selection> deltaEtaAK4_sel;
+	std::shared_ptr<Selection> nAK4_sel;
+	std::shared_ptr<Selection> EtaSignAK4_sel;
+	std::shared_ptr<Selection> deltaEtaAK4_sel;
 
-	std::unique_ptr<Selection> invMassAK4_1p0_sel;
+	std::shared_ptr<Selection> invMassAK4_1p0_sel;
 
+	// std::unique_ptr<Selection> softdropAK8_sel;
+	// std::unique_ptr<Selection> tau21_sel;
+
+	// std::unique_ptr<Selection> nAK4_sel;
+	// std::unique_ptr<Selection> EtaSignAK4_sel;
+	// std::unique_ptr<Selection> deltaEtaAK4_sel;
+
+	// std::unique_ptr<Selection> invMassAK4_1p0_sel;
+			
+	AndSelection AK8_selections;
+	AndSelection AK4_selections;
 	/////////////////////////////////////////
 	/////////////////HISTS///////////////////
 	/////////////////////////////////////////
 	// store the Hists collection as member variables. Again, use unique_ptr to avoid memory leaks.
-
+	std::unique_ptr<Hists> h_preselection;
 
 	//After softdropMass AK8 Cut
 	std::unique_ptr<Hists> h_softdropAK8sel;
@@ -88,7 +100,7 @@ namespace uhh2examples {
 	std::unique_ptr<Hists> h_tau21sel;
 	std::unique_ptr<Hists> h_AK8jets_tau21sel;
 	std::unique_ptr<Hists> h_AK4jets_tau21sel;
-			
+
 	//After deltaR(AK4,AK8) Cut
 	std::unique_ptr<Hists> h_deltaR48;
 	std::unique_ptr<Hists> h_AK8jets_deltaR48;
@@ -148,7 +160,7 @@ namespace uhh2examples {
     };
 
 
-    aQGCVVjjhadronicHIGHSidebandRegionModule::aQGCVVjjhadronicHIGHSidebandRegionModule(Context & ctx){
+	aQGCVVjjhadronicHIGHSidebandRegionModule::aQGCVVjjhadronicHIGHSidebandRegionModule(Context & ctx): AK8_selections(ctx, "AK8_selections"),AK4_selections(ctx, "AK4_selections"){
   isMC = (ctx.get("dataset_type") == "MC");
 	channel_ = ctx.get("channel");
 	version_ = ctx.get("dataset_version");
@@ -170,7 +182,7 @@ namespace uhh2examples {
 	////////////////SELECTIONS///////////////
 	/////////////////////////////////////////
   softdropAK8_sel.reset(new SidebandVVSoftDropMassSelection(65.f,105.f,135.f));
-	tau21_sel.reset(new NSubjettinessTau21Selection(0.0f,0.35f));
+	tau21_sel.reset(new NSubjettinessTau21Selection(0.0f,0.45f));
 
 	nAK4_sel.reset(new NJetSelection(2));
 	EtaSignAK4_sel.reset(new OppositeEtaAK4Selection());
@@ -178,6 +190,20 @@ namespace uhh2examples {
 
 	invMassAK4_1p0_sel.reset(new invMassAK4JetSelection(1000.0f));
 
+	// all_selections.add<VVSoftDropMassSelection>("65GeV<MSD<105GeV",softdropAK8_sel);
+	// all_selections.add<NSubjettinessTau21Selection>("0<tau21<0.45",tau21_sel);
+	// all_selections.add<NJetSelection>("nAK4>=2",nAK4_sel);
+	// all_selections.add<OppositeEtaAK4Selection>("eta1*eta2<0",EtaSignAK4_sel);
+	// all_selections.add<deltaEtaAk4Selection>("dEta<3.0",deltaEtaAK4_sel);
+	// all_selections.add<invMassAK4JetSelection>("MjjAK4>1TeV",invMassAK4_1p0_sel);
+
+	AK8_selections.add("M_{SD}>135 GeV",softdropAK8_sel);
+	AK8_selections.add("0<#tau_{2}/#tau_{1}<0.45",tau21_sel);
+	AK4_selections.add("N_{AK4}>=2",nAK4_sel);
+	AK4_selections.add("#eta_{1}*#eta_{2}<0",EtaSignAK4_sel);
+	AK4_selections.add("#Delta #eta<3.0",deltaEtaAK4_sel);
+	AK4_selections.add("M_{jj-AK4}>1 TeV",invMassAK4_1p0_sel);
+	
 	if(EXTRAOUT){
 		std::cout << "Selections set up" <<std::endl;
 	}
@@ -186,6 +212,8 @@ namespace uhh2examples {
 	/////////////////////////////////////////
 	/////////////////HISTS///////////////////
 	/////////////////////////////////////////
+
+	h_preselection.reset(new aQGCVVjjhadronicHists(ctx,"preselection"));
 
 	//SoftdropMass Cut
 	h_softdropAK8sel.reset(new aQGCVVjjhadronicHists(ctx,"softdropAK8sel"));
@@ -263,7 +291,10 @@ namespace uhh2examples {
 		MCPileupReweightModule->process(event);
 	}
 
-
+	h_preselection->fill(event);
+	
+	bool passes_AK8sels=AK8_selections.passes(event);
+	
 	if(EXTRAOUT)genparticle_printer->process(event);
 
 	//SoftdropMass Cut
@@ -283,7 +314,7 @@ namespace uhh2examples {
 	h_AK4jets_tau21sel->fill(event);
 	if(EXTRAOUT)std::cout << "nsubjettines AK8 Cut done!"<<std::endl;
 
-	//Removing AK4 Jets with deltaR(AK4,AK8_1,2)<1.3
+		//Removing AK4 Jets with deltaR(AK4,AK8_1,2)<1.3
 	std::vector<Jet>* AK4Jets(new std::vector<Jet> (*event.jets));
 	std::vector<TopJet> AK8Jets = *event.topjets;
 
@@ -313,13 +344,16 @@ namespace uhh2examples {
 	h_AK4jets_deltaR48->fill(event);
 	if(EXTRAOUT)std::cout << "deltaR Selection done!"<<std::endl;
 
+	bool passes_AK4sels=AK4_selections.passes(event);
+
 	//VBF Selection && VBFVeto
 	bool nAK4_selection = nAK4_sel->passes(event);
 	bool EtaSignAK4_selection = EtaSignAK4_sel->passes(event);
 	bool deltaEtaAK4_selection = deltaEtaAK4_sel->passes(event);
 	bool invMassAK4_1p0_selection = invMassAK4_1p0_sel->passes(event);
 
-	bool VBFVeto=!(nAK4_selection && EtaSignAK4_selection && deltaEtaAK4_selection && invMassAK4_1p0_selection);
+	// bool VBFVeto=!(nAK4_selection && EtaSignAK4_selection && deltaEtaAK4_selection && invMassAK4_1p0_selection);
+	bool VBFVeto=!passes_AK4sels;
 
 	if(VBFVeto){
 	    h_VVRegion->fill(event);
@@ -331,6 +365,7 @@ namespace uhh2examples {
 	    }
 	}
 	if(EXTRAOUT)std::cout << "VV done!"<<std::endl;
+
 
 	//After N_AL4>2 Cut
 	if(!nAK4_selection) return false;
@@ -376,6 +411,7 @@ namespace uhh2examples {
 	}
 	if(EXTRAOUT)std::cout << "invariant Mass AK4 Cut (1.0TeV) done!"<<std::endl;
 
+	
 	return true;
     }
 

@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <memory>
 #include <string>
@@ -88,6 +87,7 @@ namespace uhh2examples {
 	std::unique_ptr<JetCleaner> ak4pfidfilter;
 	std::unique_ptr<TopJetCleaner> ak8pfidfilter;
 
+	std::unique_ptr<AnalysisModule> massCalcCorr;
 	//TODO
 	// Data/MC scale factors
 	std::unique_ptr<uhh2::AnalysisModule> pileup_SF;
@@ -129,7 +129,10 @@ namespace uhh2examples {
 	std::unique_ptr<Hists> h_AK8jets_cleaner;
 	std::unique_ptr<Hists> h_AK4jets_cleaner;
 
-	std::unique_ptr<Hists> h_pfidfilter;
+	std::unique_ptr<Hists> h_softdropmassCorr;
+
+	std::unique_ptr<Hists> h_AK4pfidfilter;
+	std::unique_ptr<Hists> h_AK8pfidfilter;
 
 	//After N_AK8>2 Cut
 	std::unique_ptr<Hists> h_AK8N2sel;
@@ -199,7 +202,7 @@ namespace uhh2examples {
 
 	//disableing pileup reweighting for now
 	//common->disable_mcpileupreweight();
-
+	
 	common->switch_jetlepcleaner(false);
 	// common->change_pf_id(JetPFID::WP_LOOSE_PUPPI);
 	common->disable_jetpfidfilter();
@@ -278,6 +281,8 @@ namespace uhh2examples {
 	ak8pfidfilter.reset(new TopJetCleaner(ctx,AK8PFID));
 	ak4pfidfilter.reset(new JetCleaner(ctx,AK4PFID));
 
+	massCalcCorr.reset(new SoftDropMassCalculator(ctx, true, "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/data/puppiCorr.root"));
+
 
 	/////////////////////////////////////////
 	////////////////SELECTIONS///////////////
@@ -294,11 +299,11 @@ namespace uhh2examples {
 	// AK4PFIDSelection.reset(new JetIdSelection(AK4PFID));
 	// AK8PFIDSelection.reset(new TopJetIdSelection(AK8PFID));
 
+	// cutflow_selections.add("AK4PFIDFilter",AK4PFIDSelection);
+	// cutflow_selections.add("AK8PFIDFilter",AK8PFIDSelection);
 	cutflow_selections.add("N_{AK8}>2",nAK8_sel);
 	cutflow_selections.add("M_{jj-AK8}>1050 GeV",invMassAK8_sel);
 	cutflow_selections.add("#Delta#eta<1.3",deltaEtaAK8_sel);
-	// cutflow_selections.add("AK4PFIDFilter",AK4PFIDSelection);
-	// cutflow_selections.add("AK8PFIDFilter",AK8PFIDSelection);
 
 	if(EXTRAOUT){
 		std::cout << "Selections set up" <<std::endl;
@@ -327,8 +332,10 @@ namespace uhh2examples {
 	h_AK8jets_cleaner.reset(new TopJetHists(ctx,"AK8_cleaner"));
 	h_AK4jets_cleaner.reset(new JetHists(ctx,"AK4_cleaner"));
 
-
-	h_pfidfilter.reset(new aQGCVVjjhadronicHists(ctx,"pfidfilter"));
+	h_softdropmassCorr.reset(new aQGCVVjjhadronicHists(ctx,"softdropmassCorr"));
+	
+	h_AK4pfidfilter.reset(new aQGCVVjjhadronicHists(ctx,"AK4pfidfilter"));
+	h_AK8pfidfilter.reset(new aQGCVVjjhadronicHists(ctx,"AK8pfidfilter"));
 
 	//After N_AK8>=2 Cut
 	h_AK8N2sel.reset(new aQGCVVjjhadronicHists(ctx,"AK8N2sel"));
@@ -372,7 +379,7 @@ namespace uhh2examples {
 	// }
 	vector<Jet> IdCriteriaJets = event.get(h_IdCriteriaJets);
 	std::vector<int> skipindex;	
-	for(int i=0;i<event.topjets->size();i++){
+	for(unsigned int i=0;i<event.topjets->size();i++){
 		int N_Daughters = event.topjets->at(i).numberOfDaughters();
 		float nEMFrac = event.topjets->at(i).neutralEmEnergyFraction();
 		float nHFrac = event.topjets->at(i).neutralHadronEnergyFraction();
@@ -382,7 +389,7 @@ namespace uhh2examples {
 
 		double deltaR_min=99999.;
 		int nearest_index=0;
-		for(int j=0;j<IdCriteriaJets.size();j++){
+		for(unsigned int j=0;j<IdCriteriaJets.size();j++){
 			if(std::find(skipindex.begin(),skipindex.end(),j) != skipindex.end()) continue;
 			double deltaR_candiate=deltaR(IdCriteriaJets.at(j),event.topjets->at(i));
 			if(deltaR_candiate<deltaR_min){
@@ -427,6 +434,18 @@ namespace uhh2examples {
 
 	if(EXTRAOUT)genparticle_printer->process(event);
 
+	// if(isMC){
+	// 	unsigned int N_V=0;
+	//   for (const GenParticle & thisgen : *event.genparticles){
+	// 		if((thisgen.pdgId()==23) || (thisgen.pdgId()==24)|| (thisgen.pdgId()==25)){
+	// 			N_V++;
+	// 		}
+	// 	}
+	// 	if(N_V!=2){
+	// 		std::cout << "Not exactly two VectorBosons in Event (N_V="<<N_V<<")."<<std::endl;
+	// 		genparticle_printer->process(event);
+	// 	}
+	// }			
 	// 2. test selections and fill histograms
 
 	//cout << "#weights: " << GenInfo().weights().size() << endl;
@@ -501,9 +520,14 @@ namespace uhh2examples {
 	h_AK8jets_cleaner->fill(event);
 	h_AK4jets_cleaner->fill(event);
 
-	ak8pfidfilter->process(event);
+  massCalcCorr->process(event);
+	h_softdropmassCorr->fill(event);
+
 	ak4pfidfilter->process(event);
-	h_pfidfilter->fill(event);
+	h_AK4pfidfilter->fill(event);
+	
+	ak8pfidfilter->process(event);
+	h_AK8pfidfilter->fill(event);
 
 
 	//N_AK8>2 Cut

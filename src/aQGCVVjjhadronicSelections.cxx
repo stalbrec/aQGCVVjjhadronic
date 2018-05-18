@@ -53,16 +53,17 @@ bool VVSoftDropMassSelection::passes(const Event & event){
 
     const auto & AK8_1=event.topjets->at(0); 
     const auto & AK8_2=event.topjets->at(1); 
-    LorentzVector subjetsum_1,subjetsum_2;
-    for (const auto subjet1:AK8_1.subjets()){
-	subjetsum_1+=subjet1.v4();
-    }
-    for (const auto subjet2:AK8_2.subjets()){
-	subjetsum_2+=subjet2.v4();
-    }
-    auto MSD1=subjetsum_1.M();
-    auto MSD2=subjetsum_2.M();
-    
+  //   LorentzVector subjetsum_1,subjetsum_2;
+  //   for (const auto subjet1:AK8_1.subjets()){
+	// subjetsum_1+=subjet1.v4();
+  //   }
+  //   for (const auto subjet2:AK8_2.subjets()){
+	// subjetsum_2+=subjet2.v4();
+  //   }
+  //   auto MSD1=subjetsum_1.M();
+  //   auto MSD2=subjetsum_2.M();
+		auto MSD1=AK8_1.softdropmass();
+		auto MSD2=AK8_2.softdropmass();
 
     //dont know if correct
     // auto MSD1=event.topjets->at(1).softdropmass();
@@ -84,15 +85,17 @@ bool SidebandVVSoftDropMassSelection::passes(const Event & event){
 
     const auto & AK8_1=event.topjets->at(0); 
     const auto & AK8_2=event.topjets->at(1); 
-    LorentzVector subjetsum_1,subjetsum_2;
-    for (const auto subjet1:AK8_1.subjets()){
-	subjetsum_1+=subjet1.v4();
-    }
-    for (const auto subjet2:AK8_2.subjets()){
-	subjetsum_2+=subjet2.v4();
-    }
-    auto MSD1=subjetsum_1.M();
-    auto MSD2=subjetsum_2.M();
+  //   LorentzVector subjetsum_1,subjetsum_2;
+  //   for (const auto subjet1:AK8_1.subjets()){
+	// subjetsum_1+=subjet1.v4();
+  //   }
+  //   for (const auto subjet2:AK8_2.subjets()){
+	// subjetsum_2+=subjet2.v4();
+  //   }
+  //   auto MSD1=subjetsum_1.M();
+  //   auto MSD2=subjetsum_2.M();
+		auto MSD1=AK8_1.softdropmass();
+		auto MSD2=AK8_2.softdropmass();
     
 
     //dont know if correct
@@ -168,6 +171,7 @@ JetIdSelection::JetIdSelection(const JetId & jetid_): jetid(jetid_){}
 
 bool JetIdSelection::passes(const Event & event){
 	assert(event.jets);
+	if(event.jets->size()<2) return false;
 	return jetid(event.jets->at(0),event) && jetid(event.jets->at(1),event);
 }
 
@@ -175,5 +179,6 @@ TopJetIdSelection::TopJetIdSelection(const TopJetId & topjetid_): topjetid(topje
 
 bool TopJetIdSelection::passes(const Event & event){
 	assert(event.topjets);
+	if(event.topjets->size()<2) return false;
 	return topjetid(event.topjets->at(0),event) && topjetid(event.topjets->at(1),event);
 }

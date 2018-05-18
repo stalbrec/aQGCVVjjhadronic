@@ -10,10 +10,15 @@ using namespace uhh2examples;
 
 aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirname): Hists(ctx, dirname){
 	// book all histograms here
-
+	book<TH1F>("NEvents_weighted", "weighted events", 1, 0, 1);  
+	book<TH1F>("NEvents_raw", "weighted events", 1, 0, 1);
+	
 	// primary vertices
 	book<TH1F>("N_pv", "N^{PV}", 50, 0, 50);
 	book<TH1F>("pdgID", "pdgID", 50, -25,25);
+	book<TH1F>("pdgID_raw", "pdgID", 50, -25,25);
+	book<TH1F>("N_V", "N_Bosons", 10, 0,10);
+	book<TH1F>("N_V_raw", "N_Bosons", 10, 0,10);
 
 
 	// double mjjBins[] = {99,112,125,138,151,164,177,190, 203, 216, 229, 243, 257, 272, 287, 303, 319, 335, 352, 369, 387, 405, 424, 443, 462, 482, 502, 523, 544, 566, 588, 611, 634, 657, 681, 705, 730, 755, 781, 807, 834, 861, 889, 917, 946, 976, 1006, 1037, 1068, 1100, 1133, 1166, 1200, 1234, 1269, 1305, 1341, 1378, 1416, 1454, 1493, 1533, 1573, 1614, 1656, 1698, 1741, 1785, 1830, 1875, 1921, 1968, 2016, 2065, 2114, 2164, 2215, 2267, 2320, 2374, 2429, 2485, 2542, 2600, 2659, 2719, 2780, 2842, 2905, 2969, 3034, 3100, 3167, 3235, 3305, 3376, 3448, 3521, 3596, 3672, 3749, 3827, 3907, 3988, 4070, 4154, 4239, 4326, 4414, 4504, 4595, 4688, 4782, 4878, 4975, 5074, 5175, 5277, 5381, 5487, 5595, 5705, 5817, 5931, 6047, 6165, 6285, 6407, 6531, 6658, 6787, 6918, 7052, 7188, 7326, 7467, 7610, 7756, 7904, 8055, 8208, 8364, 8523, 8685, 8850, 9019, 9191, 9366, 9544, 9726, 9911, 10100, 10292, 10488, 10688, 10892}; 
@@ -90,6 +95,7 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
 	// book<TH1F>("eta_VBFJet", "#eta^{VBF-Jets}", 40, -6.5,6.5);
 	// book<TH1F>("eta_WWJet", "#eta^{WW-Jets}", 40, -6.5,6.5);
 	// book<TH1F>("eta_3WJet", "#eta^{3W-Jets}", 40, -6.5,6.5);
+	isMC = (ctx.get("dataset_type") == "MC");
 
 
 }
@@ -103,7 +109,10 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
   
 	// Don't forget to always use the weight when filling.
 	double weight = event.weight;
-  
+
+	hist("NEvents_weighted")->Fill(0.5,weight);
+	hist("NEvents_raw")->Fill(0.5,1);
+	
 	//std::vector<GenParticle>* genjets = event.genjets;
 	//for(const GenParticle & thisgenjet : * genjets){
 	//  cout << "genjet pdgId: " << thisgenjet.pdgId() <<endl;
@@ -169,15 +178,17 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 
 		const auto & AK8_1=event.topjets->at(0); 
 		const auto & AK8_2=event.topjets->at(1); 
-		LorentzVector subjetsum_1,subjetsum_2;
-		for (const auto subjet1:AK8_1.subjets()){
-	    subjetsum_1+=subjet1.v4();
-		}
-		for (const auto subjet2:AK8_2.subjets()){
-	    subjetsum_2+=subjet2.v4();
-		}
-		auto MSD1=subjetsum_1.M();
-		auto MSD2=subjetsum_2.M();
+  //   LorentzVector subjetsum_1,subjetsum_2;
+  //   for (const auto subjet1:AK8_1.subjets()){
+	// subjetsum_1+=subjet1.v4();
+  //   }
+  //   for (const auto subjet2:AK8_2.subjets()){
+	// subjetsum_2+=subjet2.v4();
+  //   }
+  //   auto MSD1=subjetsum_1.M();
+  //   auto MSD2=subjetsum_2.M();
+		auto MSD1=AK8_1.softdropmass();
+		auto MSD2=AK8_2.softdropmass();
 
 		hist("M_softdrop_1")->Fill(MSD1,weight); 
 		hist("M_softdrop_2")->Fill(MSD2,weight);
@@ -233,15 +244,17 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
   
 	int Npvs = event.pvs->size();
 	hist("N_pv")->Fill(Npvs, weight);
-  
-	// int NW=0;
-	// Took out for Data!!!
-	// for (const GenParticle & thisgen : *event.genparticles){
-	// 	if(abs(thisgen.pdgId())==24) NW++;
-	// 	hist("pdgID")->Fill(thisgen.pdgId(),weight);
-	// }
-
-
+ 	
+	if(isMC){
+		int NV=0;
+		for (const GenParticle & thisgen : *event.genparticles){
+			if((abs(thisgen.pdgId())==23) || (abs(thisgen.pdgId())==24) ||(abs(thisgen.pdgId())==25)) NV++;
+			hist("pdgID")->Fill(thisgen.pdgId(),weight);
+			hist("pdgID_raw")->Fill(thisgen.pdgId(),1);
+		}
+		hist("N_V")->Fill(NV,weight);
+		hist("N_V_raw")->Fill(NV,1);
+	}
 	// int Nww=0;
 	// int Nvbf=0;
 	// //cout << "GenParticles: " << endl;

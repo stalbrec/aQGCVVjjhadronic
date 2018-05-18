@@ -24,7 +24,7 @@
   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/" PostFix="" TargetLumi="36814.0" >
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
-    <!-- <InputData Lumi="5795.15" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWPjj_hadronic" Cacheable="False"> -->
+    <!-- <InputData Lumi="5795.15" NEventsMax="1000" Type="MC" Version="MC_aQGC_WPWPjj_hadronic" Cacheable="False"> -->
     <!--   &aQGCWPWP; -->
     <!--   <InputTree Name="AnalysisTree" /> -->
     <!--   <OutputTree Name="AnalysisTree" /> -->
@@ -49,7 +49,7 @@
     <!--   <InputTree Name="AnalysisTree" /> -->
     <!--   <OutputTree Name="AnalysisTree" /> -->
     <!-- </InputData> -->
-    <InputData Lumi="1624.87" NEventsMax="1000" Type="MC" Version="MC_aQGC_ZZjj_hadronic_cutflowpreselectiontest" Cacheable="False">
+    <InputData Lumi="1624.87" NEventsMax="1000" Type="MC" Version="MC_aQGC_ZZjj_hadronic_cutflowpreselectionrmeventtest" Cacheable="False">
       &aQGCZZ;
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
@@ -73,8 +73,8 @@
       <Item Name="channel" Value="signal" />
 
       <!-- the class name of the AnalysisModule subclasses to run: -->
-      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicPreSelectionModule" />
       <!-- <Item Name="AnalysisModule" Value="aQGCVVjjhadronicPreSelectionModule" /> -->
+      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicPreSelectionRmEventModule" />
 
       <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
       MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC

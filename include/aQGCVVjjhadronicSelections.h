@@ -2,6 +2,7 @@
 
 #include "UHH2/core/include/fwd.h"
 #include "UHH2/core/include/Selection.h"
+#include "UHH2/common/include/ObjectIdUtils.h"
 
 namespace uhh2examples {
     
@@ -75,4 +76,18 @@ namespace uhh2examples {
     private:
 	float invMass_min;
     };
+		class JetIdSelection: public uhh2::Selection {
+		public:
+			JetIdSelection(const JetId & jetid);
+			virtual bool passes(const uhh2::Event & event) override;
+		private:
+			const JetId & jetid;
+		};
+		class TopJetIdSelection: public uhh2::Selection {
+		public:
+			TopJetIdSelection(const TopJetId & topjetid);
+			virtual bool passes(const uhh2::Event & event) override;
+		private:
+			const TopJetId & topjetid;
+		};
 }
