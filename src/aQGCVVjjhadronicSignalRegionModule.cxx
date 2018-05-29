@@ -64,7 +64,8 @@ namespace uhh2examples {
 	// declare the Selections to use. Use unique_ptr to ensure automatic call of delete in the destructor,
 	// to avoid memory leaks.
 	//std::unique_ptr<Selection> njet_sel, dijet_sel;
-
+	 std::unique_ptr<Selection> muon_sel, electron_sel;//lepton veto
+		
 	std::shared_ptr<Selection> softdropAK8_sel;
 	std::shared_ptr<Selection> tau21_sel;
 
@@ -181,8 +182,12 @@ namespace uhh2examples {
 	/////////////////////////////////////////
 	////////////////SELECTIONS///////////////
 	/////////////////////////////////////////
+
+	muon_sel.reset(new MuonVeto(0.8,MuId)); // see VBFresonanceToWWSelections
+	electron_sel.reset(new ElectronVeto(0.8,EleId)); // see VBFresonanceToWWSelections
+
 	softdropAK8_sel.reset(new VVSoftDropMassSelection(65.f,105.f));
-	tau21_sel.reset(new NSubjettinessTau21Selection(0.0f,0.45f));
+	tau21_sel.reset(new NSubjettinessTau21Selection(0.0f,0.35f));
 
 	nAK4_sel.reset(new NJetSelection(2));
 	EtaSignAK4_sel.reset(new OppositeEtaAK4Selection());
@@ -285,6 +290,10 @@ namespace uhh2examples {
 	//     pileup_SF->process(event);
 	//     lumiweight->process(event);
 	// }
+	bool muon_selection = muon_sel->passes(event);
+	if(!muon_selection) return false;
+	bool electron_selection = electron_sel->passes(event);
+	if(!electron_selection) return false;
 
 	if(isMC){
 		MCWeightModule->process(event);

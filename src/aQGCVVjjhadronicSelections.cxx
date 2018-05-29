@@ -182,3 +182,44 @@ bool TopJetIdSelection::passes(const Event & event){
 	if(event.topjets->size()<2) return false;
 	return topjetid(event.topjets->at(0),event) && topjetid(event.topjets->at(1),event);
 }
+
+
+MuonVeto::MuonVeto(float deltaR_min_, const boost::optional<MuonId> & muid_): deltaR_min(deltaR_min_), muid(muid_){}
+    
+bool MuonVeto::passes(const Event & event){
+	assert(event.topjets); // if this fails, it probably means jets are not read in
+	assert(event.muons); // if this fails, it probably means jets are not read in
+	if(muid)
+		{
+			for(const auto & topjets : *event.topjets)
+				{
+					for(const auto & muons : *event.muons)    
+						{
+							if(deltaR(topjets,muons)  < deltaR_min) return false;
+							else return true;
+						}
+				}
+		}
+	return true;
+    
+}
+
+ElectronVeto::ElectronVeto(float deltaR_min_, const boost::optional<ElectronId> & eleid_): deltaR_min(deltaR_min_), eleid(eleid_){}
+    
+bool ElectronVeto::passes(const Event & event){
+	assert(event.topjets); // if this fails, it probably means jets are not read in
+	assert(event.electrons); // if this fails, it probably means jets are not read in
+	if(eleid)
+		{
+			for(const auto & topjets : *event.topjets)
+				{
+					for(const auto & electrons : *event.electrons)    
+						{
+							if(deltaR(topjets,electrons)  < deltaR_min) return false;
+							else return true;
+						}
+				}
+		}
+	return true;
+    
+}

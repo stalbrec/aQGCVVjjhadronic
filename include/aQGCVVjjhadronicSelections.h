@@ -90,4 +90,20 @@ namespace uhh2examples {
 		private:
 			const TopJetId & topjetid;
 		};
+		class ElectronVeto: public uhh2::Selection {
+		public:
+			ElectronVeto(float deltR_min = 0.8f, const boost::optional<ElectronId> & eleid = boost::none);
+			virtual bool passes(const uhh2::Event & event) override;
+		private:
+			float deltaR_min;
+			boost::optional<ElectronId> eleid;
+		};
+		class MuonVeto: public uhh2::Selection {
+		public:
+			MuonVeto(float deltR_min = 0.8f, const boost::optional<MuonId> & muid = boost::none);
+			virtual bool passes(const uhh2::Event & event) override;
+		private:
+			float deltaR_min;
+			boost::optional<MuonId> muid;
+};
 }
