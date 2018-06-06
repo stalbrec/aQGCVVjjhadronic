@@ -2,12 +2,12 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
 <!--                   Background                   -->
-<!ENTITY MC_TT SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_TT.xml">
+<!ENTITY MC_TT_both SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_TT_both.xml">
 ]>
 
 <!--
-   <ConfigParse NEventsBreak="400000" LastBreak="0" FileSplit="0" />
-   <ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_signal"/>
+<ConfigParse NEventsBreak="400000" LastBreak="0" FileSplit="0" />
+<ConfigSGE RAM ="7" DISK ="5" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_signal"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
@@ -19,7 +19,7 @@
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
 		<InputData Version="MC_TT" Lumi="92847.910" Type="MC" NEventsMax="-1" Cacheable="False">
-      &MC_TT; <InputTree Name="AnalysisTree"/>
+      &MC_TT_both; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
     </InputData>
 
@@ -31,7 +31,7 @@
 
       <Item Name="JetCollection" Value="slimmedJetsPuppi" />
       <Item Name="TopJetCollection" Value="patJetsAk8PuppiJetsSoftDropPacked_daughters" />
-	  <Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
+			<Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
       <Item Name="GenJetCollection" Value="slimmedGenJets" />
       <Item Name="GenTopJetCollection" Value="ak8GenJetsSoftDrop" />
 

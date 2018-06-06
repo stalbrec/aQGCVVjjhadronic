@@ -2,7 +2,7 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
 <!--                   Background                   -->
-<!ENTITY MC_WJetsToQQ_HT600ToInf SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_WJetsToQQ_HT600ToInf.xml">
+<!ENTITY MC_ZJetsToQQ_HT600ToInf SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/MC_ZJetsToQQ_HT600ToInf.xml">
 ]>
 
 <!--
@@ -18,8 +18,8 @@
 	<Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/SidebandRegion/" PostFix="" TargetLumi="36814.0" >
 		<!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
-		<InputData Version="MC_WJetsToQQ_HT600ToInf" Lumi="10789.542" Type="MC" NEventsMax="-1" Cacheable="False">
-			&MC_WJetsToQQ_HT600ToInf; <InputTree Name="AnalysisTree"/>
+		<InputData Version="MC_ZJetsToQQ_HT600ToInf" Lumi="24067.005" Type="MC" NEventsMax="-1" Cacheable="False">
+			&MC_ZJetsToQQ_HT600ToInf; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
 		</InputData>
 
@@ -32,7 +32,7 @@
 			<Item Name="JetCollection" Value="slimmedJetsPuppi" />
 			<Item Name="TopJetCollection" Value="patJetsAk8PuppiJetsSoftDropPacked_daughters" />
 			<Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
-			<Item Name="GenJetCollection" Value="slimmedGenJets" />
+	  	<Item Name="GenJetCollection" Value="slimmedGenJets" />
 			<Item Name="GenTopJetCollection" Value="ak8GenJetsSoftDrop" />
 
 			<Item Name="METName" Value="slimmedMETsPuppi" />
@@ -44,8 +44,8 @@
 			<Item Name="AnalysisModule" Value="aQGCVVjjhadronicSidebandRegionModule" />
 
 			<!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
-			MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
-			event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
+					 MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
+					 event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
 
 			<!-- configuration for MCPileupReweight (run as part of CommonModules): -->
 			<!-- <Item Name="pileup_directory" Value="" /> -->

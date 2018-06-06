@@ -72,7 +72,7 @@
 
       <Item Name="JetCollection" Value="slimmedJetsPuppi" />
       <Item Name="TopJetCollection" Value="patJetsAk8PuppiJetsSoftDropPacked_daughters" />
-	  <Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
+			<Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
       <Item Name="GenJetCollection" Value="slimmedGenJets" />
       <Item Name="GenTopJetCollection" Value="ak8GenJetsSoftDrop" />
 
@@ -85,27 +85,27 @@
 
 			<!-- The list of available collections to read in corresponds to the pointer members in event. The 'Name's to use here in the configuration are:
 
-           PrimaryVertexCollection
-           ElectronCollection
-           MuonCollection
-           TauCollection
-           PhotonCollection
-           JetCollection
-           TopJetCollection
-           METName
+PrimaryVertexCollection
+ElectronCollection
+MuonCollection
+TauCollection
+PhotonCollection
+JetCollection
+TopJetCollection
+METName
 
-           GenInfoName
-           GenJetCollection
-           GenTopJetCollection
-           GenParticleCollection
+GenInfoName
+GenJetCollection
+GenTopJetCollection
+GenParticleCollection
 
-           Note that the last four are only read in for MC (InputData Type="MC"), so it is save to specify
-           them for real data, although those branches do not exist.
+Note that the last four are only read in for MC (InputData Type="MC"), so it is save to specify
+them for real data, although those branches do not exist.
 
-           As 'Value', always use the branch name (if in doubt, open the input file in ROOT).
+As 'Value', always use the branch name (if in doubt, open the input file in ROOT).
 
-           By default, triggers are read. To explicitly disable reading triggers, use:
-           <Item Name="readTrigger" Value="false" />
+By default, triggers are read. To explicitly disable reading triggers, use:
+<Item Name="readTrigger" Value="false" />
       -->
 
       <!-- the class name of the AnalysisModule subclasses to run: -->

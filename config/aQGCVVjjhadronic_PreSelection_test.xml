@@ -77,8 +77,8 @@
       <Item Name="AnalysisModule" Value="aQGCVVjjhadronicPreSelectionRmEventModule" />
 
       <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
-      MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
-      event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
+					 MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
+					 event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
       <Item Name="use_sframe_weight" Value="false" />
 
       <!-- configuration for MCPileupReweight (run as part of CommonModules): -->
