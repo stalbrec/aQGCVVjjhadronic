@@ -99,6 +99,7 @@ namespace uhh2examples {
 	// declare the Selections to use. Use unique_ptr to ensure automatic call of delete in the destructor,
 	// to avoid memory leaks.
 	//std::unique_ptr<Selection> njet_sel, dijet_sel;
+	 std::unique_ptr<Selection> muon_sel, electron_sel;//lepton veto
 
 	std::shared_ptr<Selection> nAK8_sel;
 	std::shared_ptr<Selection> invMassAK8_sel;
@@ -122,6 +123,14 @@ namespace uhh2examples {
 	std::unique_ptr<Hists> h_muon_nocuts;
 
 	std::unique_ptr<Hists> h_common;
+
+	//After Muon Veto 
+	std::unique_ptr<Hists> h_muonveto;
+	std::unique_ptr<Hists> h_muon_muonveto;
+  //After Electron Veto 
+	std::unique_ptr<Hists> h_eleveto;
+	std::unique_ptr<Hists> h_ele_eleveto;
+
 	std::unique_ptr<Hists> h_corrections;
 
 	//After Cleaner
@@ -268,7 +277,8 @@ namespace uhh2examples {
 	}
 	common->init(ctx);
 
-
+	muon_sel.reset(new MuonVeto(0.8,MuId));
+	electron_sel.reset(new ElectronVeto(0.8,EleId));
 
 	ak8cleaner.reset(new TopJetCleaner(ctx,TopJetId(PtEtaCut(200.0,2.5))));
 	ak4cleaner.reset(new JetCleaner(ctx, 30.0, 5.0));
@@ -324,9 +334,17 @@ namespace uhh2examples {
 	h_muon_nocuts.reset(new MuonHists(ctx,"muon_nocuts"));
 
 	h_common.reset(new aQGCVVjjhadronicHists(ctx,"common"));
+
+
+	h_muonveto.reset(new aQGCVVjjhadronicHists(ctx,"muonveto"));
+	h_muon_muonveto.reset(new MuonHists(ctx,"muon_muonveto"));
+	
+	h_eleveto.reset(new aQGCVVjjhadronicHists(ctx,"eleveto"));
+	h_ele_eleveto.reset(new ElectronHists(ctx,"electron_eleveto"));
+
 	h_corrections.reset(new aQGCVVjjhadronicHists(ctx,"corrections"));
 
-
+	
 	//After Cleaner
 	h_cleaner.reset(new aQGCVVjjhadronicHists(ctx,"cleaner"));
 	h_AK8jets_cleaner.reset(new TopJetHists(ctx,"AK8_cleaner"));
@@ -426,12 +444,21 @@ namespace uhh2examples {
 	// }
 
 	if(EXTRAOUT)std::cout << "Input Hists done!"<<std::endl;
-
+	
 	bool common_pass=common->process(event);
 	if(!common_pass) return false;
 	h_common->fill(event);
 	if(EXTRAOUT)std::cout << "common done!"<<std::endl;
 
+	bool muon_selection = muon_sel->passes(event);
+	if(!muon_selection) return false;
+	h_muonveto->fill(event);
+	h_muon_muonveto->fill(event);
+	bool electron_selection = electron_sel->passes(event);
+	if(!electron_selection) return false;
+	h_eleveto->fill(event);
+	h_ele_eleveto->fill(event);
+	
 	if(EXTRAOUT)genparticle_printer->process(event);
 
 	// if(isMC){

@@ -37,10 +37,10 @@ namespace uhh2examples {
      * This is the central class which calls other AnalysisModules, Hists or Selection classes.
      * This AnalysisModule, in turn, is called (via AnalysisModuleRunner) by SFrame.
      */
-    class aQGCVVjjhadronicHIGHSidebandRegionModule: public AnalysisModule {
+    class aQGCVVjjhadronicSidebandRegionModule: public AnalysisModule {
     public:
 
-	explicit aQGCVVjjhadronicHIGHSidebandRegionModule(Context & ctx);
+	explicit aQGCVVjjhadronicSidebandRegionModule(Context & ctx);
 	virtual bool process(Event & event) override;
 
     private:
@@ -64,7 +64,6 @@ namespace uhh2examples {
 	// declare the Selections to use. Use unique_ptr to ensure automatic call of delete in the destructor,
 	// to avoid memory leaks.
 	//std::unique_ptr<Selection> njet_sel, dijet_sel;
-	std::unique_ptr<Selection> muon_sel, electron_sel;//lepton veto
 
 	std::shared_ptr<Selection> softdropAK8_sel;
 	std::shared_ptr<Selection> tau21_sel;
@@ -156,12 +155,10 @@ namespace uhh2examples {
 
 	bool isMC;
 
-	MuonId     MuId;
-	ElectronId EleId;
     };
 
 
-	aQGCVVjjhadronicHIGHSidebandRegionModule::aQGCVVjjhadronicHIGHSidebandRegionModule(Context & ctx): AK8_selections(ctx, "AK8_selections"),AK4_selections(ctx, "AK4_selections"){
+	aQGCVVjjhadronicSidebandRegionModule::aQGCVVjjhadronicSidebandRegionModule(Context & ctx): AK8_selections(ctx, "AK8_selections"),AK4_selections(ctx, "AK4_selections"){
   isMC = (ctx.get("dataset_type") == "MC");
 	channel_ = ctx.get("channel");
 	version_ = ctx.get("dataset_version");
@@ -183,11 +180,9 @@ namespace uhh2examples {
 	////////////////SELECTIONS///////////////
 	/////////////////////////////////////////
 
-	muon_sel.reset(new MuonVeto(0.8,MuId)); // see VBFresonanceToWWSelections
-	electron_sel.reset(new ElectronVeto(0.8,EleId)); // see VBFresonanceToWWSelections
 
 	softdropAK8_sel.reset(new SidebandVVSoftDropMassSelection(65.f,105.f,135.f));
-	tau21_sel.reset(new NSubjettinessTau21Selection(0.0f,0.35f));
+	tau21_sel.reset(new NSubjettinessTau21Selection(0.0f,0.45f));
 
 	nAK4_sel.reset(new NJetSelection(2));
 	EtaSignAK4_sel.reset(new OppositeEtaAK4Selection());
@@ -281,9 +276,9 @@ namespace uhh2examples {
     }
 
 
-    bool aQGCVVjjhadronicHIGHSidebandRegionModule::process(Event & event) {
+    bool aQGCVVjjhadronicSidebandRegionModule::process(Event & event) {
 
-	//cout << "aQGCVVjjhadronicHIGHSidebandRegionModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
+	//cout << "aQGCVVjjhadronicSidebandRegionModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
 
 	// 1. run all modules other modules.
 	// if(!event.isRealData){
@@ -291,10 +286,6 @@ namespace uhh2examples {
 	//     lumiweight->process(event);
 	// }
 
-	bool muon_selection = muon_sel->passes(event);
-	if(!muon_selection) return false;
-	bool electron_selection = electron_sel->passes(event);
-	if(!electron_selection) return false;
 			
 	if(isMC){
 		MCWeightModule->process(event);
@@ -426,7 +417,7 @@ namespace uhh2examples {
     }
 
     // as we want to run the ExampleCycleNew directly with AnalysisModuleRunner,
-    // make sure the aQGCVVjjhadronicHIGHSidebandRegionModule is found by class name. This is ensured by this macro:
-    UHH2_REGISTER_ANALYSIS_MODULE(aQGCVVjjhadronicHIGHSidebandRegionModule)
+    // make sure the aQGCVVjjhadronicSidebandRegionModule is found by class name. This is ensured by this macro:
+    UHH2_REGISTER_ANALYSIS_MODULE(aQGCVVjjhadronicSidebandRegionModule)
 
 }
