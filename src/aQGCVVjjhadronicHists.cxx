@@ -64,6 +64,7 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
 	book<TH1F>("eta_AK8_2", "#eta^{2nd AK8 jet}", 40, -6.5, 6.5);
 	book<TH1F>("pT_AK8_12", "p_{T}^{leading AK8 jets} [GeV/c]", 80 ,0 ,8000);
 	book<TH1F>("eta_AK8_12", "#eta^{leading AK8 jets}", 40, -6.5, 6.5);
+	book<TH1F>("M_softdrop","M_{softdrop,AK8 jets} [GeV/c^{2}]",100,0,300);
 	book<TH1F>("M_softdrop_1","M_{softdrop,1st AK8 jet} [GeV/c^{2}]",100,0,300);
 	book<TH1F>("M_softdrop_2","M_{softdrop,2nd AK8 jet} [GeV/c^{2}]",100,0,300);
 	book<TH1F>("M_softdrop_12","M_{softdrop, leading AK8 jets} [GeV/c^{2}]",100,0,300);
@@ -80,6 +81,7 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
   book<TH1F>("tau21_12", "#tau_{2}/#tau_{1} (leading AK8 jets)", 50, 0, 1.0);
 
 	book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",NBINS-1,BOUNDARIES);
+	book<TH1F>("M_jj_AK8_raw", "M_{jj-AK8} [GeV/c^{2}]",NBINS-1,BOUNDARIES);
 	book<TH1F>("M_jj_AK8_highbin", "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
 	// book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",nBins-1,xbins);
 
@@ -164,6 +166,7 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 		hist("pT_AK8")->Fill(thisjet.pt(),weight);
 		hist("eta_AK8")->Fill(thisjet.eta(),weight);
 		hist("M_AK8")->Fill(thisjet.v4().M(),weight);
+		hist("M_softdrop")->Fill(thisjet.softdropmass(),weight);
 	}
 
 	if(N_AK8>=1){
@@ -182,6 +185,7 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
 		hist("M_AK8_12")->Fill(AK8Jets->at(0).v4().M(),weight);
 		hist("M_AK8_12")->Fill(AK8Jets->at(1).v4().M(),weight);
 		hist("M_jj_AK8")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight);
+		hist("M_jj_AK8_raw")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),1);
 		hist("M_jj_AK8_highbin")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight);
 
     auto detaAK8 = fabs(event.topjets->at(0).eta()-event.topjets->at(1).eta());
