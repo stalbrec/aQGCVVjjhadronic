@@ -24,32 +24,32 @@
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
     <InputData Lumi="5795.15" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWPjj_hadronic" Cacheable="False">
-			<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPWPjj_hadronic.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPWPjj_hadronic.root" Lumi="0.0"/>
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
     <InputData Lumi="488.64" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWMjj_hadronic" Cacheable="False">
-			<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPWMjj_hadronic.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPWMjj_hadronic.root" Lumi="0.0"/>
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
     <InputData Lumi="36573.91" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMWMjj_hadronic" Cacheable="False">
-			<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WMWMjj_hadronic.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WMWMjj_hadronic.root" Lumi="0.0"/>
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
     <InputData Lumi="5224.39" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPZjj_hadronic" Cacheable="False">
-			<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPZjj_hadronic.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPZjj_hadronic.root" Lumi="0.0"/>
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
     <InputData Lumi="12406.67" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMZjj_hadronic" Cacheable="False">
-			<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WMZjj_hadronic.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WMZjj_hadronic.root" Lumi="0.0"/>
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
     <InputData Lumi="1624.87" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic" Cacheable="False">
-			<In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic.root" Lumi="0.0"/>
+      <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic.root" Lumi="0.0"/>
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
@@ -62,7 +62,7 @@
 
       <Item Name="JetCollection" Value="slimmedJetsPuppi" />
       <Item Name="TopJetCollection" Value="patJetsAk8PuppiJetsSoftDropPacked_daughters" />
-			<Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
+      <Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
       <Item Name="GenJetCollection" Value="slimmedGenJets" />
       <Item Name="GenTopJetCollection" Value="ak8GenJetsSoftDrop" />
 
@@ -75,8 +75,8 @@
       <Item Name="AnalysisModule" Value="aQGCVVjjhadronicSidebandRegionModule" />
 
       <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
-					 MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
-					 event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
+	   MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
+	   event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
       <Item Name="use_sframe_weight" Value="false" />
 
       <!-- configuration for MCPileupReweight (run as part of CommonModules): -->

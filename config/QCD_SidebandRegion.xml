@@ -62,7 +62,7 @@
 
       <Item Name="JetCollection" Value="slimmedJetsPuppi" />
       <Item Name="TopJetCollection" Value="patJetsAk8PuppiJetsSoftDropPacked_daughters" />
-			<Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
+      <Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
       <Item Name="GenJetCollection" Value="slimmedGenJets" />
       <Item Name="GenTopJetCollection" Value="ak8GenJetsSoftDrop" />
 

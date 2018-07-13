@@ -25,44 +25,44 @@
   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/SidebandRegion/" PostFix="" TargetLumi="36814.0" >
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
-		<InputData Version="DATA_JetHT_Run2016B" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
+    <InputData Version="DATA_JetHT_Run2016B" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
       &DATA_JetHT_Run2016B; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
-		</InputData>
+    </InputData>
 
-		<InputData Version="DATA_JetHT_Run2016C" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
+    <InputData Version="DATA_JetHT_Run2016C" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
       &DATA_JetHT_Run2016C; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
-		</InputData>
+    </InputData>
 
-		<InputData Version="DATA_JetHT_Run2016D" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
+    <InputData Version="DATA_JetHT_Run2016D" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
       &DATA_JetHT_Run2016D; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
-		</InputData>
+    </InputData>
 
-		<InputData Version="DATA_JetHT_Run2016E" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
+    <InputData Version="DATA_JetHT_Run2016E" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
       &DATA_JetHT_Run2016E; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
-		</InputData>
+    </InputData>
 
-		<InputData Version="DATA_JetHT_Run2016F" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
+    <InputData Version="DATA_JetHT_Run2016F" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
       &DATA_JetHT_Run2016F; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
-		</InputData>
+    </InputData>
 
-		<InputData Version="DATA_JetHT_Run2016G" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
+    <InputData Version="DATA_JetHT_Run2016G" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
       &DATA_JetHT_Run2016G; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
-		</InputData>
+    </InputData>
 
-		<InputData Version="DATA_JetHT_Run2016H_ver2" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
+    <InputData Version="DATA_JetHT_Run2016H_ver2" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
       &DATA_JetHT_Run2016H_ver2; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
-		</InputData>
-		<InputData Version="DATA_JetHT_Run2016H_ver3" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
+    </InputData>
+    <InputData Version="DATA_JetHT_Run2016H_ver3" Lumi="1" Type="Data" NEventsMax="-1" Cacheable="False">
       &DATA_JetHT_Run2016H_ver3; <InputTree Name="AnalysisTree"/>
       <OutputTree Name="AnalysisTree"/>
-		</InputData>
+    </InputData>
 
     <UserConfig>
       <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" />
@@ -72,7 +72,7 @@
 
       <Item Name="JetCollection" Value="slimmedJetsPuppi" />
       <Item Name="TopJetCollection" Value="patJetsAk8PuppiJetsSoftDropPacked_daughters" />
-			<Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
+      <Item Name="additionalBranches" Value="patJetsAK8PFPUPPI" />
       <Item Name="GenJetCollection" Value="slimmedGenJets" />
       <Item Name="GenTopJetCollection" Value="ak8GenJetsSoftDrop" />
 
@@ -80,10 +80,10 @@
       <Item Name="GenParticleCollection" Value="GenParticles" />
       <Item Name="GenInfoName" Value="genInfo" />
       <Item Name="channel" Value="data" />
-			<Item Name="lumi_file" Value="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/data/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.root" />
+      <Item Name="lumi_file" Value="/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/data/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.root" />
 
 
-			<!-- The list of available collections to read in corresponds to the pointer members in event. The 'Name's to use here in the configuration are:
+      <!-- The list of available collections to read in corresponds to the pointer members in event. The 'Name's to use here in the configuration are:
 
 PrimaryVertexCollection
 ElectronCollection
