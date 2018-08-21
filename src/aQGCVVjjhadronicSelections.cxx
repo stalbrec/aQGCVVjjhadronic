@@ -7,6 +7,38 @@ using namespace uhh2examples;
 using namespace uhh2;
 
 
+MqqSelection::MqqSelection(float mqq_min_): mqq_min(mqq_min_){}
+    
+bool MqqSelection::passes(const Event & event){
+  assert(event.genparticles);
+  if(event.genparticles->size() < 2) return false;
+	int i(0);
+	int j(0);
+	for (int l=0;l<event.genparticles->size();l++){
+		auto genpar=event.genparticles->at(l);
+		if( (genpar.mother1()==0 && genpar.mother2()==1) && genpar.pdgId() !=23){
+			if(j==0){
+				j=genpar.index();
+			}else{
+				i=genpar.index();
+			}
+		}
+		if( (genpar.mother1()==1 && genpar.mother2()==0) && genpar.pdgId() !=23){
+			if(j==0){
+				j=genpar.index();
+			}else{
+				i=genpar.index();
+			}
+		}
+	}
+	if(j!=4 || i!=5) return false;
+	// std::cout << "quark indices: "<<j<<", "<<i<<std::endl;
+	const auto & genquark0 = event.genparticles->at(4);
+  const auto & genquark1 = event.genparticles->at(5);
+  auto invMass = (genquark0.v4()+genquark1.v4()).M();
+	return ( invMass > mqq_min );
+}
+
 DijetSelection::DijetSelection(float dphi_min_, float third_frac_max_): dphi_min(dphi_min_), third_frac_max(third_frac_max_){}
     
 bool DijetSelection::passes(const Event & event){
