@@ -302,9 +302,9 @@ namespace uhh2examples {
 
     // 2. set up selections
 
-    nAK8_sel.reset(new NTopJetSelection(2));
     invMassAK8_sel.reset(new invMassAK8JetSelection(1050.0f));
     deltaEtaAK8_sel.reset(new deltaEtaAk8Selection(1.3f));
+    nAK8_sel.reset(new NTopJetSelection(2));
 
     // AK4PFIDFilter.reset(new NJetSelection(0,-1,JetPFID(JetPFID::WP_LOOSE_PUPPI)));
     // AK8PFIDFilter.reset(new NTopJetSelection(0,-1,JetPFID(JetPFID::WP_LOOSE_PUPPI)));
@@ -313,9 +313,9 @@ namespace uhh2examples {
 
     // cutflow_selections.add("AK4PFIDFilter",AK4PFIDSelection);
     // cutflow_selections.add("AK8PFIDFilter",AK8PFIDSelection);
-    cutflow_selections.add("N_{AK8}>2",nAK8_sel);
     cutflow_selections.add("M_{jj-AK8}>1050 GeV",invMassAK8_sel);
     cutflow_selections.add("#Delta#eta<1.3",deltaEtaAK8_sel);
+    cutflow_selections.add("N_{AK8}>2",nAK8_sel);
 
     if(EXTRAOUT){
       std::cout << "Selections set up" <<std::endl;
@@ -357,10 +357,6 @@ namespace uhh2examples {
     h_AK4pfidfilter.reset(new aQGCVVjjhadronicHists(ctx,"AK4pfidfilter"));
     h_AK8pfidfilter.reset(new aQGCVVjjhadronicHists(ctx,"AK8pfidfilter"));
 
-    //After N_AK8>=2 Cut
-    h_AK8N2sel.reset(new aQGCVVjjhadronicHists(ctx,"AK8N2sel"));
-    h_AK8jets_AK8N2sel.reset(new TopJetHists(ctx,"AK8_AK8N2sel"));
-    h_AK4jets_AK8N2sel.reset(new JetHists(ctx,"AK4_AK8N2sel"));
 
     //After invariant Mass AK8 Cut
     h_invMAk8sel.reset(new aQGCVVjjhadronicHists(ctx,"invMAk8sel"));
@@ -371,6 +367,11 @@ namespace uhh2examples {
     h_detaAk8sel.reset(new aQGCVVjjhadronicHists(ctx,"detaAk8sel"));
     h_AK8jets_detaAk8sel.reset(new TopJetHists(ctx,"AK8_detaAk8sel"));
     h_AK4jets_detaAk8sel.reset(new JetHists(ctx,"AK4_detaAk8sel"));
+
+    //After N_AK8>=2 Cut
+    h_AK8N2sel.reset(new aQGCVVjjhadronicHists(ctx,"AK8N2sel"));
+    h_AK8jets_AK8N2sel.reset(new TopJetHists(ctx,"AK8_AK8N2sel"));
+    h_AK4jets_AK8N2sel.reset(new JetHists(ctx,"AK4_AK8N2sel"));
 
     if(EXTRAOUT){
       std::cout << "Hists set up"<<std::endl;
@@ -560,13 +561,6 @@ namespace uhh2examples {
     h_AK8pfidfilter->fill(event);
 
 
-    //N_AK8>2 Cut
-    bool nAK8_selection = nAK8_sel->passes(event);
-    if(!nAK8_selection) return false;
-    h_AK8N2sel->fill(event);
-    h_AK8jets_AK8N2sel->fill(event);
-    h_AK4jets_AK8N2sel->fill(event);
-    if(EXTRAOUT)std::cout << "N_AK8 Sel done!"<<std::endl;
 
     //After invariant Mass AK8 Cut
     bool invMassAK8_selection = invMassAK8_sel->passes(event);
@@ -583,6 +577,14 @@ namespace uhh2examples {
     h_AK8jets_detaAk8sel->fill(event);
     h_AK4jets_detaAk8sel->fill(event);
     if(EXTRAOUT)std::cout << "deltaEta AK8 Cut done!"<<std::endl;
+
+		//N_AK8>2 Cut
+    bool nAK8_selection = nAK8_sel->passes(event);
+    if(!nAK8_selection) return false;
+    h_AK8N2sel->fill(event);
+    h_AK8jets_AK8N2sel->fill(event);
+    h_AK4jets_AK8N2sel->fill(event);
+    if(EXTRAOUT)std::cout << "N_AK8 Sel done!"<<std::endl;
 
     // // 3. decide whether or not to keep the current event in the output:
     // return njet_selection && dijet_selection;
