@@ -11,7 +11,7 @@
 ]>
 
 <!--
-<ConfigParse NEventsBreak="400000" LastBreak="0" FileSplit="0" />
+<ConfigParse NEventsBreak="40000" LastBreak="0" FileSplit="0" />
 <ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_jes_presel_nom"/>
 -->
 
@@ -21,35 +21,35 @@
   <Package Name="SUHH2aQGCVVjjhadronic.par" />
 
   <!-- <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/SignalRegion/" PostFix="" TargetLumi="1" > -->
-  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/JEScaleStuy/PreSelection/NOMINAL/" PostFix="" TargetLumi="36814.0" >
+  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/JEScaleStudy/PreSelection/NOMINAL/" PostFix="" TargetLumi="36814.0" >
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
-    <InputData Lumi="5795.15" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWPjj_hadronic" Cacheable="False">
-      &aQGCWPWP;
-      <InputTree Name="AnalysisTree" />
-      <OutputTree Name="AnalysisTree" />
-    </InputData>
-    <InputData Lumi="488.64" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWMjj_hadronic" Cacheable="False">
-      &aQGCWPWM;
-      <InputTree Name="AnalysisTree" />
-      <OutputTree Name="AnalysisTree" />
-    </InputData>
-    <InputData Lumi="36573.91" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMWMjj_hadronic" Cacheable="False">
-      &aQGCWMWM;
-      <InputTree Name="AnalysisTree" />
-      <OutputTree Name="AnalysisTree" />
-    </InputData>
-    <InputData Lumi="5224.39" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPZjj_hadronic" Cacheable="False">
-      &aQGCWPZ;
-      <InputTree Name="AnalysisTree" />
-      <OutputTree Name="AnalysisTree" />
-    </InputData>
-    <InputData Lumi="12406.67" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMZjj_hadronic" Cacheable="False">
-      &aQGCWMZ;
-      <InputTree Name="AnalysisTree" />
-      <OutputTree Name="AnalysisTree" />
-    </InputData>
-    <InputData Lumi="1624.87" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic" Cacheable="False">
+    <!-- <InputData Lumi="5795.15" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWPjj_hadronic" Cacheable="False"> -->
+    <!--   &aQGCWPWP; -->
+    <!--   <InputTree Name="AnalysisTree" /> -->
+    <!--   <OutputTree Name="AnalysisTree" /> -->
+    <!-- </InputData> -->
+    <!-- <InputData Lumi="488.64" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWMjj_hadronic" Cacheable="False"> -->
+    <!--   &aQGCWPWM; -->
+    <!--   <InputTree Name="AnalysisTree" /> -->
+    <!--   <OutputTree Name="AnalysisTree" /> -->
+    <!-- </InputData> -->
+    <!-- <InputData Lumi="36573.91" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMWMjj_hadronic" Cacheable="False"> -->
+    <!--   &aQGCWMWM; -->
+    <!--   <InputTree Name="AnalysisTree" /> -->
+    <!--   <OutputTree Name="AnalysisTree" /> -->
+    <!-- </InputData> -->
+    <!-- <InputData Lumi="5224.39" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPZjj_hadronic" Cacheable="False"> -->
+    <!--   &aQGCWPZ; -->
+    <!--   <InputTree Name="AnalysisTree" /> -->
+    <!--   <OutputTree Name="AnalysisTree" /> -->
+    <!-- </InputData> -->
+    <!-- <InputData Lumi="12406.67" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMZjj_hadronic" Cacheable="False"> -->
+    <!--   &aQGCWMZ; -->
+    <!--   <InputTree Name="AnalysisTree" /> -->
+    <!--   <OutputTree Name="AnalysisTree" /> -->
+    <!-- </InputData> -->
+    <InputData Lumi="17069.48" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic" Cacheable="False">
       &aQGCZZ;
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
