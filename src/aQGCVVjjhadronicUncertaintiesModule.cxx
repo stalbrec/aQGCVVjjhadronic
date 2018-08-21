@@ -23,7 +23,7 @@
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicSelections.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicMjjHists.h"
-#include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicPDFHists.h"
+#include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicUncertaintiesHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/VBFresonanceToWW_WTopJetHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicGenHists.h"
 
@@ -39,10 +39,10 @@ namespace uhh2examples {
    * This is the central class which calls other AnalysisModules, Hists or Selection classes.
    * This AnalysisModule, in turn, is called (via AnalysisModuleRunner) by SFrame.
    */
-  class aQGCVVjjhadronicPDFModule: public AnalysisModule {
+  class aQGCVVjjhadronicUncertaintiesModule: public AnalysisModule {
   public:
 
-    explicit aQGCVVjjhadronicPDFModule(Context & ctx);
+    explicit aQGCVVjjhadronicUncertaintiesModule(Context & ctx);
     virtual bool process(Event & event) override;
 
   private:
@@ -82,10 +82,10 @@ namespace uhh2examples {
     // store the Hists collection as member variables. Again, use unique_ptr to avoid memory leaks.
 
     std::unique_ptr<Hists> h_MjjHistsVVRegion;
-    std::unique_ptr<Hists> h_PDFHistsVVRegion;
+    std::unique_ptr<Hists> h_UncertaintiesHistsVVRegion;
 
     std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p0;
-    std::unique_ptr<Hists> h_PDFHistsinvMAk4sel_1p0;
+    std::unique_ptr<Hists> h_UncertaintiesHistsinvMAk4sel_1p0;
 
     const int runNR_BCD = 276811;
     const int runNR_EF = 278802;
@@ -97,7 +97,7 @@ namespace uhh2examples {
   };
 
 
-  aQGCVVjjhadronicPDFModule::aQGCVVjjhadronicPDFModule(Context & ctx){
+  aQGCVVjjhadronicUncertaintiesModule::aQGCVVjjhadronicUncertaintiesModule(Context & ctx){
     isMC = (ctx.get("dataset_type") == "MC");
     channel_ = ctx.get("channel");
     version_ = ctx.get("dataset_version");
@@ -142,10 +142,10 @@ namespace uhh2examples {
     /////////////////////////////////////////
 
     h_MjjHistsVVRegion.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_VVRegion"));
-    h_PDFHistsVVRegion.reset(new aQGCVVjjhadronicPDFHists(ctx,"PDFHists_VVRegion",reweight_index_));
+    h_UncertaintiesHistsVVRegion.reset(new aQGCVVjjhadronicUncertaintiesHists(ctx,"UncertaintiesHists_VVRegion",reweight_index_));
 
     h_MjjHistsinvMAk4sel_1p0.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0"));
-    h_PDFHistsinvMAk4sel_1p0.reset(new aQGCVVjjhadronicPDFHists(ctx,"PDFHists_invMAk4sel_1p0",reweight_index_));
+    h_UncertaintiesHistsinvMAk4sel_1p0.reset(new aQGCVVjjhadronicUncertaintiesHists(ctx,"UncertaintiesHists_invMAk4sel_1p0",reweight_index_));
 
     if(EXTRAOUT){
       std::cout << "Hists set up"<<std::endl;
@@ -154,9 +154,9 @@ namespace uhh2examples {
   }
 
 
-  bool aQGCVVjjhadronicPDFModule::process(Event & event) {
+  bool aQGCVVjjhadronicUncertaintiesModule::process(Event & event) {
 
-    //cout << "aQGCVVjjhadronicPDFModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
+    //cout << "aQGCVVjjhadronicUncertaintiesModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
 
     // 1. run all modules other modules.
     // if(!event.isRealData){
@@ -222,7 +222,7 @@ namespace uhh2examples {
       if(channel_=="signal"){
 	// if(version_.find("ZZ") != std::string::npos)
 	h_MjjHistsVVRegion->fill(event);
-	h_PDFHistsVVRegion->fill(event);
+	h_UncertaintiesHistsVVRegion->fill(event);
       }
     }
     if(EXTRAOUT)std::cout << "VV done!"<<std::endl;
@@ -238,14 +238,14 @@ namespace uhh2examples {
     if(!invMassAK4_1p0_selection) return false;
     if(channel_=="signal"){
       h_MjjHistsinvMAk4sel_1p0->fill(event);
-      h_PDFHistsinvMAk4sel_1p0->fill(event);
+      h_UncertaintiesHistsinvMAk4sel_1p0->fill(event);
     }
     if(EXTRAOUT)std::cout << "invariant Mass AK4 Cut (1.0TeV) done!"<<std::endl;
     return true;
   }
 
   // as we want to run the ExampleCycleNew directly with AnalysisModuleRunner,
-  // make sure the aQGCVVjjhadronicPDFModule is found by class name. This is ensured by this macro:
-  UHH2_REGISTER_ANALYSIS_MODULE(aQGCVVjjhadronicPDFModule)
+  // make sure the aQGCVVjjhadronicUncertaintiesModule is found by class name. This is ensured by this macro:
+  UHH2_REGISTER_ANALYSIS_MODULE(aQGCVVjjhadronicUncertaintiesModule)
 
 }

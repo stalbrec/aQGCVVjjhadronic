@@ -1,4 +1,4 @@
-#include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicPDFHists.h"
+#include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicUncertaintiesHists.h"
 #include "UHH2/core/include/Event.h"
 
 #include "TH1F.h"
@@ -10,7 +10,7 @@ using namespace uhh2;
 using namespace uhh2examples;
 
 
-aQGCVVjjhadronicPDFHists::aQGCVVjjhadronicPDFHists(Context & ctx, const string & dirname,const int parameter_index_): Hists(ctx, dirname), parameter_index(parameter_index_) {
+aQGCVVjjhadronicUncertaintiesHists::aQGCVVjjhadronicUncertaintiesHists(Context & ctx, const string & dirname,const int parameter_index_): Hists(ctx, dirname), parameter_index(parameter_index_) {
 
   if(parameter_index<83){
     std::string parameter_string="S0";
@@ -68,17 +68,23 @@ aQGCVVjjhadronicPDFHists::aQGCVVjjhadronicPDFHists(Context & ctx, const string &
     reweight_name=getParNamePDF("T9",-12.00f,0.30f,parameter_index-1359);
   }	
     
-  std::string AK8_hist_name="M_jj_AK8_"+ reweight_name;
-  AK8_hist_name=AK8_hist_name+"_pdf_";
+  std::string AK8_hist_name_pdf="M_jj_AK8_"+ reweight_name;
+  AK8_hist_name_pdf=AK8_hist_name_pdf+"_pdf_";
   for(unsigned int j=0 ; j< 103;j++){
-    std::string pdf_AK8_hist_name=AK8_hist_name+std::to_string(j);
+    std::string pdf_AK8_hist_name=AK8_hist_name_pdf+std::to_string(j);
+    book<TH1F>(pdf_AK8_hist_name, "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);    
+  }
+  std::string AK8_hist_name_scale="M_jj_AK8_"+ reweight_name;
+  AK8_hist_name_scale=AK8_hist_name_scale+"_scale_";
+  for(unsigned int j=0 ; j< 9;j++){
+    std::string pdf_AK8_hist_name=AK8_hist_name_scale+std::to_string(j);
     book<TH1F>(pdf_AK8_hist_name, "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);    
   }
 	
 }
 
 
-void aQGCVVjjhadronicPDFHists::fill(const Event & event){
+void aQGCVVjjhadronicUncertaintiesHists::fill(const Event & event){
   // fill the histograms. Please note the comments in the header file:
   // 'hist' is used here a lot for simplicity, but it will be rather
   // slow when you have many histograms; therefore, better
@@ -99,20 +105,27 @@ void aQGCVVjjhadronicPDFHists::fill(const Event & event){
   if(N_AK8>2){ 
     std::string hist_name="M_jj_AK8_"+ reweight_name;
     hist_name=hist_name+"_pdf_";
-		
     auto fillweight=event.weight * event.genInfo->systweights().at(parameter_index+N_pdfwgt) / event.genInfo->originalXWGTUP();
     for(unsigned int j=0 ; j< 103;j++){
-      auto pdf_fillweight=event.genInfo->systweights().at(j) * fillweight;
+      auto pdf_fillweight=fillweight * event.genInfo->systweights().at(j+9) / event.genInfo->originalXWGTUP();
       std::string pdf_hist_name=hist_name+std::to_string(j);
 			
-      hist(pdf_hist_name.c_str())->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),pdf_fillweight);    
+      hist(pdf_hist_name.c_str())->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),pdf_fillweight);    			
     }
-		
+
+		std::string hist_name_scale="M_jj_AK8_"+ reweight_name;
+    hist_name_scale=hist_name_scale+"_scale_";
+    for(unsigned int j=0 ; j< 9;j++){
+      auto scale_fillweight=fillweight * event.genInfo->systweights().at(j) / event.genInfo->originalXWGTUP();
+      std::string scale_hist_name=hist_name_scale+std::to_string(j);			
+      hist(scale_hist_name.c_str())->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),scale_fillweight);    			
+    }
+
   }
   
 }
 
-aQGCVVjjhadronicPDFHists::~aQGCVVjjhadronicPDFHists(){}
+aQGCVVjjhadronicUncertaintiesHists::~aQGCVVjjhadronicUncertaintiesHists(){}
 
 
 std::string getParNamePDF(std::string set, float startx, float increment,int i){
