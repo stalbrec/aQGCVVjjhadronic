@@ -8,6 +8,7 @@
 <!ENTITY aQGCWPZ SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWPZ.xml">
 <!ENTITY aQGCWMZ SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWMZ.xml">
 <!ENTITY aQGCZZ SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCZZ.xml">
+<!ENTITY highstat SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCZZ.xml">
 ]>
 
 <!--
@@ -49,10 +50,11 @@
     <!--   <InputTree Name="AnalysisTree" /> -->
     <!--   <OutputTree Name="AnalysisTree" /> -->
     <!-- </InputData> -->
-    <InputData Lumi="1624.87" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_pdfhiststest" Cacheable="False">
-      <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic.root" Lumi="0.0"/>
+    <InputData Lumi="17069.48" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_overflowhist" Cacheable="False">
+      <!-- &highstat; -->
+      &aQGCZZ;
       <InputTree Name="AnalysisTree" />
-      <OutputTree Name="AnalysisTree" />
+      <!-- <OutputTree Name="AnalysisTree" /> -->
     </InputData>
 
     <UserConfig>

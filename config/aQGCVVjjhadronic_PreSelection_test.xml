@@ -49,7 +49,7 @@
     <!--   <InputTree Name="AnalysisTree" /> -->
     <!--   <OutputTree Name="AnalysisTree" /> -->
     <!-- </InputData> -->
-    <InputData Lumi="1624.87" NEventsMax="1000" Type="MC" Version="MC_aQGC_ZZjj_hadronic_cutflowpreselectionrmeventtest" Cacheable="False">
+    <InputData Lumi="17069.48" NEventsMax="1000" Type="MC" Version="MC_aQGC_ZZjj_hadronic_cutflowpreselectionrmeventtest" Cacheable="False">
       &aQGCZZ;
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />

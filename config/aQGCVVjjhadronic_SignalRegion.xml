@@ -11,7 +11,7 @@
 ]>
 
 <!--
-<ConfigParse NEventsBreak="400000" LastBreak="0" FileSplit="0" />
+<ConfigParse NEventsBreak="40000" LastBreak="0" FileSplit="0" />
 <ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_signal"/>
 -->
 
@@ -49,7 +49,7 @@
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
-    <InputData Lumi="1624.87" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic" Cacheable="False">
+    <InputData Lumi="17069.48" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic" Cacheable="False">
       <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic.root" Lumi="0.0"/>
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
