@@ -83,6 +83,7 @@ aQGCVVjjhadronicHists::aQGCVVjjhadronicHists(Context & ctx, const string & dirna
   book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",NBINS-1,BOUNDARIES);
   book<TH1F>("M_jj_AK8_raw", "M_{jj-AK8} [GeV/c^{2}]",NBINS-1,BOUNDARIES);
   book<TH1F>("M_jj_AK8_highbin", "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
+  book<TH1F>("M_jj_AK8_lowbin", "M_{jj-AK8} [GeV/c^{2}]",8,0,2800);
   // book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",nBins-1,xbins);
 
   //Check for Noise from Calorimeter
@@ -184,10 +185,13 @@ void aQGCVVjjhadronicHists::fill(const Event & event){
     hist("M_AK8_2")->Fill(AK8Jets->at(1).v4().M(),weight);
     hist("M_AK8_12")->Fill(AK8Jets->at(0).v4().M(),weight);
     hist("M_AK8_12")->Fill(AK8Jets->at(1).v4().M(),weight);
-    hist("M_jj_AK8")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight);
-    hist("M_jj_AK8_raw")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),1);
-    hist("M_jj_AK8_highbin")->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),weight);
 
+    auto MjjAK8=(AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M();
+    hist("M_jj_AK8")->Fill(MjjAK8,weight);
+    hist("M_jj_AK8_raw")->Fill(MjjAK8,1);
+    hist("M_jj_AK8_highbin")->Fill(MjjAK8,weight);
+    hist("M_jj_AK8_lowbin")->Fill(MjjAK8,weight);
+		
     auto detaAK8 = fabs(event.topjets->at(0).eta()-event.topjets->at(1).eta());
     hist("deta_AK8_12")->Fill(detaAK8,weight);
 
