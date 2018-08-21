@@ -5,7 +5,14 @@
 #include "UHH2/common/include/ObjectIdUtils.h"
 
 namespace uhh2examples {
-    
+
+	class MqqSelection: public uhh2::Selection {
+	public:
+		MqqSelection(float mqq_min_=100.0f);  
+		virtual bool passes(const uhh2::Event & event) override;
+	private:
+		float mqq_min;
+	};  
   /* Select events with at least two jets in which the leading two jets have deltaphi > 2.7 and the third jet pt is
    * below 20% of the average of the leading two jets, where the minimum deltaphi and
    * maximum third jet pt fraction can be changed in the constructor.
