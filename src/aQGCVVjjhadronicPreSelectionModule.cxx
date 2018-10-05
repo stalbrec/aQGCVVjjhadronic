@@ -13,6 +13,7 @@
 #include "UHH2/common/include/ObjectIdUtils.h"
 #include "UHH2/common/include/JetCorrections.h"
 #include <UHH2/common/include/MCWeight.h>
+#include <UHH2/common/include/PDFWeights.h>
 #include "UHH2/common/include/PrintingModules.h"
 
 #include "UHH2/common/include/ElectronHists.h"
@@ -51,7 +52,10 @@ namespace uhh2examples {
     Event::Handle<vector<Jet>> h_IdCriteriaJets;
 
     std::unique_ptr<CommonModules> common;
-
+    PDFWeights* m_pdfweights;
+    PDFWeights* m_refpdfweights;
+    TString m_pdfname;
+    TString m_refpdfname;
     std::unique_ptr<AnalysisModule> genparticle_printer;
 
     //AK4JetCorrection MC:
@@ -203,7 +207,12 @@ namespace uhh2examples {
 
     MuId = AndId<Muon>(MuonIDTight(), PtEtaCut(30.,2.4));
     EleId = AndId<Electron>(ElectronID_HEEP_RunII_25ns, PtEtaCut(30.,2.5));
-
+		if(isMC){
+			m_refpdfname = "NNPDF30_lo_as_0130_nf_4";
+			m_refpdfweights = new PDFWeights(m_refpdfname);
+			m_pdfname = "NNPDF30_lo_as_0130";
+			m_pdfweights = new PDFWeights(m_pdfname);
+		}
     genparticle_printer.reset(new GenParticlesPrinter(ctx));
 
     // 1. setup other modules. CommonModules and the JetCleaner:
@@ -433,8 +442,17 @@ namespace uhh2examples {
       event.topjets->at(i).set_chargedMultiplicity(chMulti);
     }
 
+    if(isMC){
+			if(version_.find("hadronic") != std::string::npos){
+			std::vector<double> pdf_weights = m_pdfweights->GetWeightList(event);
+			std::vector<double> refpdf_weights = m_refpdfweights->GetWeightList(event);
+			double new_weight = event.weight;
+			new_weight*= pdf_weights.at(0)/refpdf_weights.at(0);
+			event.genInfo->set_originalXWGTUP(event.genInfo->originalXWGTUP()*(pdf_weights.at(0)/refpdf_weights.at(0)));
+			event.weight=new_weight;
+			}
+		}
     //INPUT Hists
-
     h_nocuts->fill(event);
     h_AK8jets_nocuts->fill(event);
     h_AK4jets_nocuts->fill(event);

@@ -13,6 +13,7 @@
 #include "UHH2/common/include/ObjectIdUtils.h"
 #include "UHH2/common/include/JetCorrections.h"
 #include <UHH2/common/include/MCWeight.h>
+#include <UHH2/common/include/PDFWeights.h>
 #include "UHH2/common/include/PrintingModules.h"
 
 #include "UHH2/common/include/ElectronHists.h"
@@ -53,7 +54,12 @@ namespace uhh2examples {
     std::unique_ptr<uhh2::AnalysisModule> MCWeightModule;
     std::unique_ptr<uhh2::AnalysisModule> MCPileupReweightModule;
 
-    std::unique_ptr<AnalysisModule> genparticle_printer;
+    PDFWeights* m_pdfweights;
+    PDFWeights* m_refpdfweights;
+    TString m_pdfname;
+    TString m_refpdfname;
+
+		std::unique_ptr<AnalysisModule> genparticle_printer;
 
     //TODO
     // Data/MC scale factors
@@ -176,8 +182,12 @@ namespace uhh2examples {
     if(isMC){
       MCWeightModule.reset(new MCLumiWeight(ctx));
       MCPileupReweightModule.reset(new MCPileupReweight(ctx));
-    }
-
+			m_refpdfname = "NNPDF30_lo_as_0130_nf_4";
+			m_refpdfweights = new PDFWeights(m_refpdfname);
+			m_pdfname = "NNPDF30_lo_as_0130";
+			m_pdfweights = new PDFWeights(m_pdfname);
+		}
+    
     genparticle_printer.reset(new GenParticlesPrinter(ctx));
 
     /////////////////////////////////////////
@@ -295,8 +305,16 @@ namespace uhh2examples {
     if(isMC){
       MCWeightModule->process(event);
       MCPileupReweightModule->process(event);
-    }
-
+			if(version_.find("hadronic") != std::string::npos){
+				std::vector<double> pdf_weights = m_pdfweights->GetWeightList(event);
+				std::vector<double> refpdf_weights = m_refpdfweights->GetWeightList(event);
+				double new_weight = event.weight;
+				new_weight*= pdf_weights.at(0)/refpdf_weights.at(0);
+				event.genInfo->set_originalXWGTUP(event.genInfo->originalXWGTUP()*(pdf_weights.at(0)/refpdf_weights.at(0)));
+				event.weight=new_weight;
+			}
+		}
+		
     h_preselection->fill(event);
 	
     bool passes_AK8sels=AK8_selections.passes(event);
@@ -382,7 +400,7 @@ namespace uhh2examples {
     if(EXTRAOUT)std::cout << "N_AK4 Cut done!"<<std::endl;
 
     //OppositeEtaSign_Ak4 Cut
-    if(!EtaSignAK4_selection) return false;
+    // if(!EtaSignAK4_selection) return false;
     h_OpSignsel->fill(event);
     h_AK8jets_OpSignsel->fill(event);
     h_AK4jets_OpSignsel->fill(event);
