@@ -25,6 +25,7 @@
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicMjjHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/VBFresonanceToWW_WTopJetHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicGenHists.h"
+#include <UHH2/common/include/PDFWeights.h>
 
 #define EXTRAOUT false
 
@@ -51,6 +52,10 @@ namespace uhh2examples {
     Event::Handle<vector<Jet>> h_IdCriteriaJets;
 
     std::unique_ptr<CommonModules> common;
+    PDFWeights* m_pdfweights;
+    PDFWeights* m_refpdfweights;
+    TString m_pdfname;
+    TString m_refpdfname;
 
     std::unique_ptr<AnalysisModule> genparticle_printer;
 
@@ -213,6 +218,11 @@ namespace uhh2examples {
 
     // 1. setup other modules. CommonModules and the JetCleaner:
     common.reset(new CommonModules());
+
+    m_refpdfname = "NNPDF30_lo_as_0130_nf_4";
+    m_refpdfweights = new PDFWeights(m_refpdfname);
+    m_pdfname = "NNPDF30_lo_as_0130";
+    m_pdfweights = new PDFWeights(m_pdfname);
     // TODO: configure common here, e.g. by
     //  calling common->set_*_id or common->disable_*
 
@@ -438,7 +448,14 @@ namespace uhh2examples {
       event.topjets->at(i).set_chargedHadronEnergyFraction(chHFrac);
       event.topjets->at(i).set_chargedMultiplicity(chMulti);
     }
-
+    if(version_.find("hadronic")!=std::string::npos){
+      std::vector<double> pdf_weights = m_pdfweights->GetWeightList(event);
+      std::vector<double> refpdf_weights = m_refpdfweights->GetWeightList(event);
+      double new_weight = event.weight;
+      new_weight*= pdf_weights.at(0)/refpdf_weights.at(0);
+      event.genInfo->set_originalXWGTUP(event.genInfo->originalXWGTUP()*(pdf_weights.at(0)/refpdf_weights.at(0)));
+      event.weight=new_weight;
+    }
     //INPUT Hists
 
     h_nocuts->fill(event);
