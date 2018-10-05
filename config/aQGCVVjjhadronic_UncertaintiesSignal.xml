@@ -2,7 +2,7 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
 <!--                   Signal                   -->
-<!ENTITY aQGCZZPreSelection SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/backup_aug14/aQGCZZ.xml">
+<!ENTITY aQGCZZPreSelection SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCZZ.xml">
 ]>
 
 <!--
@@ -15,7 +15,7 @@
   <Library Name="libSUHH2aQGCVVjjhadronic"/>
   <Package Name="SUHH2aQGCVVjjhadronic.par" />
 
-  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/PDFStudy/" PostFix="" TargetLumi="36814.0" >
+  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/PDFStudy/" PostFix="" TargetLumi="35867" >
 
     <InputData Lumi="17069.48" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_0" Cacheable="False">
       &aQGCZZPreSelection;
