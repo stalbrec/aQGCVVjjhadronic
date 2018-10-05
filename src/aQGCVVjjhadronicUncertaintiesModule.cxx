@@ -48,10 +48,16 @@ namespace uhh2examples {
   private:
     std::string channel_;
     std::string version_;
-			
+
     std::vector<std::unique_ptr<AnalysisModule>> weight_modules;
     std::unique_ptr<uhh2::AnalysisModule> MCWeightModule;
     std::unique_ptr<uhh2::AnalysisModule> MCPileupReweightModule;
+
+    PDFWeights* m_pdfweights;
+    PDFWeights* m_refpdfweights;
+    TString m_pdfname;
+    TString m_refpdfname;
+    
 
     std::unique_ptr<AnalysisModule> genparticle_printer;
 
@@ -90,7 +96,6 @@ namespace uhh2examples {
     const int runNR_BCD = 276811;
     const int runNR_EF = 278802;
     const int runNR_G = 280385;
-
     bool isMC;
     int reweight_index_;
 		
@@ -116,6 +121,14 @@ namespace uhh2examples {
       MCPileupReweightModule.reset(new MCPileupReweight(ctx));
     }
 
+
+    m_refpdfname = "NNPDF30_lo_as_0130_nf_4";
+    m_refpdfweights = new PDFWeights(m_refpdfname);
+    m_pdfname = "NNPDF30_lo_as_0130";
+    m_pdfweights = new PDFWeights(m_pdfname);
+   
+    
+		
     genparticle_printer.reset(new GenParticlesPrinter(ctx));
 
     /////////////////////////////////////////
@@ -168,8 +181,18 @@ namespace uhh2examples {
       MCWeightModule->process(event);
       MCPileupReweightModule->process(event);
     }
-
-	
+    std::vector<double> pdf_weights = m_pdfweights->GetWeightList(event);
+    std::vector<double> refpdf_weights = m_refpdfweights->GetWeightList(event);
+    double new_weight = event.weight;
+    // new_weight*=pdf_weights.at(0)/refpdf_weights.at(0);
+    new_weight*= pdf_weights.at(0)/refpdf_weights.at(0);
+    // new_weight*= event.genInfo->systweights().at(1070+9) / event.genInfo->originalXWGTUP();
+    event.genInfo->set_originalXWGTUP(event.genInfo->originalXWGTUP()*(pdf_weights.at(0)/refpdf_weights.at(0)));
+    // event.genInfo->set_originalXWGTUP(event.genInfo->systweights().at(1070+9));
+    
+    // std::cout << event.weight << "  " << new_weight << std::endl;
+    event.weight=new_weight;
+		
 	
     if(EXTRAOUT)genparticle_printer->process(event);
 
