@@ -12,9 +12,9 @@ MqqSelection::MqqSelection(float mqq_min_): mqq_min(mqq_min_){}
 bool MqqSelection::passes(const Event & event){
   assert(event.genparticles);
   if(event.genparticles->size() < 2) return false;
-	int i(0);
-	int j(0);
-	for (int l=0;l<event.genparticles->size();l++){
+	unsigned int i(0);
+	unsigned int j(0);
+	for (unsigned int l=0;l<event.genparticles->size();l++){
 		auto genpar=event.genparticles->at(l);
 		if( (genpar.mother1()==0 && genpar.mother2()==1) && genpar.pdgId() !=23){
 			if(j==0){
