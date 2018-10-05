@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UHH2/core/include/Hists.h"
+#include "UHH2/common/include/PDFWeights.h"
 #include <string>
 namespace uhh2examples {
 
@@ -22,6 +23,13 @@ namespace uhh2examples {
     std::string reweight_name;
     std::string BosonChannel;
     int parameter_index;
+		PDFWeights* m_pdfweights;
+		PDFWeights* m_refpdfweights;
+		/* std::vector<double> m_sumofweights; */
+		unsigned int m_Ntotal;
+		TString m_pdfname;
+		TString m_refpdfname;
+		TString m_oname;
     
   };
 
