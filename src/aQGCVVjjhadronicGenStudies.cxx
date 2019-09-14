@@ -23,7 +23,6 @@
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicSelections.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicMjjHists.h"
-#include "UHH2/aQGCVVjjhadronic/include/VBFresonanceToWW_WTopJetHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicGenHists.h"
 #include <UHH2/common/include/PDFWeights.h>
 
@@ -74,7 +73,7 @@ namespace uhh2examples {
     std::unique_ptr<TopJetCorrector> topjet_corrector_EF;
     std::unique_ptr<TopJetCorrector> topjet_corrector_G;
     std::unique_ptr<TopJetCorrector> topjet_corrector_H;
-		
+
     //AK8JetCorrection MC:
     // std::unique_ptr<SubJetCorrector> subjet_corrector;
     //AK8JetCorrection Data:
@@ -130,21 +129,20 @@ namespace uhh2examples {
 
     std::unique_ptr<Hists> h_common;
 
-    //After Muon Veto 
+    //After Muon Veto
     std::unique_ptr<Hists> h_muonveto;
     std::unique_ptr<Hists> h_muon_muonveto;
-    //After Electron Veto 
+    //After Electron Veto
     std::unique_ptr<Hists> h_eleveto;
     std::unique_ptr<Hists> h_ele_eleveto;
 
     std::unique_ptr<Hists> h_corrections;
-    std::unique_ptr<Hists> h_corrections_wtopjets;
 
 
 		//GenStudies
     std::unique_ptr<Hists> h_genstudies;
-    std::unique_ptr<Hists> h_Mqqsel;		
-		
+    std::unique_ptr<Hists> h_Mqqsel;
+
     // //After Cleaner
     // std::unique_ptr<Hists> h_cleaner;
     // std::unique_ptr<Hists> h_AK8jets_cleaner;
@@ -228,7 +226,7 @@ namespace uhh2examples {
 
     //disableing pileup reweighting for now
     //common->disable_mcpileupreweight();
-	
+
     common->switch_jetlepcleaner(false);
     // common->change_pf_id(JetPFID::WP_LOOSE_PUPPI);
     common->disable_jetpfidfilter();
@@ -357,20 +355,19 @@ namespace uhh2examples {
 		h_Mqqsel.reset(new aQGCVVjjhadronicGenHists(ctx,"mjjCut"));
     // h_muonveto.reset(new aQGCVVjjhadronicHists(ctx,"muonveto"));
     // h_muon_muonveto.reset(new MuonHists(ctx,"muon_muonveto"));
-	
+
     // h_eleveto.reset(new aQGCVVjjhadronicHists(ctx,"eleveto"));
     // h_ele_eleveto.reset(new ElectronHists(ctx,"electron_eleveto"));
 
     // h_corrections.reset(new aQGCVVjjhadronicHists(ctx,"corrections"));
-    // h_corrections_wtopjets.reset(new VBFresonanceToWW_WTopJetHists(ctx,"corrections_wtopjets"));
-	
+
     // //After Cleaner
     // h_cleaner.reset(new aQGCVVjjhadronicHists(ctx,"cleaner"));
     // h_AK8jets_cleaner.reset(new TopJetHists(ctx,"AK8_cleaner"));
     // h_AK4jets_cleaner.reset(new JetHists(ctx,"AK4_cleaner"));
 
     // h_softdropmassCorr.reset(new aQGCVVjjhadronicHists(ctx,"softdropmassCorr"));
-	
+
     // h_AK4pfidfilter.reset(new aQGCVVjjhadronicHists(ctx,"AK4pfidfilter"));
     // h_AK8pfidfilter.reset(new aQGCVVjjhadronicHists(ctx,"AK8pfidfilter"));
 
@@ -415,7 +412,7 @@ namespace uhh2examples {
     //     lumiweight->process(event);
     // }
     vector<Jet> IdCriteriaJets = event.get(h_IdCriteriaJets);
-    std::vector<int> skipindex;	
+    std::vector<int> skipindex;
     for(unsigned int i=0;i<event.topjets->size();i++){
       int N_Daughters = event.topjets->at(i).numberOfDaughters();
       float nEMFrac = event.topjets->at(i).neutralEmEnergyFraction();
@@ -440,7 +437,7 @@ namespace uhh2examples {
 	chEMFrac = IdCriteriaJets.at(nearest_index).chargedEmEnergyFraction();
 	chHFrac =IdCriteriaJets.at(nearest_index).chargedHadronEnergyFraction();
 	chMulti = IdCriteriaJets.at(nearest_index).chargedMultiplicity();
-      }		
+      }
       event.topjets->at(i).set_numberOfDaughters(N_Daughters);
       event.topjets->at(i).set_neutralEmEnergyFraction(nEMFrac);
       event.topjets->at(i).set_neutralHadronEnergyFraction(nHFrac);
@@ -470,7 +467,7 @@ namespace uhh2examples {
     // }
 
     if(EXTRAOUT)std::cout << "Input Hists done!"<<std::endl;
-	
+
     bool common_pass=common->process(event);
     if(!common_pass) return false;
     h_common->fill(event);
@@ -481,7 +478,7 @@ namespace uhh2examples {
 		bool mqq_selection = Mqq_sel->passes(event);
 		if(!mqq_selection) return false;
 		h_Mqqsel->fill(event);
-		
+
 		//   bool muon_selection = muon_sel->passes(event);
   //   if(!muon_selection) return false;
   //   h_muonveto->fill(event);
@@ -490,7 +487,7 @@ namespace uhh2examples {
   //   if(!electron_selection) return false;
   //   h_eleveto->fill(event);
   //   h_ele_eleveto->fill(event);
-	
+
   //   if(EXTRAOUT)genparticle_printer->process(event);
 
   //   // if(isMC){
@@ -504,7 +501,7 @@ namespace uhh2examples {
   //   // 		std::cout << "Not exactly two VectorBosons in Event (N_V="<<N_V<<")."<<std::endl;
   //   // 		genparticle_printer->process(event);
   //   // 	}
-  //   // }			
+  //   // }
   //   // 2. test selections and fill histograms
 
   //   //cout << "#weights: " << GenInfo().weights().size() << endl;
@@ -567,7 +564,6 @@ namespace uhh2examples {
   //   sort_by_pt<TopJet>(*event.topjets);
 
   //   h_corrections->fill(event);
-  //   h_corrections_wtopjets->fill(event);
 
   //   bool passes_all=cutflow_selections.passes(event);
 
@@ -585,7 +581,7 @@ namespace uhh2examples {
 
   //   ak4pfidfilter->process(event);
   //   h_AK4pfidfilter->fill(event);
-	
+
   //   ak8pfidfilter->process(event);
   //   h_AK8pfidfilter->fill(event);
 

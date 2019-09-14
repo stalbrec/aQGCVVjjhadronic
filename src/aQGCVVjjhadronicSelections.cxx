@@ -8,7 +8,7 @@ using namespace uhh2;
 
 
 MqqSelection::MqqSelection(float mqq_min_): mqq_min(mqq_min_){}
-    
+
 bool MqqSelection::passes(const Event & event){
   assert(event.genparticles);
   if(event.genparticles->size() < 2) return false;
@@ -40,7 +40,7 @@ bool MqqSelection::passes(const Event & event){
 }
 
 DijetSelection::DijetSelection(float dphi_min_, float third_frac_max_): dphi_min(dphi_min_), third_frac_max(third_frac_max_){}
-    
+
 bool DijetSelection::passes(const Event & event){
   assert(event.jets); // if this fails, it probably means jets are not read in
   if(event.jets->size() < 2) return false;
@@ -61,7 +61,7 @@ bool deltaEtaAk8Selection::passes(const Event & event){
   if(event.topjets->size()<2) return false;
   auto deta = fabs(event.topjets->at(0).eta()-event.topjets->at(1).eta());
   if(deta > deta_max) return false;
-  else return true;    
+  else return true;
 }
 
 invMassAK8JetSelection::invMassAK8JetSelection(float invMass_min_): invMass_min(invMass_min_){}
@@ -83,8 +83,8 @@ bool VVSoftDropMassSelection::passes(const Event & event){
   assert(event.topjets);
   if(event.topjets->size()<2) return false;
 
-  const auto & AK8_1=event.topjets->at(0); 
-  const auto & AK8_2=event.topjets->at(1); 
+  const auto & AK8_1=event.topjets->at(0);
+  const auto & AK8_2=event.topjets->at(1);
   //   LorentzVector subjetsum_1,subjetsum_2;
   //   for (const auto subjet1:AK8_1.subjets()){
   // subjetsum_1+=subjet1.v4();
@@ -115,24 +115,11 @@ bool SidebandVVSoftDropMassSelection::passes(const Event & event){
   assert(event.topjets);
   if(event.topjets->size()<2) return false;
 
-  const auto & AK8_1=event.topjets->at(0); 
-  const auto & AK8_2=event.topjets->at(1); 
-  //   LorentzVector subjetsum_1,subjetsum_2;
-  //   for (const auto subjet1:AK8_1.subjets()){
-  // subjetsum_1+=subjet1.v4();
-  //   }
-  //   for (const auto subjet2:AK8_2.subjets()){
-  // subjetsum_2+=subjet2.v4();
-  //   }
-  //   auto MSD1=subjetsum_1.M();
-  //   auto MSD2=subjetsum_2.M();
+  const auto & AK8_1=event.topjets->at(0);
+  const auto & AK8_2=event.topjets->at(1);
+
   auto MSD1=AK8_1.softdropmass();
   auto MSD2=AK8_2.softdropmass();
-    
-
-  //dont know if correct
-  // auto MSD1=event.topjets->at(1).softdropmass();
-  // auto MSD2=event.topjets->at(2).softdropmass();
 
   //demand 65GeV<M_SD<105GeV
   if( (MSD1<Sideband_min) || (MSD2<Signal_min) || (MSD2>Signal_max) ){
@@ -147,7 +134,7 @@ NSubjettinessTau21Selection::NSubjettinessTau21Selection(float tau21_min_,float 
 bool NSubjettinessTau21Selection::passes(const Event & event){
   assert(event.topjets);
   if(event.topjets->size()<2)return false;
-    
+
   auto tau1_1 = event.topjets->at(0).tau1();
   if(tau1_1 == 0.0) return false;
   auto tau2_1= event.topjets->at(0).tau2();
@@ -157,16 +144,16 @@ bool NSubjettinessTau21Selection::passes(const Event & event){
   if(!std::isfinite(tau1_2) || tau1_2 == 0.0) return false;
   auto tau2_2= event.topjets->at(1).tau2();
   if(!std::isfinite(tau2_2)) return false;
-    
+
   auto tau21_1=tau2_1/tau1_1;
   auto tau21_2=tau2_2/tau1_2;
-    
-  if( (tau21_1 <= tau21_min) || (tau21_1 > tau21_max) || (tau21_2 <= tau21_min) || (tau21_2 > tau21_max) ){    
+
+  if( (tau21_1 <= tau21_min) || (tau21_1 > tau21_max) || (tau21_2 <= tau21_min) || (tau21_2 > tau21_max) ){
     return false;
   }else{
     return true;
   }
-}   
+}
 
 
 OppositeEtaAK4Selection::OppositeEtaAK4Selection( ){}
@@ -217,7 +204,7 @@ bool TopJetIdSelection::passes(const Event & event){
 
 
 MuonVeto::MuonVeto(float deltaR_min_, const boost::optional<MuonId> & muid_): deltaR_min(deltaR_min_), muid(muid_){}
-    
+
 bool MuonVeto::passes(const Event & event){
   assert(event.topjets); // if this fails, it probably means jets are not read in
   assert(event.muons); // if this fails, it probably means jets are not read in
@@ -225,7 +212,7 @@ bool MuonVeto::passes(const Event & event){
     {
       for(const auto & topjets : *event.topjets)
 	{
-	  for(const auto & muons : *event.muons)    
+	  for(const auto & muons : *event.muons)
 	    {
 	      if(deltaR(topjets,muons)  < deltaR_min) return false;
 	      else return true;
@@ -233,11 +220,11 @@ bool MuonVeto::passes(const Event & event){
 	}
     }
   return true;
-    
+
 }
 
 ElectronVeto::ElectronVeto(float deltaR_min_, const boost::optional<ElectronId> & eleid_): deltaR_min(deltaR_min_), eleid(eleid_){}
-    
+
 bool ElectronVeto::passes(const Event & event){
   assert(event.topjets); // if this fails, it probably means jets are not read in
   assert(event.electrons); // if this fails, it probably means jets are not read in
@@ -245,7 +232,7 @@ bool ElectronVeto::passes(const Event & event){
     {
       for(const auto & topjets : *event.topjets)
 	{
-	  for(const auto & electrons : *event.electrons)    
+	  for(const auto & electrons : *event.electrons)
 	    {
 	      if(deltaR(topjets,electrons)  < deltaR_min) return false;
 	      else return true;
@@ -253,5 +240,5 @@ bool ElectronVeto::passes(const Event & event){
 	}
     }
   return true;
-    
+
 }

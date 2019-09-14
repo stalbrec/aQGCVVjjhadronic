@@ -24,7 +24,6 @@
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicMjjHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicUncertaintiesHists.h"
-#include "UHH2/aQGCVVjjhadronic/include/VBFresonanceToWW_WTopJetHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicGenHists.h"
 
 #define EXTRAOUT false
@@ -57,7 +56,7 @@ namespace uhh2examples {
     PDFWeights* m_refpdfweights;
     TString m_pdfname;
     TString m_refpdfname;
-    
+
 
     std::unique_ptr<AnalysisModule> genparticle_printer;
 
@@ -81,7 +80,7 @@ namespace uhh2examples {
     std::unique_ptr<Selection> deltaEtaAK4_sel;
 
     std::unique_ptr<Selection> invMassAK4_1p0_sel;
-			
+
     /////////////////////////////////////////
     /////////////////HISTS///////////////////
     /////////////////////////////////////////
@@ -98,7 +97,7 @@ namespace uhh2examples {
     const int runNR_G = 280385;
     bool isMC;
     int reweight_index_;
-		
+
   };
 
 
@@ -106,9 +105,9 @@ namespace uhh2examples {
     isMC = (ctx.get("dataset_type") == "MC");
     channel_ = ctx.get("channel");
     version_ = ctx.get("dataset_version");
-		
+
     reweight_index_ = std::stoi(version_.substr(version_.find_last_of("_")+1));
-		
+
     // If running in SFrame, the keys "dataset_version", "dataset_type", "dataset_lumi",
     // and "target_lumi" are set to the according values in the xml file. For CMSSW, these are
     // not set automatically, but can be set in the python config file.
@@ -126,9 +125,9 @@ namespace uhh2examples {
     m_refpdfweights = new PDFWeights(m_refpdfname);
     m_pdfname = "NNPDF30_lo_as_0130";
     m_pdfweights = new PDFWeights(m_pdfname);
-   
-    
-		
+
+
+
     genparticle_printer.reset(new GenParticlesPrinter(ctx));
 
     /////////////////////////////////////////
@@ -144,7 +143,7 @@ namespace uhh2examples {
     deltaEtaAK4_sel.reset(new deltaEtaAk4Selection(3.0f));
 
     invMassAK4_1p0_sel.reset(new invMassAK4JetSelection(1000.0f));
-	
+
     if(EXTRAOUT){
       std::cout << "Selections set up" <<std::endl;
     }
@@ -189,11 +188,11 @@ namespace uhh2examples {
     // new_weight*= event.genInfo->systweights().at(1070+9) / event.genInfo->originalXWGTUP();
     event.genInfo->set_originalXWGTUP(event.genInfo->originalXWGTUP()*(pdf_weights.at(0)/refpdf_weights.at(0)));
     // event.genInfo->set_originalXWGTUP(event.genInfo->systweights().at(1070+9));
-    
+
     // std::cout << event.weight << "  " << new_weight << std::endl;
     event.weight=new_weight;
-		
-	
+
+
     if(EXTRAOUT)genparticle_printer->process(event);
 
     //SoftdropMass Cut

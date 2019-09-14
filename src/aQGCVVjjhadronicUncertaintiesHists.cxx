@@ -66,13 +66,13 @@ aQGCVVjjhadronicUncertaintiesHists::aQGCVVjjhadronicUncertaintiesHists(Context &
   }else if(parameter_index<1440){
     std::string parameter_string="T9";
     reweight_name=getParNamePDF("T9",-12.00f,0.30f,parameter_index-1359);
-  }	
-    
+  }
+
 	std::string AK8_hist_name_pdf="M_jj_AK8_"+ reweight_name;
   AK8_hist_name_pdf=AK8_hist_name_pdf+"_pdf_";
   for(unsigned int j=0 ; j< 103;j++){
     std::string pdf_AK8_hist_name_owncalc=AK8_hist_name_pdf+"_owncalc_"+std::to_string(j);
-    book<TH1F>(pdf_AK8_hist_name_owncalc, "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);    
+    book<TH1F>(pdf_AK8_hist_name_owncalc, "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
     std::string pdf_AK8_hist_name=AK8_hist_name_pdf+std::to_string(j);
     book<TH1F>(pdf_AK8_hist_name, "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
   }
@@ -80,7 +80,7 @@ aQGCVVjjhadronicUncertaintiesHists::aQGCVVjjhadronicUncertaintiesHists(Context &
   AK8_hist_name_scale=AK8_hist_name_scale+"_scale_";
   for(unsigned int j=0 ; j< 9;j++){
     std::string pdf_AK8_hist_name=AK8_hist_name_scale+std::to_string(j);
-    book<TH1F>(pdf_AK8_hist_name, "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);    
+    book<TH1F>(pdf_AK8_hist_name, "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
   }
 
 
@@ -95,7 +95,7 @@ aQGCVVjjhadronicUncertaintiesHists::aQGCVVjjhadronicUncertaintiesHists(Context &
   m_pdfweights = new PDFWeights(m_pdfname);
 
   m_Ntotal=0;
-  
+
   // m_sumofweights.clear();
   // for(unsigned int i=0; i< m_pdfweights->GetNWeights(); ++i){
   //   m_sumofweights.push_back(0);
@@ -109,23 +109,23 @@ void aQGCVVjjhadronicUncertaintiesHists::fill(const Event & event){
   // 'hist' is used here a lot for simplicity, but it will be rather
   // slow when you have many histograms; therefore, better
   // use histogram pointers as members as in 'UHH2/common/include/ElectronHists.h'
-  
+
   // Don't forget to always use the weight when filling.
   std::vector<double> pdf_weights = m_pdfweights->GetWeightList(event);
   std::vector<double> refpdf_weights = m_refpdfweights->GetWeightList(event);
-	
+
   double weight = event.weight;
-	
+
 	// weight*=pdf_weights.at(0)/refpdf_weights.at(0);
-  
-  // double refpdf_nominal=m_refpdfweights->GetWeightList(event).at(0);	
+
+  // double refpdf_nominal=m_refpdfweights->GetWeightList(event).at(0);
 	// double refpdf_nominal=event.genInfo->systweights().at(0);
-	// double refpdf_nominal=event.genInfo->originalXWGTUP();	
+	// double refpdf_nominal=event.genInfo->originalXWGTUP();
   // for(unsigned int i=0; i< m_pdfweights->GetNWeights(); ++i){
   //   //std::cout << i << "   " << weights[i]<< std::endl;
   //   m_sumofweights[i]+=weights[i];
-	// }    
-	
+	// }
+
   int N_systweights=event.genInfo->systweights().size();
   unsigned int N_pdfwgt=0;
   N_pdfwgt=1080;
@@ -134,11 +134,7 @@ void aQGCVVjjhadronicUncertaintiesHists::fill(const Event & event){
   std::vector<TopJet>* AK8Jets = event.topjets;
   auto N_AK8=AK8Jets->size();
 
-	// std::cout << "+++++++++++++++++++++++++++++++++++++++" << std::endl;
-	// std::cout << "+++++++++++++++++++++++++++++++++++++++" << std::endl;
-	// std::cout << "+++++"<< event.weight<<" "<<event.genInfo->originalXWGTUP()<<" "<<event.genInfo->pdf_scalePDF()<<"+++++" << std::endl;
-	// std::cout << "+++++++++++++++++++++++++++++++++++++++" << std::endl;
-	// std::cout << "+++++++++++++++++++++++++++++++++++++++" << std::endl;
+	// std::cout<< event.weight<<" "<<event.genInfo->originalXWGTUP()<<" "<<event.genInfo->pdf_scalePDF()<< std::endl;
 	// for(unsigned int i=0;i<130;i++){
 	// 	std::cout << i<<": "<<event.genInfo->systweights().at(i)<<std::endl;
 	// 	if(i==8){
@@ -146,18 +142,12 @@ void aQGCVVjjhadronicUncertaintiesHists::fill(const Event & event){
 	// 		std::cout << "=======================================" << std::endl;
 	// 	}
 	// }
-	// std::cout << "+++++++++++++++++++++++++++++++++++++++" << std::endl;
-	// std::cout << "+++++++++++++++++++++++++++++++++++++++" << std::endl;
-	// std::cout << "+++++++++++++++++++++++++++++++++++++++" << std::endl;
-	// std::cout << "+++++++++++++++++++++++++++++++++++++++" << std::endl;
-		
 	// int SetOffset=466;						// PDF4LHC15_nlo_100_pdfas (Total: 103)
 	// int N_pdfset=103;
 	unsigned int SetOffset=963;						// NNPDF30_nlo_nf_5_pdfas  (Total: 103)
 	unsigned int N_pdfset=103;
 	// int SetOffset=0;						// NNPDF31_nnlo_hessian_pdfas  (Total: 103)
 	// int N_pdfset=103;
-	// std::cout << "+++++++++++++++++++++++++++++++++++++++" << std::endl;
 	// std::cout << event.weight<< std::endl;
 	// std::cout << event.genInfo->originalXWGTUP()<< std::endl;
 	// std::cout << event.genInfo->systweights().at(SetOffset+9)<< std::endl;
@@ -166,13 +156,13 @@ void aQGCVVjjhadronicUncertaintiesHists::fill(const Event & event){
 	// 	std::cout << event.genInfo->systweights().at(i)<< std::endl;
 	// }
 	
-  if(N_AK8>2){ 
+  if(N_AK8>2){
     std::string hist_name="M_jj_AK8_"+ reweight_name;
     hist_name=hist_name+"_pdf_";
     auto fillweight=weight * event.genInfo->systweights().at(parameter_index+N_pdfwgt) / event.genInfo->originalXWGTUP();
     // auto fillweight=event.weight * event.genInfo->systweights().at(parameter_index+N_pdfwgt);
     auto nominal_pdfweight=pdf_weights.at(0)/refpdf_weights.at(0);
-    
+
     for(unsigned int j=0 ; j< pdf_weights.size();j++){
       auto pdf_fillweight=fillweight*nominal_pdfweight;
       if(j==0){
@@ -182,14 +172,14 @@ void aQGCVVjjhadronicUncertaintiesHists::fill(const Event & event){
 	pdf_fillweight*= pdf_weights.at(j);
 	}
       std::string pdf_hist_name_owncalc=hist_name+"_owncalc_"+std::to_string(j);
-      hist(pdf_hist_name_owncalc.c_str())->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),pdf_fillweight);    			
+      hist(pdf_hist_name_owncalc.c_str())->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),pdf_fillweight);
     }
 
-		
+
     for(unsigned int j=0 ; j< N_pdfset;j++){
-      auto pdf_fillweight=fillweight * event.genInfo->systweights().at(j+SetOffset+9) / event.genInfo->originalXWGTUP(); 
+      auto pdf_fillweight=fillweight * event.genInfo->systweights().at(j+SetOffset+9) / event.genInfo->originalXWGTUP();
       std::string pdf_hist_name=hist_name+std::to_string(j);
-      hist(pdf_hist_name.c_str())->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),pdf_fillweight);    			
+      hist(pdf_hist_name.c_str())->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),pdf_fillweight);
     }
 
 		std::string hist_name_scale="M_jj_AK8_"+ reweight_name;
@@ -197,11 +187,11 @@ void aQGCVVjjhadronicUncertaintiesHists::fill(const Event & event){
     for(unsigned int j=0 ; j< 9;j++){
       auto scale_fillweight=fillweight * event.genInfo->systweights().at(j) / event.genInfo->originalXWGTUP();
       std::string scale_hist_name=hist_name_scale+std::to_string(j);
-      hist(scale_hist_name.c_str())->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),scale_fillweight);    			
+      hist(scale_hist_name.c_str())->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),scale_fillweight);
     }
 
   }
-  
+
 }
 
 aQGCVVjjhadronicUncertaintiesHists::~aQGCVVjjhadronicUncertaintiesHists(){}
@@ -214,6 +204,6 @@ std::string getParNamePDF(std::string set, float startx, float increment,int i){
     name = std::to_string(parameter/100) + "p" + std::to_string(parameter%100);
   }else{
     name = "m"+std::to_string(-parameter/100) + "p" + std::to_string((-parameter)%100);
-  }	
+  }
   return set+"_"+name;
 }

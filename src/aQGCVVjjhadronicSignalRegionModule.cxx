@@ -25,7 +25,6 @@
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicMjjHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicUncertaintiesHists.h"
-#include "UHH2/aQGCVVjjhadronic/include/VBFresonanceToWW_WTopJetHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicGenHists.h"
 
 #define EXTRAOUT false
@@ -49,7 +48,7 @@ namespace uhh2examples {
   private:
     std::string channel_;
     std::string version_;
-			
+
     std::vector<std::unique_ptr<AnalysisModule>> weight_modules;
     std::unique_ptr<uhh2::AnalysisModule> MCWeightModule;
     std::unique_ptr<uhh2::AnalysisModule> MCPileupReweightModule;
@@ -72,7 +71,7 @@ namespace uhh2examples {
     // declare the Selections to use. Use unique_ptr to ensure automatic call of delete in the destructor,
     // to avoid memory leaks.
     //std::unique_ptr<Selection> njet_sel, dijet_sel;
-		
+
     std::shared_ptr<Selection> softdropAK8_sel;
     std::shared_ptr<Selection> tau21_sel;
 
@@ -90,7 +89,7 @@ namespace uhh2examples {
     // std::unique_ptr<Selection> deltaEtaAK4_sel;
 
     // std::unique_ptr<Selection> invMassAK4_1p0_sel;
-			
+
     AndSelection AK8_selections;
     AndSelection AK4_selections;
     /////////////////////////////////////////
@@ -187,7 +186,7 @@ namespace uhh2examples {
 			m_pdfname = "NNPDF30_lo_as_0130";
 			m_pdfweights = new PDFWeights(m_pdfname);
 		}
-    
+
     genparticle_printer.reset(new GenParticlesPrinter(ctx));
 
     /////////////////////////////////////////
@@ -217,7 +216,7 @@ namespace uhh2examples {
     AK4_selections.add("#eta_{1}*#eta_{2}<0",EtaSignAK4_sel);
     AK4_selections.add("#Delta #eta<3.0",deltaEtaAK4_sel);
     AK4_selections.add("M_{jj-AK4}>1 TeV",invMassAK4_1p0_sel);
-	
+
     if(EXTRAOUT){
       std::cout << "Selections set up" <<std::endl;
     }
@@ -314,11 +313,11 @@ namespace uhh2examples {
 				event.weight=new_weight;
 			}
 		}
-		
+
     h_preselection->fill(event);
-	
+
     bool passes_AK8sels=AK8_selections.passes(event);
-	
+
     if(EXTRAOUT)genparticle_printer->process(event);
 
     //SoftdropMass Cut
@@ -437,7 +436,7 @@ namespace uhh2examples {
     }
     if(EXTRAOUT)std::cout << "invariant Mass AK4 Cut (1.0TeV) done!"<<std::endl;
 
-	
+
     return true;
   }
 
