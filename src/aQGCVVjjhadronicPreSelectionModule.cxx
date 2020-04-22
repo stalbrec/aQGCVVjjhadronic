@@ -8,8 +8,6 @@
 
 #include "UHH2/common/include/CommonModules.h"
 #include "UHH2/common/include/CleaningModules.h"
-#include "UHH2/common/include/MuonIds.h"
-#include "UHH2/common/include/ElectronIds.h"
 #include "UHH2/common/include/ObjectIdUtils.h"
 #include "UHH2/common/include/JetCorrections.h"
 #include <UHH2/common/include/MCWeight.h>
@@ -57,34 +55,15 @@ namespace uhh2examples {
     TString m_refpdfname;
     std::unique_ptr<AnalysisModule> genparticle_printer;
 
-    //AK4JetCorrection MC:
-    std::unique_ptr<JetCorrector> jet_corrector;
-    //AK4JetCorrection Data:
-    std::unique_ptr<JetCorrector> jet_corrector_BCD;
-    std::unique_ptr<JetCorrector> jet_corrector_EF;
-    std::unique_ptr<JetCorrector> jet_corrector_G;
-    std::unique_ptr<JetCorrector> jet_corrector_H;
 
-    //AK8JetCorrection MC:
-    std::unique_ptr<TopJetCorrector> topjet_corrector;
-    //AK8JetCorrection Data:
-    std::unique_ptr<TopJetCorrector> topjet_corrector_BCD;
-    std::unique_ptr<TopJetCorrector> topjet_corrector_EF;
-    std::unique_ptr<TopJetCorrector> topjet_corrector_G;
-    std::unique_ptr<TopJetCorrector> topjet_corrector_H;
+    std::unique_ptr<YearSwitcher> AK4_JEC_MC,AK8_JEC_MC;
+    std::unique_ptr<YearSwitcher> AK4_JEC_data,AK8_JEC_data;
+    std::shared_ptr<RunSwitcher> AK4_JEC_Switcher_16,AK4_JEC_Switcher_17,AK4_JEC_Switcher_18;
+    std::shared_ptr<RunSwitcher> AK8_JEC_Switcher_16,AK8_JEC_Switcher_17,AK8_JEC_Switcher_18;
 
-    //AK8JetCorrection MC:
-    // std::unique_ptr<SubJetCorrector> subjet_corrector;
-    //AK8JetCorrection Data:
-    // std::unique_ptr<SubJetCorrector> subjet_corrector_BCD;
-    // std::unique_ptr<SubJetCorrector> subjet_corrector_EF;
-    // std::unique_ptr<SubJetCorrector> subjet_corrector_G;
-    // std::unique_ptr<SubJetCorrector> subjet_corrector_H;
+    std::unique_ptr<YearSwitcher> jet_corrector_MC, jet_corrector_data;
+    std::shared_ptr<RunSwitcher> jec_switcher_16, jec_switcher_17, jec_switcher_18;
 
-    //AK4JERSmearer
-    std::unique_ptr<JetResolutionSmearer> jetER_smearer;
-    //AK8JERSmearer
-    std::unique_ptr<GenericJetResolutionSmearer> topjetER_smearer;
 
     std::unique_ptr<JetCleaner> ak4cleaner;
     std::unique_ptr<TopJetCleaner> ak8cleaner;
@@ -123,17 +102,7 @@ namespace uhh2examples {
     std::unique_ptr<Hists> h_AK8jets_nocuts;
     std::unique_ptr<Hists> h_AK4jets_nocuts;
 
-    std::unique_ptr<Hists> h_ele_nocuts;
-    std::unique_ptr<Hists> h_muon_nocuts;
-
     std::unique_ptr<Hists> h_common;
-
-    //After Muon Veto
-    std::unique_ptr<Hists> h_muonveto;
-    std::unique_ptr<Hists> h_muon_muonveto;
-    //After Electron Veto
-    std::unique_ptr<Hists> h_eleveto;
-    std::unique_ptr<Hists> h_ele_eleveto;
 
     std::unique_ptr<Hists> h_corrections;
 
@@ -162,15 +131,7 @@ namespace uhh2examples {
     std::unique_ptr<Hists> h_AK8jets_detaAk8sel;
     std::unique_ptr<Hists> h_AK4jets_detaAk8sel;
 
-
-    const int runNR_BCD = 276811;
-    const int runNR_EF = 278802;
-    const int runNR_G = 280385;
-
     bool isMC;
-
-    MuonId     MuId;
-    ElectronId EleId;
 
     JetId AK4PFID;
     TopJetId AK8PFID;
@@ -202,9 +163,6 @@ namespace uhh2examples {
 
     h_IdCriteriaJets = ctx.get_handle<vector<Jet>>("patJetsAK8PFPUPPI");
 
-
-    MuId = AndId<Muon>(MuonIDTight(), PtEtaCut(30.,2.4));
-    EleId = AndId<Electron>(ElectronID_HEEP_RunII_25ns, PtEtaCut(30.,2.5));
 		if(isMC){
 			m_refpdfname = "NNPDF30_lo_as_0130_nf_4";
 			m_refpdfweights = new PDFWeights(m_refpdfname);
@@ -231,63 +189,79 @@ namespace uhh2examples {
       std::cout << "CommonModules set up"<<std::endl;
     }
 
-    std::vector<std::string> JEC_AK4, JEC_AK8,JEC_AK4_BCD,JEC_AK4_EF,JEC_AK4_G,JEC_AK4_H,JEC_AK8_BCD,JEC_AK8_EF,JEC_AK8_G,JEC_AK8_H;
-    if(isMC)
-      {
-	JEC_AK4 = JERFiles::Summer16_23Sep2016_V4_L123_AK4PFPuppi_MC;
-	JEC_AK8 = JERFiles::Summer16_23Sep2016_V4_L123_AK8PFPuppi_MC;
-      }
-    else
-      {
-	JEC_AK4_BCD =  JERFiles::Summer16_23Sep2016_V4_BCD_L123_AK4PFPuppi_DATA;
-	JEC_AK4_EF = JERFiles::Summer16_23Sep2016_V4_EF_L123_AK4PFPuppi_DATA;
-	JEC_AK4_G =  JERFiles::Summer16_23Sep2016_V4_G_L123_AK4PFPuppi_DATA;
-	JEC_AK4_H =  JERFiles::Summer16_23Sep2016_V4_H_L123_AK4PFPuppi_DATA;
+    const std::string JEC_tag_2016="Summer16_07Aug2017";
+    const std::string JEC_version_2016="11";
+    const std::string JEC_tag_2017="Fall17_17Nov2017";
+    const std::string JEC_version_2017="32";
+    const std::string JEC_tag_2018="Autumn18";
+    const std::string JEC_version_2018="8";
+    const std::string AK4_jetcoll="AK4PFPuppi";
+    const std::string AK8_jetcoll="AK8PFPuppi";
 
-	JEC_AK8_BCD =  JERFiles::Summer16_23Sep2016_V4_BCD_L123_AK8PFPuppi_DATA;
-	JEC_AK8_EF =  JERFiles::Summer16_23Sep2016_V4_EF_L123_AK8PFPuppi_DATA;
-	JEC_AK8_G =  JERFiles::Summer16_23Sep2016_V4_G_L123_AK8PFPuppi_DATA;
-	JEC_AK8_H =  JERFiles::Summer16_23Sep2016_V4_H_L123_AK8PFPuppi_DATA;
+    if(isMC){
+      AK4_JEC_MC.reset(new YearSwitcher(ctx));
+      AK4_JEC_MC->setup2016(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(JEC_tag_2016, JEC_version_2016, AK4_jetcoll)));
+      AK4_JEC_MC->setup2017(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(JEC_tag_2017, JEC_version_2017, AK4_jetcoll)));
+      AK4_JEC_MC->setup2018(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(JEC_tag_2018, JEC_version_2018, AK4_jetcoll)));
+
+      AK8_JEC_MC.reset(new YearSwitcher(ctx));
+      AK8_JEC_MC->setup2016(std::make_shared<TopJetCorrector>(ctx, JERFiles::JECFilesMC(JEC_tag_2016, JEC_version_2016, AK8_jetcoll)));
+      AK8_JEC_MC->setup2017(std::make_shared<TopJetCorrector>(ctx, JERFiles::JECFilesMC(JEC_tag_2017, JEC_version_2017, AK8_jetcoll)));
+      AK8_JEC_MC->setup2018(std::make_shared<TopJetCorrector>(ctx, JERFiles::JECFilesMC(JEC_tag_2018, JEC_version_2018, AK8_jetcoll)));
+
+
+      // const JERSmearing::SFType1 AK8_JER_sf=JERSmearing::SF_13TeV_Autumn18_RunABCD_V4;
+      // const TString resFilename="2018/Autumn18_V4_MC_PtResolution_AK8PFPuppi.txt";
+      // AK4_jet_smearer.reset(new JetResolutionSmearer(ctx));
+      // if(EXTRAOUT)std::cout << "AK4jetER_smearer set up!" << std::endl;
+      // AK8_jet_smearer.reset(new GenericJetResolutionSmearer(ctx, "topjets","gentopjets", & AK8_JER_sf, resFilename));
+      // if(EXTRAOUT)std::cout << "AK8jetER_smearer set up!" << std::endl;
+    }else{
+      AK4_JEC_Switcher_16.reset(new RunSwitcher(ctx, "2016"));
+      for (const auto & runItr : runPeriods2016) {
+        AK4_JEC_Switcher_16->setupRun(runItr, std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesDATA(JEC_tag_2016, JEC_version_2016, AK4_jetcoll, runItr)));
       }
 
-    if(isMC)
-      {
-	jet_corrector.reset(new JetCorrector(ctx, JEC_AK4));
-	topjet_corrector.reset(new TopJetCorrector(ctx, JEC_AK8));
-	// subjet_corrector.reset(new SubJetCorrector(ctx,JEC_AK4));
-	if(channel_=="signal")
-	  {
-	    jetER_smearer.reset(new JetResolutionSmearer(ctx));
-	    if(EXTRAOUT)std::cout << "AK4jetER_smearer set up!" << std::endl;
-	    topjetER_smearer.reset(new GenericJetResolutionSmearer(ctx,"topjets","gentopjets",true,JERSmearing::SF_13TeV_2016,"Spring16_25nsV10_MC_PtResolution_AK8PFPuppi.txt"));
-	    if(EXTRAOUT)std::cout << "AK8jetER_smearer set up!" << std::endl;
-	  }
+      AK4_JEC_Switcher_17.reset(new RunSwitcher(ctx, "2017"));
+      for (const auto & runItr : runPeriods2017) {
+        AK4_JEC_Switcher_17->setupRun(runItr, std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesDATA(JEC_tag_2017, JEC_version_2017, AK4_jetcoll, runItr)));
       }
-    else
-      {
-	jet_corrector_BCD.reset(new JetCorrector(ctx, JEC_AK4_BCD));
-	jet_corrector_EF.reset(new JetCorrector(ctx, JEC_AK4_EF));
-	jet_corrector_G.reset(new JetCorrector(ctx,JEC_AK4_G ));
-	jet_corrector_H.reset(new JetCorrector(ctx,JEC_AK4_H ));
 
-	topjet_corrector_BCD.reset(new TopJetCorrector(ctx, JEC_AK8_BCD));
-	topjet_corrector_EF.reset(new TopJetCorrector(ctx, JEC_AK8_EF));
-	topjet_corrector_G.reset(new TopJetCorrector(ctx,JEC_AK8_G ));
-	topjet_corrector_H.reset(new TopJetCorrector(ctx,JEC_AK8_H ));
-
-	// subjet_corrector_BCD.reset(new SubJetCorrector(ctx, JEC_AK4_BCD));
-	// subjet_corrector_EF.reset(new SubJetCorrector(ctx, JEC_AK4_EF));
-	// subjet_corrector_G.reset(new SubJetCorrector(ctx,JEC_AK4_G ));
-	// subjet_corrector_H.reset(new SubJetCorrector(ctx,JEC_AK4_H ));
+      AK4_JEC_Switcher_18.reset(new RunSwitcher(ctx, "2018"));
+      for (const auto & runItr : runPeriods2018) {
+        AK4_JEC_Switcher_18->setupRun(runItr, std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesDATA(JEC_tag_2018, JEC_version_2018, AK4_jetcoll, runItr)));
       }
+
+      AK4_JEC_data.reset(new YearSwitcher(ctx));
+      AK4_JEC_data->setup2016(AK4_JEC_Switcher_16);
+      AK4_JEC_data->setup2017(AK4_JEC_Switcher_17);
+      AK4_JEC_data->setup2018(AK4_JEC_Switcher_18);
+
+      AK8_JEC_Switcher_16.reset(new RunSwitcher(ctx, "2016"));
+      for (const auto & runItr : runPeriods2016) {
+        AK8_JEC_Switcher_16->setupRun(runItr, std::make_shared<TopJetCorrector>(ctx, JERFiles::JECFilesDATA(JEC_tag_2016, JEC_version_2016, AK8_jetcoll, runItr)));
+      }
+
+      AK8_JEC_Switcher_17.reset(new RunSwitcher(ctx, "2017"));
+      for (const auto & runItr : runPeriods2017) {
+        AK8_JEC_Switcher_17->setupRun(runItr, std::make_shared<TopJetCorrector>(ctx, JERFiles::JECFilesDATA(JEC_tag_2017, JEC_version_2017, AK8_jetcoll, runItr)));
+      }
+
+      AK8_JEC_Switcher_18.reset(new RunSwitcher(ctx, "2018"));
+      for (const auto & runItr : runPeriods2018) {
+        AK8_JEC_Switcher_18->setupRun(runItr, std::make_shared<TopJetCorrector>(ctx, JERFiles::JECFilesDATA(JEC_tag_2018, JEC_version_2018, AK8_jetcoll, runItr)));
+      }
+
+      AK8_JEC_data.reset(new YearSwitcher(ctx));
+      AK8_JEC_data->setup2016(AK8_JEC_Switcher_16);
+      AK8_JEC_data->setup2017(AK8_JEC_Switcher_17);
+      AK8_JEC_data->setup2018(AK8_JEC_Switcher_18);
+    }
 
     if(EXTRAOUT){
       std::cout << "Custom Jet-Corrections added to CommonModules"<<std::endl;
     }
     common->init(ctx);
-
-    muon_sel.reset(new MuonVeto(0.8,MuId));
-    electron_sel.reset(new ElectronVeto(0.8,EleId));
 
     ak8cleaner.reset(new TopJetCleaner(ctx,TopJetId(PtEtaCut(200.0,2.5))));
     ak4cleaner.reset(new JetCleaner(ctx, 30.0, 5.0));
@@ -339,17 +313,7 @@ namespace uhh2examples {
     h_AK8jets_nocuts.reset(new TopJetHists(ctx,"AK8_nocuts"));
     h_AK4jets_nocuts.reset(new JetHists(ctx,"AK4_nocuts"));
 
-    h_ele_nocuts.reset(new ElectronHists(ctx,"electron_nocuts"));
-    h_muon_nocuts.reset(new MuonHists(ctx,"muon_nocuts"));
-
     h_common.reset(new aQGCVVjjhadronicHists(ctx,"common"));
-
-
-    h_muonveto.reset(new aQGCVVjjhadronicHists(ctx,"muonveto"));
-    h_muon_muonveto.reset(new MuonHists(ctx,"muon_muonveto"));
-
-    h_eleveto.reset(new aQGCVVjjhadronicHists(ctx,"eleveto"));
-    h_ele_eleveto.reset(new ElectronHists(ctx,"electron_eleveto"));
 
     h_corrections.reset(new aQGCVVjjhadronicHists(ctx,"corrections"));
 
@@ -454,9 +418,6 @@ namespace uhh2examples {
     h_AK8jets_nocuts->fill(event);
     h_AK4jets_nocuts->fill(event);
 
-    h_ele_nocuts->fill(event);
-    h_muon_nocuts->fill(event);
-
     // if(version_=="MC_aQGC_WPWPjj_hadronic_newrange_genplots"){
     //     h_genparticle_nocuts->fill(event);
     // }
@@ -467,15 +428,6 @@ namespace uhh2examples {
     if(!common_pass) return false;
     h_common->fill(event);
     if(EXTRAOUT)std::cout << "common done!"<<std::endl;
-
-    bool muon_selection = muon_sel->passes(event);
-    if(!muon_selection) return false;
-    h_muonveto->fill(event);
-    h_muon_muonveto->fill(event);
-    bool electron_selection = electron_sel->passes(event);
-    if(!electron_selection) return false;
-    h_eleveto->fill(event);
-    h_ele_eleveto->fill(event);
 
     if(EXTRAOUT)genparticle_printer->process(event);
 
@@ -506,47 +458,16 @@ namespace uhh2examples {
     // h_genAK4jets_nocuts;
     // h_gendijets_nocuts;
     // h_genparticle_nocuts;
+
+
     if(isMC){
-      if(EXTRAOUT)std::cout << "MC JEC and Smearing!"<<std::endl;
-      topjet_corrector->process(event);
-      if(EXTRAOUT)std::cout << "MC topjet done!"<<std::endl;
-      // subjet_corrector->process(event);
-      // if(EXTRAOUT)std::cout << "MC subjet done!"<<std::endl;
-      jet_corrector->process(event);
-      if(EXTRAOUT)std::cout << "MC jet done!"<<std::endl;
-      jet_corrector->correct_met(event);
-      if(EXTRAOUT)std::cout << "MC METCorrector done!"<<std::endl;
-      if(channel_=="signal"){
-	jetER_smearer->process(event);
-	if(EXTRAOUT)std::cout << "MC sigjet done!"<<std::endl;
-	topjetER_smearer->process(event);
-	if(EXTRAOUT)std::cout << "MC sigtopjet done!"<<std::endl;
-      }
+      AK4_JEC_MC->process(event);
+      AK8_JEC_MC->process(event);
+      // AK4_jet_smearer->process(event);
+      // AK8_jet_smearer->process(event);
     }else{
-      if(event.run <= runNR_BCD){
-	jet_corrector_BCD->process(event);
-	topjet_corrector_BCD->process(event);
-	// subjet_corrector_BCD->process(event);
-	jet_corrector_BCD->correct_met(event);
-      }
-      if(event.run < runNR_EF){
-	jet_corrector_EF->process(event);
-	topjet_corrector_EF->process(event);
-	// subjet_corrector_EF->process(event);
-	jet_corrector_EF->correct_met(event);
-      }
-      if(event.run <= runNR_G){
-	jet_corrector_G->process(event);
-	topjet_corrector_G->process(event);
-	// subjet_corrector_G->process(event);
-	jet_corrector_G->correct_met(event);
-      }
-      if(event.run > runNR_G){
-	jet_corrector_H->process(event);
-	topjet_corrector_H->process(event);
-	// subjet_corrector_H->process(event);
-	jet_corrector_H->correct_met(event);
-      }
+      AK4_JEC_data->process(event);
+      AK8_JEC_data->process(event);
     }
     if(EXTRAOUT)std::cout << "JER/Smearer done!"<<std::endl;
     sort_by_pt<Jet>(*event.jets);
@@ -554,7 +475,7 @@ namespace uhh2examples {
 
     h_corrections->fill(event);
 
-    bool passes_all=cutflow_selections.passes(event);
+    // bool passes_all=cutflow_selections.passes(event);
 
 
     ak4cleaner->process(event);
