@@ -62,6 +62,8 @@ namespace uhh2examples {
 
     std::unique_ptr<YearSwitcher> jet_corrector_MC, jet_corrector_data;
     std::shared_ptr<RunSwitcher> jec_switcher_16, jec_switcher_17, jec_switcher_18;
+    std::unique_ptr<GenericJetResolutionSmearer> AK8_jet_smearer;
+    std::unique_ptr<JetResolutionSmearer> AK4_jet_smearer;
 
 
     std::unique_ptr<JetCleaner> ak4cleaner;
@@ -87,8 +89,6 @@ namespace uhh2examples {
     std::shared_ptr<Selection> invMassAK8_sel;
     std::shared_ptr<Selection> deltaEtaAK8_sel;
 
-    // std::shared_ptr<Selection> AK4PFIDSelection;
-    // std::shared_ptr<Selection> AK8PFIDSelection;
 
     AndSelection cutflow_selections;
     /////////////////////////////////////////
@@ -162,12 +162,6 @@ namespace uhh2examples {
 
     h_IdCriteriaJets = ctx.get_handle<vector<Jet>>("jetsAk8Puppi");
 
-		if(isMC){
-			m_refpdfname = "NNPDF30_lo_as_0130_nf_4";
-			m_refpdfweights = new PDFWeights(m_refpdfname);
-			m_pdfname = "NNPDF30_lo_as_0130";
-			m_pdfweights = new PDFWeights(m_pdfname);
-		}
     genparticle_printer.reset(new GenParticlesPrinter(ctx));
 
     // 1. setup other modules. CommonModules and the JetCleaner:
@@ -175,14 +169,12 @@ namespace uhh2examples {
     // TODO: configure common here, e.g. by
     //  calling common->set_*_id or common->disable_*
 
-    //disableing pileup reweighting for now
-    //common->disable_mcpileupreweight();
-
     common->switch_jetlepcleaner(false);
-    // common->change_pf_id(JetPFID::WP_LOOSE_PUPPI);
     common->disable_jetpfidfilter();
-    common->disable_jersmear();
+
+    //disable jec/jer for ak4 in common modules since we do it manually for both ak4 and ak8 below
     common->disable_jec();
+    common->disable_jersmear();
 
     if(EXTRAOUT){
       std::cout << "CommonModules set up"<<std::endl;
@@ -209,12 +201,12 @@ namespace uhh2examples {
       AK8_JEC_MC->setup2018(std::make_shared<TopJetCorrector>(ctx, JERFiles::JECFilesMC(JEC_tag_2018, JEC_version_2018, AK8_jetcoll)));
 
 
-      // const JERSmearing::SFType1 AK8_JER_sf=JERSmearing::SF_13TeV_Autumn18_RunABCD_V4;
-      // const TString resFilename="2018/Autumn18_V4_MC_PtResolution_AK8PFPuppi.txt";
-      // AK4_jet_smearer.reset(new JetResolutionSmearer(ctx));
-      // if(EXTRAOUT)std::cout << "AK4jetER_smearer set up!" << std::endl;
-      // AK8_jet_smearer.reset(new GenericJetResolutionSmearer(ctx, "topjets","gentopjets", & AK8_JER_sf, resFilename));
-      // if(EXTRAOUT)std::cout << "AK8jetER_smearer set up!" << std::endl;
+      const JERSmearing::SFtype1 AK8_JER_sf=JERSmearing::SF_13TeV_Summer16_25nsV1;
+      const TString resFilename="2016/Summer16_25nsV1_MC_PtResolution_AK8PFPuppi.txt";
+      AK4_jet_smearer.reset(new JetResolutionSmearer(ctx));
+      if(EXTRAOUT)std::cout << "AK4jetER_smearer set up!" << std::endl;
+      AK8_jet_smearer.reset(new GenericJetResolutionSmearer(ctx, "topjets","gentopjets", AK8_JER_sf, resFilename));
+      if(EXTRAOUT)std::cout << "AK8jetER_smearer set up!" << std::endl;
     }else{
       AK4_JEC_Switcher_16.reset(new RunSwitcher(ctx, "2016"));
       for (const auto & runItr : runPeriods2016) {
@@ -258,7 +250,7 @@ namespace uhh2examples {
     }
 
     if(EXTRAOUT){
-      std::cout << "Custom Jet-Corrections added to CommonModules"<<std::endl;
+      std::cout << "Custom Jet-Corrections setup"<<std::endl;
     }
     common->init(ctx);
 
@@ -286,13 +278,6 @@ namespace uhh2examples {
     deltaEtaAK8_sel.reset(new deltaEtaAk8Selection(1.3f));
     nAK8_sel.reset(new NTopJetSelection(2));
 
-    // AK4PFIDFilter.reset(new NJetSelection(0,-1,JetPFID(JetPFID::WP_LOOSE_PUPPI)));
-    // AK8PFIDFilter.reset(new NTopJetSelection(0,-1,JetPFID(JetPFID::WP_LOOSE_PUPPI)));
-    // AK4PFIDSelection.reset(new JetIdSelection(AK4PFID));
-    // AK8PFIDSelection.reset(new TopJetIdSelection(AK8PFID));
-
-    // cutflow_selections.add("AK4PFIDFilter",AK4PFIDSelection);
-    // cutflow_selections.add("AK8PFIDFilter",AK8PFIDSelection);
     cutflow_selections.add("M_{jj-AK8}>1050 GeV",invMassAK8_sel);
     cutflow_selections.add("#Delta#eta<1.3",deltaEtaAK8_sel);
     cutflow_selections.add("N_{AK8}>2",nAK8_sel);
@@ -402,24 +387,11 @@ namespace uhh2examples {
       event.topjets->at(i).set_chargedMultiplicity(chMulti);
     }
 
-    if(isMC){
-			if(version_.find("hadronic") != std::string::npos){
-			std::vector<double> pdf_weights = m_pdfweights->GetWeightList(event);
-			std::vector<double> refpdf_weights = m_refpdfweights->GetWeightList(event);
-			double new_weight = event.weight;
-			new_weight*= pdf_weights.at(0)/refpdf_weights.at(0);
-			event.genInfo->set_originalXWGTUP(event.genInfo->originalXWGTUP()*(pdf_weights.at(0)/refpdf_weights.at(0)));
-			event.weight=new_weight;
-			}
-		}
+ 
     //INPUT Hists
     h_nocuts->fill(event);
     h_AK8jets_nocuts->fill(event);
     h_AK4jets_nocuts->fill(event);
-
-    // if(version_=="MC_aQGC_WPWPjj_hadronic_newrange_genplots"){
-    //     h_genparticle_nocuts->fill(event);
-    // }
 
     if(EXTRAOUT)std::cout << "Input Hists done!"<<std::endl;
 
@@ -430,22 +402,6 @@ namespace uhh2examples {
 
     if(EXTRAOUT)genparticle_printer->process(event);
 
-    // if(isMC){
-    // 	unsigned int N_V=0;
-    //   for (const GenParticle & thisgen : *event.genparticles){
-    // 		if((thisgen.pdgId()==23) || (thisgen.pdgId()==24)|| (thisgen.pdgId()==25)){
-    // 			N_V++;
-    // 		}
-    // 	}
-    // 	if(N_V!=2){
-    // 		std::cout << "Not exactly two VectorBosons in Event (N_V="<<N_V<<")."<<std::endl;
-    // 		genparticle_printer->process(event);
-    // 	}
-    // }
-    // 2. test selections and fill histograms
-
-    //cout << "#weights: " << GenInfo().weights().size() << endl;
-    //cout << "#systweights: " << GenInfo().systweights().size() << endl;
 
 
     if(EXTRAOUT&&false){
@@ -453,28 +409,22 @@ namespace uhh2examples {
 	cout << "(" << thisgen.index() << ") " << " id: " << thisgen.pdgId()<< " status: " << thisgen.status() << " m1: " << thisgen.mother1() << " m2: " << thisgen.mother2() << " d1: " << thisgen.daughter1() << " d2: " <<thisgen.daughter2() << "  pT:  " << thisgen.pt() << endl;
       }
     }
-    // h_genAK8jets_nocuts;
-    // h_genAK4jets_nocuts;
-    // h_gendijets_nocuts;
-    // h_genparticle_nocuts;
 
 
     if(isMC){
       AK4_JEC_MC->process(event);
       AK8_JEC_MC->process(event);
-      // AK4_jet_smearer->process(event);
-      // AK8_jet_smearer->process(event);
+      AK4_jet_smearer->process(event);
+      AK8_jet_smearer->process(event);
     }else{
       AK4_JEC_data->process(event);
       AK8_JEC_data->process(event);
     }
-    if(EXTRAOUT)std::cout << "JER/Smearer done!"<<std::endl;
+    if(EXTRAOUT)std::cout << "JEC/JER done!"<<std::endl;
     sort_by_pt<Jet>(*event.jets);
     sort_by_pt<TopJet>(*event.topjets);
 
     h_corrections->fill(event);
-
-    // bool passes_all=cutflow_selections.passes(event);
 
 
     ak4cleaner->process(event);
