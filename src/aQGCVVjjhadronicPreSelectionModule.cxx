@@ -74,8 +74,6 @@ namespace uhh2examples {
     std::unique_ptr<AnalysisModule> massCalcCorr;
     //TODO
     // Data/MC scale factors
-    std::unique_ptr<uhh2::AnalysisModule> pileup_SF;
-    std::unique_ptr<uhh2::AnalysisModule> lumiweight;
 
     /////////////////////////////////////////
     ////////////////SELECTIONS///////////////
@@ -348,10 +346,6 @@ namespace uhh2examples {
     //cout << "aQGCVVjjhadronicPreSelectionModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
 
     // 1. run all modules other modules.
-    // if(!event.isRealData){
-    //     pileup_SF->process(event);
-    //     lumiweight->process(event);
-    // }
     vector<Jet> IdCriteriaJets = event.get(h_IdCriteriaJets);
     std::vector<int> skipindex;
     for(unsigned int i=0;i<event.topjets->size();i++){
