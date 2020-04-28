@@ -174,11 +174,11 @@ namespace uhh2examples {
 
     if(isMC){
       MCWeightModule.reset(new MCLumiWeight(ctx));
-      MCPileupReweightModule.reset(new MCPileupReweight(ctx));
-			m_refpdfname = "NNPDF30_lo_as_0130_nf_4";
-			m_refpdfweights = new PDFWeights(m_refpdfname);
-			m_pdfname = "NNPDF30_lo_as_0130";
-			m_pdfweights = new PDFWeights(m_pdfname);
+      // MCPileupReweightModule.reset(new MCPileupReweight(ctx));
+      //   		m_refpdfname = "NNPDF30_lo_as_0130_nf_4";
+      //   		m_refpdfweights = new PDFWeights(m_refpdfname);
+      //   		m_pdfname = "NNPDF30_lo_as_0130";
+      //   		m_pdfweights = new PDFWeights(m_pdfname);
 		}
 
     genparticle_printer.reset(new GenParticlesPrinter(ctx));
@@ -295,15 +295,15 @@ namespace uhh2examples {
 
     if(isMC){
       MCWeightModule->process(event);
-      MCPileupReweightModule->process(event);
-			if(version_.find("hadronic") != std::string::npos){
-				std::vector<double> pdf_weights = m_pdfweights->GetWeightList(event);
-				std::vector<double> refpdf_weights = m_refpdfweights->GetWeightList(event);
-				double new_weight = event.weight;
-				new_weight*= pdf_weights.at(0)/refpdf_weights.at(0);
-				event.genInfo->set_originalXWGTUP(event.genInfo->originalXWGTUP()*(pdf_weights.at(0)/refpdf_weights.at(0)));
-				event.weight=new_weight;
-			}
+      // MCPileupReweightModule->process(event);
+      //   		if(version_.find("hadronic") != std::string::npos){
+      //   			std::vector<double> pdf_weights = m_pdfweights->GetWeightList(event);
+      //   			std::vector<double> refpdf_weights = m_refpdfweights->GetWeightList(event);
+      //   			double new_weight = event.weight;
+      //   			new_weight*= pdf_weights.at(0)/refpdf_weights.at(0);
+      //   			event.genInfo->set_originalXWGTUP(event.genInfo->originalXWGTUP()*(pdf_weights.at(0)/refpdf_weights.at(0)));
+      //   			event.weight=new_weight;
+      //   		}
 		}
 
     h_preselection->fill(event);
