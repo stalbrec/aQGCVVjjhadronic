@@ -24,8 +24,6 @@
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicSelections.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicMjjHists.h"
-#include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicUncertaintiesHists.h"
-#include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicGenHists.h"
 
 #define EXTRAOUT false
 
@@ -118,7 +116,6 @@ namespace uhh2examples {
     std::unique_ptr<Hists> h_AK8jets_VVRegion;
     std::unique_ptr<Hists> h_AK4jets_VVRegion;
     std::unique_ptr<Hists> h_MjjHistsVVRegion;
-    std::unique_ptr<Hists> h_UncertaintiesHistsVVRegion;
 
     //After N_AL4>2 Cut
     std::unique_ptr<Hists> h_AK4N2sel;
@@ -140,13 +137,11 @@ namespace uhh2examples {
     std::unique_ptr<Hists> h_ele_detaAk4sel;
     std::unique_ptr<Hists> h_muon_detaAk4sel;
 
-    std::unique_ptr<Hists> h_genparticle_detaAk4sel;
 
     //After invariant Mass AK4 Cut 1.0TeV
     std::unique_ptr<Hists> h_invMAk4sel_1p0;
 
     std::unique_ptr<Hists> h_MjjHistsinvMAk4sel_1p0;
-    std::unique_ptr<Hists> h_UncertaintiesHistsinvMAk4sel_1p0;
 
 
     std::unique_ptr<Hists> h_AK8jets_invMAk4sel_1p0;
@@ -155,7 +150,6 @@ namespace uhh2examples {
     std::unique_ptr<Hists> h_ele_invMAk4sel_1p0;
     std::unique_ptr<Hists> h_muon_invMAk4sel_1p0;
 
-    std::unique_ptr<Hists> h_genparticle_invMAk4sel_1p0;
 
 
     const int runNR_BCD = 276811;
@@ -248,7 +242,6 @@ namespace uhh2examples {
     h_AK8jets_VVRegion.reset(new TopJetHists(ctx,"AK8_VVRegion"));
     h_AK4jets_VVRegion.reset(new JetHists(ctx,"AK4_VVRegion"));
     h_MjjHistsVVRegion.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_VVRegion"));
-    h_UncertaintiesHistsVVRegion.reset(new aQGCVVjjhadronicUncertaintiesHists(ctx,"UncertaintiesHists_VVRegion",4));
 
     //After N_AL4>2 Cut
     h_AK4N2sel.reset(new aQGCVVjjhadronicHists(ctx,"AK4N2sel"));
@@ -276,7 +269,6 @@ namespace uhh2examples {
     h_invMAk4sel_1p0.reset(new aQGCVVjjhadronicHists(ctx,"invMAk4sel_1p0"));
 
     h_MjjHistsinvMAk4sel_1p0.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0"));
-    h_UncertaintiesHistsinvMAk4sel_1p0.reset(new aQGCVVjjhadronicUncertaintiesHists(ctx,"UncertaintiesHists_invMAk4sel_1p0",4));
 
     h_AK8jets_invMAk4sel_1p0.reset(new TopJetHists(ctx,"AK8_invMAk4sel_1p0"));
     h_AK4jets_invMAk4sel_1p0.reset(new JetHists(ctx,"AK4_invMAk4sel_1p0"));
@@ -385,7 +377,6 @@ namespace uhh2examples {
       if(channel_=="signal"){
 	// if(version_.find("ZZ") != std::string::npos)
 	h_MjjHistsVVRegion->fill(event);
-	h_UncertaintiesHistsVVRegion->fill(event);
       }
     }
     if(EXTRAOUT)std::cout << "VV done!"<<std::endl;
@@ -424,16 +415,12 @@ namespace uhh2examples {
     h_invMAk4sel_1p0->fill(event);
     if(channel_=="signal"){
       h_MjjHistsinvMAk4sel_1p0->fill(event);
-      h_UncertaintiesHistsinvMAk4sel_1p0->fill(event);
     }
     h_AK8jets_invMAk4sel_1p0->fill(event);
     h_AK4jets_invMAk4sel_1p0->fill(event);
 
     h_ele_invMAk4sel_1p0->fill(event);
     h_muon_invMAk4sel_1p0->fill(event);
-    if(version_=="MC_aQGC_WPWPjj_hadronic_newrange_genplots"){
-      h_genparticle_invMAk4sel_1p0->fill(event);
-    }
     if(EXTRAOUT)std::cout << "invariant Mass AK4 Cut (1.0TeV) done!"<<std::endl;
 
 
