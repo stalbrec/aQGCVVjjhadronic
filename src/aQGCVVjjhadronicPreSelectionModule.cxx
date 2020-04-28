@@ -22,7 +22,6 @@
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicSelections.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicMjjHists.h"
-#include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicGenHists.h"
 
 #define EXTRAOUT false
 
@@ -161,7 +160,7 @@ namespace uhh2examples {
       cout << " " << kv.first << " = " << kv.second << endl;
     }
 
-    h_IdCriteriaJets = ctx.get_handle<vector<Jet>>("patJetsAK8PFPUPPI");
+    h_IdCriteriaJets = ctx.get_handle<vector<Jet>>("jetsAk8Puppi");
 
 		if(isMC){
 			m_refpdfname = "NNPDF30_lo_as_0130_nf_4";
@@ -274,7 +273,7 @@ namespace uhh2examples {
     ak8pfidfilter.reset(new TopJetCleaner(ctx,AK8PFID));
     ak4pfidfilter.reset(new JetCleaner(ctx,AK4PFID));
 
-    massCalcCorr.reset(new SoftDropMassCalculator(ctx, true, "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/common/data/puppiCorr.root"));
+    massCalcCorr.reset(new SoftDropMassCalculator(ctx, true, "common/data/2016/puppiCorr.root"));
 
 
     /////////////////////////////////////////
