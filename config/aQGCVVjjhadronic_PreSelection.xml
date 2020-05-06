@@ -2,16 +2,12 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
 <!--                   Signal                   -->
-<!-- <!ENTITY aQGCWPWP SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPWP.xml"> -->
-<!-- <!ENTITY aQGCWPWM SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPWM.xml"> -->
-<!-- <!ENTITY aQGCWMWM SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWMWM.xml"> -->
-<!-- <!ENTITY aQGCWPZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWPZ.xml"> -->
-<!-- <!ENTITY aQGCWMZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCWMZ.xml"> -->
-<!-- <!ENTITY aQGCZZ SYSTEM "/nfs/dust/cms/user/albrechs/CMSSW_8_0_24_patch1/src/UHH2/scripts/aQGCZZ.xml"> -->
+<!ENTITY aQGCZZ SYSTEM "/nfs/dust/cms/user/albrechs/VBS_aQGC/Ntuples/aQGC_ZJJZJJjj_EWK_LO_NPle1_mjj100_pTj10_13TeV_madgraphMLM_pythia8.xml">
+<!-- <!ENTITY aQGCZZ SYSTEM "samples/aQGC_ZJJZJJjj_EWK_LO_NPle1_mjj100_pTj10_13TeV_madgraphMLM_pythia8.xml"> -->
 ]>
 
 <!--
-<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="100" />
+<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="1" />
 <ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_preselection"/>
 -->
 
@@ -20,58 +16,24 @@
   <Library Name="libSUHH2aQGCVVjjhadronic"/>
   <Package Name="SUHH2aQGCVVjjhadronic.par" />
 
-  <!-- <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/" PostFix="" TargetLumi="1" > -->
   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="./" PostFix="" TargetLumi="35867" >
-    <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
-    <InputData Lumi="17069.48" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_2016v3_test" Cacheable="False">
-    <In FileName="/afs/desy.de/user/a/albrechs/xxl/af-cms/UHH2/10_2_v2/CMSSW_10_2_16/src/UHH2/core/python/Ntuple.root" Lumi="0.0"/>      
+    <!-- <InputData Lumi="17069.48" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_2016v3_test" Cacheable="False"> -->
+    <!-- <In FileName="/nfs/dust/cms/user/albrechs/Ntuple.root" Lumi="0.0"/>       -->
+    <!--   <InputTree Name="AnalysisTree" /> -->
+    <!--   <OutputTree Name="AnalysisTree" /> -->
+    <!-- </InputData> -->
+    
+    <InputData Lumi="367851.527014455" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_2016v3" Cacheable="False">
+      &aQGCZZ;
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
-
     
-    <!-- <InputData Lumi="5795.15" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWPjj_hadronic" Cacheable="False"> -->
-    <!--   &aQGCWPWP; -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-    <!-- <InputData Lumi="488.64" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWMjj_hadronic" Cacheable="False"> -->
-    <!--   &aQGCWPWM; -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-    <!-- <InputData Lumi="36573.91" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMWMjj_hadronic" Cacheable="False"> -->
-    <!--   &aQGCWMWM; -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-    <!-- <InputData Lumi="5224.39" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPZjj_hadronic" Cacheable="False"> -->
-    <!--   &aQGCWPZ; -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-    <!-- <InputData Lumi="12406.67" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMZjj_hadronic" Cacheable="False"> -->
-    <!--   &aQGCWMZ; -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-    <!-- <!-\- <InputData Lumi="1624.87" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic" Cacheable="False"> -\-> -->
-    <!-- <!-\-   &aQGCZZ; -\-> -->
-    <!-- <!-\-   <InputTree Name="AnalysisTree" /> -\-> -->
-    <!-- <!-\-   <OutputTree Name="AnalysisTree" /> -\-> -->
-    <!-- <!-\- </InputData> -\-> -->
-    <!-- <InputData Lumi="17069.48" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic" Cacheable="False"> -->
-    <!--   &aQGCZZ; -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-
     <UserConfig>
       <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" />
       <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
       <Item Name="MuonCollection" Value="slimmedMuonsUSER" />
-      <!-- <Item Name="TauCollection" Value="slimmedTaus" /> -->
 
       <Item Name="JetCollection" Value="jetsAk4Puppi" />
       <Item Name="TopJetCollection" Value="jetsAk8PuppiSubstructure_SoftDropPuppi" />
