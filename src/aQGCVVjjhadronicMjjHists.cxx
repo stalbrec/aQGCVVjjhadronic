@@ -12,93 +12,74 @@ using namespace uhh2examples;
 aQGCVVjjhadronicMjjHists::aQGCVVjjhadronicMjjHists(Context & ctx, const string & dirname): Hists(ctx, dirname){
   // book all histograms here
 
-	if(dirname.find("Unc") != std::string::npos){
-		//T0=[91,0.12,-5.40,5.40]
-		for(unsigned int i=0; i<61; i++){
-			reweight_names.push_back(getParName("T0",-15.00f,0.5f,i));
-		}
-	}else{
-		//S0=[83,8.00,-328.00,328.00]
-		for(unsigned int i=0; i<83; i++){
-			reweight_names.push_back(getParName("S0",-328.00f,8.00f,i));
-		}
-		//S1=[71,30.00,-1050.00,1050.00]
-		for(unsigned int i=0; i<71; i++){
-			reweight_names.push_back(getParName("S1",-1050.00f,30.00f,i));
-		}
-		//M0=[71,3.00,-105.00,105.00]
-		for(unsigned int i=0; i<71; i++){
-			reweight_names.push_back(getParName("M0",-105.00f,3.00f,i));
-		}
-		//M1=[71,3.00,-105.00,105.00]
-		for(unsigned int i=0; i<71; i++){
-			reweight_names.push_back(getParName("M1",-105.00f,3.00f,i));
-		}
-		//M2=[81,5.00,-200.00,200.00]
-		for(unsigned int i=0; i<81; i++){
-			reweight_names.push_back(getParName("M2",-200.00f,5.00f,i));
-		}
-		//M3=[81,8.00,-320.00,320.00]
-		for(unsigned int i=0; i<81; i++){
-			reweight_names.push_back(getParName("M3",-320.00f,8.00f,i));
-		}
-		//M4=[81,8.00,-320.00,320.00]
-		for(unsigned int i=0; i<81; i++){
-			reweight_names.push_back(getParName("M4",-320.00f,8.00f,i));
-		}
-		//M5=[81,13.00,-520.00,520.00]
-		for(unsigned int i=0; i<81; i++){
-			reweight_names.push_back(getParName("M5",-520.00f,13.00f,i));
-		}
-		//M6=[71,6.00,-210.00,210.00]
-		for(unsigned int i=0; i<71; i++){
-			reweight_names.push_back(getParName("M6",-210.00f,6.00f,i));
-		}
-		//M7=[85,4.00,-168.00,168.00]
-		for(unsigned int i=0; i<85; i++){
-			reweight_names.push_back(getParName("M7",-168.00f,4.00f,i));
-		}
-		//T0=[91,0.12,-5.40,5.40]
-		for(unsigned int i=0; i<91; i++){
-			reweight_names.push_back(getParName("T0",-5.40f,0.12f,i));
-		}
-		//T1=[97,0.03,-1.44,1.44]
-		for(unsigned int i=0; i<97; i++){
-			reweight_names.push_back(getParName("T1",-1.44f,0.03f,i));
-		}
-		//T2=[71,0.18,-6.30,6.30]
-		for(unsigned int i=0; i<71; i++){
-			reweight_names.push_back(getParName("T2",-6.30f,0.18f,i));
-		}
-		//T5=[81,0.70,-28.00,28.00]
-		for(unsigned int i=0; i<81; i++){
-			reweight_names.push_back(getParName("T5",-28.00f,0.70f,i));
-		}
-		//T6=[81,0.50,-20.00,20.00]
-		for(unsigned int i=0; i<81; i++){
-			reweight_names.push_back(getParName("T6",-20.00f,0.50f,i));
-		}
-		//T7=[81,1.40,-56.00,56.00]
-		for(unsigned int i=0; i<81; i++){
-			reweight_names.push_back(getParName("T7",-56.00f,1.40f,i));
-		}
-		//T8=[81,0.15,-6.00,6.00]
-		for(unsigned int i=0; i<81; i++){
-			reweight_names.push_back(getParName("T8",-6.00f,0.15f,i));
-		}
-		//T9=[81,0.30,-12.00,12.00]
-		for(unsigned int i=0; i<81; i++){
-			reweight_names.push_back(getParName("T9",-12.00f,0.30f,i));
-		}
-		// }
-	}
-
-
+  if(dirname.find("Unc") != std::string::npos){
+    //T0=[91,0.12,-5.40,5.40]
+    for(unsigned int i=0; i<61; i++){
+      reweight_names.push_back(getParName("T0",-15.00f,0.5f,i));
+    }
+  }else{
+    for(unsigned int i = 0; i < 6; i++){//S0=[6,5.00,0.00,30.00]
+      reweight_names.push_back(getParName("S0",0.00,5.00,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//S1=[6,8.00,0.00,48.00]
+      reweight_names.push_back(getParName("S1",0.00,8.00,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//S2=[6,5.00,0.00,30.00]
+      reweight_names.push_back(getParName("S2",0.00,5.00,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//M0=[6,0.90,0.00,5.40]
+      reweight_names.push_back(getParName("M0",0.00,0.90,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//M1=[6,0.70,0.00,4.20]
+      reweight_names.push_back(getParName("M1",0.00,0.70,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//M2=[6,1.50,0.00,9.00]
+      reweight_names.push_back(getParName("M2",0.00,1.50,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//M3=[6,2.00,0.00,12.00]
+      reweight_names.push_back(getParName("M3",0.00,2.00,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//M4=[6,2.00,0.00,12.00]
+      reweight_names.push_back(getParName("M4",0.00,2.00,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//M5=[6,4.00,0.00,24.00]
+      reweight_names.push_back(getParName("M5",0.00,4.00,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//M7=[6,2.00,0.00,12.00]
+      reweight_names.push_back(getParName("M7",0.00,2.00,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//T0=[6,0.05,0.00,0.30]
+      reweight_names.push_back(getParName("T0",0.00,0.05,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//T1=[6,0.05,0.00,0.30]
+      reweight_names.push_back(getParName("T1",0.00,0.05,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//T2=[6,0.10,0.00,0.60]
+      reweight_names.push_back(getParName("T2",0.00,0.10,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//T5=[6,0.20,0.00,1.20]
+      reweight_names.push_back(getParName("T5",0.00,0.20,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//T6=[6,0.20,0.00,1.20]
+      reweight_names.push_back(getParName("T6",0.00,0.20,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//T7=[6,0.40,0.00,2.40]
+      reweight_names.push_back(getParName("T7",0.00,0.40,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//T8=[6,0.50,0.00,3.00]
+      reweight_names.push_back(getParName("T8",0.00,0.50,i));
+    }
+    for(unsigned int i = 0; i < 6; i++){//T9=[6,0.50,0.00,3.00]
+      reweight_names.push_back(getParName("T9",0.00,0.50,i));
+    }
+  }
+  
+  
   //TODO correct binning!
-
+  
   book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
   book<TH1F>("M_jj_AK4", "M_{jj-AK4} [GeV/c^{2}]",14000,0,14000);
-
+  
   for(unsigned int i=0; i<reweight_names.size();i++){
     // std::cout << "reweight.size(): " << reweight_names.size() << std::endl;
     // std::cout << "paranames: " << reweight_names.at(i)<<std::endl;
@@ -121,16 +102,6 @@ void aQGCVVjjhadronicMjjHists::fill(const Event & event){
 
   // Don't forget to always use the weight when filling.
   double weight = event.weight;
-
-  // S0: 882  - 972
-  // S1: 973	 - 1039
-  // M0: 1040 - 1124
-  // M1: 1125 - 1191
-  // M6: 1192 - 1276
-  // M7: 1277 - 1397
-  // T0: 1398 - 1466
-  // T1: 1467 - 1517
-  // T2: 1518 - 1600
   //event.genInfo->systweights().at(i)
 
   // std::cout << "length systweights: " << event.genInfo->systweights().size() << std::endl;
@@ -138,14 +109,10 @@ void aQGCVVjjhadronicMjjHists::fill(const Event & event){
 
   int N_systweights=event.genInfo->systweights().size();
   int N_reweight=reweight_names.size();
-  int N_pdfwgt=0;
-  // if(dirname_var.find("WPWPl") != std::string::npos){
-  // 	N_pdfwgt=882;
-  // }else{
-  N_pdfwgt=1080;
-  // }
-  // std::cout <<"Npwdfwgt= "<<N_pdfwgt<<std::endl;
-  if(N_systweights==N_reweight+N_pdfwgt){
+  int N_pdfwgt = 148;
+  int N_pdfwgt_postSMEFT = 1322;
+
+  if(N_systweights==N_reweight+N_pdfwgt+N_pdfwgt_postSMEFT){
     assert(event.topjets);
     std::vector<TopJet>* AK8Jets = event.topjets;
     auto N_AK8=AK8Jets->size();
@@ -158,7 +125,6 @@ void aQGCVVjjhadronicMjjHists::fill(const Event & event){
 	// std::cout << "histname: " << hist_name<<std::endl;
 	auto fillweight=event.weight * event.genInfo->systweights().at(i+N_pdfwgt) / event.genInfo->originalXWGTUP();
 
-	// std::cout << "i= " << i+882 << "  fillweight: " <<  fillweight << std::endl;
 	hist(hist_name.c_str())->Fill((AK8Jets->at(0).v4()+AK8Jets->at(1).v4()).M(),fillweight);
       }
     }
@@ -173,7 +139,6 @@ void aQGCVVjjhadronicMjjHists::fill(const Event & event){
 	// std::cout << "histname: " << hist_name<<std::endl;
 	auto fillweight=event.weight * event.genInfo->systweights().at(i+N_pdfwgt) / event.genInfo->originalXWGTUP();
 
-	// std::cout << "i= " << i+882 << "  fillweight: " <<  fillweight << std::endl;
 	hist(hist_name.c_str())->Fill((AK4Jets->at(0).v4()+AK4Jets->at(1).v4()).M(),fillweight);
       }
     }
