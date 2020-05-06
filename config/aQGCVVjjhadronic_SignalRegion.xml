@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
-<!--                   Signal                   -->
-<!-- <!ENTITY aQGCWPWP SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWPWP.xml"> -->
-<!-- <!ENTITY aQGCWPWM SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWPWM.xml"> -->
-<!-- <!ENTITY aQGCWMWM SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWMWM.xml"> -->
-<!-- <!ENTITY aQGCWPZ SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWPZ.xml"> -->
-<!-- <!ENTITY aQGCWMZ SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCWMZ.xml"> -->
-<!-- <!ENTITY aQGCZZ SYSTEM "/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/aQGCZZ.xml"> -->
 ]>
 
 <!--
@@ -20,47 +13,14 @@
   <Library Name="libSUHH2aQGCVVjjhadronic"/>
   <Package Name="SUHH2aQGCVVjjhadronic.par" />
 
-  <!-- <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/UHH2_Output/SignalRegion/" PostFix="" TargetLumi="1" > -->
   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="./" PostFix="" TargetLumi="35867" >
-    <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
     
-    <InputData Lumi="17069.48" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_2016v3_test" Cacheable="False">
-    <In FileName="PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic_2016v3_test.root" Lumi="0.0"/>      
+    <InputData Lumi="367851.527014455" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_2016v3" Cacheable="False">
+      <In FileName="/nfs/dust/cms/user/albrechs/UHH2/10_2_v2/SFBWorkdir/PreSel/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic_2016v3.root" Lumi="0.0"/>      
       <InputTree Name="AnalysisTree" />
       <OutputTree Name="AnalysisTree" />
     </InputData>
-
-    <!-- <InputData Lumi="5795.15" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWPjj_hadronic" Cacheable="False"> -->
-    <!--   <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPWPjj_hadronic.root" Lumi="0.0"/> -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-    <!-- <InputData Lumi="488.64" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPWMjj_hadronic" Cacheable="False"> -->
-    <!--   <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPWMjj_hadronic.root" Lumi="0.0"/> -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-    <!-- <InputData Lumi="36573.91" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMWMjj_hadronic" Cacheable="False"> -->
-    <!--   <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WMWMjj_hadronic.root" Lumi="0.0"/> -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-    <!-- <InputData Lumi="5224.39" NEventsMax="-1" Type="MC" Version="MC_aQGC_WPZjj_hadronic" Cacheable="False"> -->
-    <!--   <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WPZjj_hadronic.root" Lumi="0.0"/> -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-    <!-- <InputData Lumi="12406.67" NEventsMax="-1" Type="MC" Version="MC_aQGC_WMZjj_hadronic" Cacheable="False"> -->
-    <!--   <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_WMZjj_hadronic.root" Lumi="0.0"/> -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
-    <!-- <InputData Lumi="17069.48" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic" Cacheable="False"> -->
-    <!--   <In FileName="/nfs/dust/cms/user/albrechs/UHH2_Output/PreSelection/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic.root" Lumi="0.0"/> -->
-    <!--   <InputTree Name="AnalysisTree" /> -->
-    <!--   <OutputTree Name="AnalysisTree" /> -->
-    <!-- </InputData> -->
 
     <UserConfig>
       <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" />
