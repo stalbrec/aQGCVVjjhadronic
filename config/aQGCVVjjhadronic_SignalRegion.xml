@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
+<!ENTITY PreSelDir "PATH/TO/PRESEL/OUTPUT">
+
 ]>
 
 <!--
@@ -17,9 +19,39 @@
 
     
     <InputData Lumi="367851.527014455" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_2016v3" Cacheable="False">
-      <In FileName="/nfs/dust/cms/user/albrechs/UHH2/10_2_v2/SFBWorkdir/PreSel/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic_2016v3.root" Lumi="0.0"/>      
+      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic_2016v3.root" Lumi="0.0"/>      
       <InputTree Name="AnalysisTree" />
-      <OutputTree Name="AnalysisTree" />
+    </InputData>
+
+    
+    <InputData Version="MC_QCD_HT300to500_2016v3" Lumi="156.8963244" Type="MC" NEventsMax="-1" Cacheable="False">
+      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_MC_QCD_HT300to500_2016v3.root" Lumi="0.0"/>      
+      <InputTree Name="AnalysisTree"/>
+    </InputData>
+    
+    <InputData Version="MC_QCD_HT500to700_2016v3" Lumi="1824.729564" Type="MC" NEventsMax="-1" Cacheable="False">
+      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_MC_QCD_HT500to700_2016v3.root" Lumi="0.0"/>      
+      <InputTree Name="AnalysisTree"/>
+    </InputData> 
+
+    <InputData Version="MC_QCD_HT700to1000_2016v3" Lumi="5450.708" Type="MC" NEventsMax="-1" Cacheable="False">
+      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_MC_QCD_HT700to1000_2016v3.root" Lumi="0.0"/>      
+      <InputTree Name="AnalysisTree"/>
+    </InputData> 
+
+    <InputData Version="MC_QCD_HT1000to1500_2016v3" Lumi="12602.26926" Type="MC" NEventsMax="-1" Cacheable="False">
+      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_MC_QCD_HT1000to1500_2016v3.root" Lumi="0.0"/>      
+      <InputTree Name="AnalysisTree"/>
+    </InputData> 
+
+    <InputData Version="MC_QCD_HT1500to2000_2016v3" Lumi="98743.59466" Type="MC" NEventsMax="-1" Cacheable="False">
+      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_MC_QCD_HT1500to2000_2016v3.root" Lumi="0.0"/>      
+      <InputTree Name="AnalysisTree"/>
+    </InputData> 
+    
+    <InputData Version="MC_QCD_HT2000toInf_2016v3" Lumi="238492.1157" Type="MC" NEventsMax="-1" Cacheable="False">
+      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_MC_QCD_HT2000toInf_2016v3.root" Lumi="0.0"/>      
+      <InputTree Name="AnalysisTree"/>
     </InputData>
 
     <UserConfig>
