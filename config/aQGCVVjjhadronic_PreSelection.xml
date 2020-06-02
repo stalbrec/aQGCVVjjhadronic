@@ -21,7 +21,7 @@
 ]>
 
 <!--
-<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="1" />
+<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="5" />
 <ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_preselection"/>
 -->
 
