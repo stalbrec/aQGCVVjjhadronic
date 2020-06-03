@@ -11,6 +11,14 @@
 
 <!ENTITY PreSelDir "/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/config">
 
+<!ENTITY aQGC_ZZjj_hadronic_2016v3 SYSTEM "/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/config/PreSel/MC_aQGC_ZZjj_hadronic_2016v3.xml">
+<!ENTITY QCD_HT300to500_2016v3     SYSTEM "/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/config/PreSel/MC_QCD_HT300to500_2016v3.xml">
+<!ENTITY QCD_HT500to700_2016v3     SYSTEM "/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/config/PreSel/MC_QCD_HT500to700_2016v3.xml">
+<!ENTITY QCD_HT700to1000_2016v3    SYSTEM "/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/config/PreSel/MC_QCD_HT700to1000_2016v3.xml">
+<!ENTITY QCD_HT1000to1500_2016v3   SYSTEM "/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/config/PreSel/MC_QCD_HT1000to1500_2016v3.xml">
+<!ENTITY QCD_HT1500to2000_2016v3   SYSTEM "/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/config/PreSel/MC_QCD_HT1500to2000_2016v3.xml">
+<!ENTITY QCD_HT2000toInf_2016v3    SYSTEM "/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/config/PreSel/MC_QCD_HT2000toInf_2016v3.xml">
+
 ]>
 
 <!--
@@ -28,32 +36,33 @@
     <!-- <Cycle Name="uhh2::AnalysisModuleRunner"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/nfs/dust/cms/user/ottjoc/proof-wd/" ProofNodes="2" OutputDirectory="./" PostFix="" TargetLumi="1" >  -->
 
     <InputData Lumi="367851.527014455" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_2016v3" Cacheable="False">
-      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic_2016v3.root" Lumi="0.0"/>      
+      &aQGC_ZZjj_hadronic_2016v3;
       <InputTree Name="AnalysisTree" />
     </InputData>
     
-    <InputData Version="MC_QCD_HT300to500_2016v3" Lumi="156.8963244" Type="MC" NEventsMax="-1" Cacheable="False">
-      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_QCD_HT300to500_2016v3.root" Lumi="0.0"/>      
-      <InputTree Name="AnalysisTree"/>
-    </InputData>    
+    <!-- QCD_HT300to500 is empty afer PreSelection, commenting it out here, because sframe doesnt like empty datasets -->
+    <!-- <InputData Version="MC_QCD_HT300to500_2016v3" Lumi="156.8963244" Type="MC" NEventsMax="-1" Cacheable="False"> -->
+    <!--   &QCD_HT300to500_2016v3; -->
+    <!--   <InputTree Name="AnalysisTree"/> -->
+    <!-- </InputData>     -->
     <InputData Version="MC_QCD_HT500to700_2016v3" Lumi="1824.729564" Type="MC" NEventsMax="-1" Cacheable="False">
-      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_QCD_HT500to700_2016v3.root" Lumi="0.0"/>      
+      &QCD_HT500to700_2016v3;
       <InputTree Name="AnalysisTree"/>
     </InputData> 
     <InputData Version="MC_QCD_HT700to1000_2016v3" Lumi="5450.708" Type="MC" NEventsMax="-1" Cacheable="False">
-      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_QCD_HT700to1000_2016v3.root" Lumi="0.0"/>      
+      &QCD_HT700to1000_2016v3;
       <InputTree Name="AnalysisTree"/>
     </InputData> 
     <InputData Version="MC_QCD_HT1000to1500_2016v3" Lumi="12602.26926" Type="MC" NEventsMax="-1" Cacheable="False">
-      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_QCD_HT1000to1500_2016v3.root" Lumi="0.0"/>      
+      &QCD_HT1000to1500_2016v3;
       <InputTree Name="AnalysisTree"/>
     </InputData> 
     <InputData Version="MC_QCD_HT1500to2000_2016v3" Lumi="98743.59466" Type="MC" NEventsMax="-1" Cacheable="False">
-      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_QCD_HT1500to2000_2016v3.root" Lumi="0.0"/>      
+      &QCD_HT1500to2000_2016v3;
       <InputTree Name="AnalysisTree"/>
     </InputData> 
     <InputData Version="MC_QCD_HT2000toInf_2016v3" Lumi="238492.1157" Type="MC" NEventsMax="-1" Cacheable="False">
-      <In FileName="&PreSelDir;/uhh2.AnalysisModuleRunner.MC.MC_QCD_HT2000toInf_2016v3.root" Lumi="0.0"/>      
+      &QCD_HT2000toInf_2016v3;
       <InputTree Name="AnalysisTree"/>
     </InputData>
 
