@@ -20,10 +20,9 @@
 <!ENTITY QCD_HT2000toInf_2016v3    SYSTEM "/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/config/PreSel/MC_QCD_HT2000toInf_2016v3.xml">
 
 ]>
-
 <!--
 <ConfigParse NEventsBreak="40000" LastBreak="0" FileSplit="0" />
-<ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_signal"/>
+<ConfigSGE RAM ="2" DISK ="2" Mail="jloemker@desy.de" Notification="as" Workdir="workdir_signal"/>
 -->
 
 <!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
