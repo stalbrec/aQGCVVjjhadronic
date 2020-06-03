@@ -24,6 +24,8 @@
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicSelections.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicHists.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicMjjHists.h"
+//___________________________________________________________________________new
+#include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicKinematicsjjHists.h"
 
 #define EXTRAOUT false
 
@@ -149,8 +151,8 @@ namespace uhh2examples {
 
     std::unique_ptr<Hists> h_ele_invMAk4sel_1p0;
     std::unique_ptr<Hists> h_muon_invMAk4sel_1p0;
-
-
+//_________________________________________________new
+    std::unique_ptr<Hists> h_Kin_AK8;
 
     const int runNR_BCD = 276811;
     const int runNR_EF = 278802;
@@ -269,12 +271,15 @@ namespace uhh2examples {
     h_invMAk4sel_1p0.reset(new aQGCVVjjhadronicHists(ctx,"invMAk4sel_1p0"));
 
     h_MjjHistsinvMAk4sel_1p0.reset(new aQGCVVjjhadronicMjjHists(ctx,"MjjHists_invMAk4sel_1p0"));
-
+//whats the difference between MjjHists and AK_invMass ?
     h_AK8jets_invMAk4sel_1p0.reset(new TopJetHists(ctx,"AK8_invMAk4sel_1p0"));
     h_AK4jets_invMAk4sel_1p0.reset(new JetHists(ctx,"AK4_invMAk4sel_1p0"));
 
     h_ele_invMAk4sel_1p0.reset(new ElectronHists(ctx,"electron_invMAk4sel_1p0"));
     h_muon_invMAk4sel_1p0.reset(new MuonHists(ctx,"muon_invMAk4sel_1p0"));
+//_____________________________________________________________________1stTry
+    h_Kin_AK8.reset(new aQGCVVjjhadronicKinematicsjjHists(ctx, "Kin_AK8"));
+
 
     if(EXTRAOUT){
       std::cout << "Hists set up"<<std::endl;
@@ -415,7 +420,12 @@ namespace uhh2examples {
     h_invMAk4sel_1p0->fill(event);
     if(channel_=="signal"){
       h_MjjHistsinvMAk4sel_1p0->fill(event);
+    //________________________________________new
+      h_Kin_AK8->fill(event);
     }
+    //somethings missing here ?.
+  //  h_Kin_AK8->fill(event);
+    //______________________________________I am so proud if it works now...sad story..maybe now
     h_AK8jets_invMAk4sel_1p0->fill(event);
     h_AK4jets_invMAk4sel_1p0->fill(event);
 

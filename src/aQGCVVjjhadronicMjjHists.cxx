@@ -1,4 +1,5 @@
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicMjjHists.h"
+#include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicSelections.h"
 #include "UHH2/core/include/Event.h"
 
 #include "TH1F.h"
@@ -12,7 +13,7 @@ using namespace uhh2examples;
 aQGCVVjjhadronicMjjHists::aQGCVVjjhadronicMjjHists(Context & ctx, const string & dirname): Hists(ctx, dirname){
   // book all histograms here
 
-  if(dirname.find("Unc") != std::string::npos){
+  if(dirname.find("Unc") != std::string::npos){//This value, when used as the value for a len (or sublen) parameter in string's member functions, means "until the end of the string". 
     //T0=[91,0.12,-5.40,5.40]
     for(unsigned int i=0; i<61; i++){
       reweight_names.push_back(getParName("T0",-15.00f,0.5f,i));
@@ -77,8 +78,9 @@ aQGCVVjjhadronicMjjHists::aQGCVVjjhadronicMjjHists(Context & ctx, const string &
   
   //TODO correct binning!
   
-  book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
-  book<TH1F>("M_jj_AK4", "M_{jj-AK4} [GeV/c^{2}]",14000,0,14000);
+  book<TH1F>("M_jj_AK8", "M_{jj-AK8} [GeV/c^{2}]",10000,0,10000);//(const char *name, const char *title, Int_t nbinsx, Double_t xlow, Double_t xup)
+  book<TH1F>("M_jj_AK4", "M_{jj-AK4} [GeV/c^{2}]",10000,0,10000);
+
   
   for(unsigned int i=0; i<reweight_names.size();i++){
     // std::cout << "reweight.size(): " << reweight_names.size() << std::endl;
@@ -87,11 +89,12 @@ aQGCVVjjhadronicMjjHists::aQGCVVjjhadronicMjjHists(Context & ctx, const string &
     std::string AK8_hist_name="M_jj_AK8_"+ reweight_names.at(i);
     std::string AK4_hist_name="M_jj_AK4_"+ reweight_names.at(i);
 
-    book<TH1F>(AK8_hist_name, "M_{jj-AK8} [GeV/c^{2}]",14000,0,14000);
-    book<TH1F>(AK4_hist_name, "M_{jj-AK4} [GeV/c^{2}]",14000,0,14000);
+    book<TH1F>(AK8_hist_name, "M_{jj-AK8} [GeV/c^{2}]",10000,0,10000);
+    book<TH1F>(AK4_hist_name, "M_{jj-AK4} [GeV/c^{2}]",10000,0,10000);
   }
 
 }
+
 
 
 void aQGCVVjjhadronicMjjHists::fill(const Event & event){

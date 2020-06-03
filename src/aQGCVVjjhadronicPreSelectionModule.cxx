@@ -3,6 +3,7 @@
 #include <string>
 #include <algorithm>
 
+#include "UHH2/common/include/MCLargeWeightKiller.h"
 #include "UHH2/core/include/AnalysisModule.h"
 #include "UHH2/core/include/Event.h"
 
@@ -73,6 +74,7 @@ namespace uhh2examples {
 
     std::unique_ptr<AnalysisModule> massCalcCorr;
     //TODO
+    std::unique_ptr<MCLargeWeightKiller> mcSpikeKiller;
     // Data/MC scale factors
 
     /////////////////////////////////////////
@@ -157,6 +159,16 @@ namespace uhh2examples {
     for(auto & kv : ctx.get_all()){
       cout << " " << kv.first << " = " << kv.second << endl;
     }
+
+   mcSpikeKiller.reset(new MCLargeWeightKiller(
+								 ctx,
+								 2, // maximum allowed ratio of leading reco jet pT / generator HT
+                                 2, // maximum allowed ratio of leading gen jet pT / generator HT
+                                 2, // maximum allowed ratio of leading reco jet pT / Q scale
+                                 2, // maximum allowed ratio of PU maximum pTHat / gen HT (ensures scale of PU < scale of hard interaction)
+                                 2, // maximum allowed ratio of leading reco jet pT / pTHat
+                                 2 // maximum allowed ratio of leading gen jet pT / pTHat
+	));
 
     h_IdCriteriaJets = ctx.get_handle<vector<Jet>>("jetsAk8Puppi");
 
@@ -347,6 +359,9 @@ namespace uhh2examples {
 
     // 1. run all modules other modules.
     vector<Jet> IdCriteriaJets = event.get(h_IdCriteriaJets);
+    if (!event.isRealData) {
+    if (!mcSpikeKiller->passes(event)) return false;
+    }
     std::vector<int> skipindex;
     for(unsigned int i=0;i<event.topjets->size();i++){
       int N_Daughters = event.topjets->at(i).numberOfDaughters();
