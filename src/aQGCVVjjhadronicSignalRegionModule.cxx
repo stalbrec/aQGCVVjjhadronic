@@ -165,8 +165,8 @@ namespace uhh2examples {
 
   aQGCVVjjhadronicSignalRegionModule::aQGCVVjjhadronicSignalRegionModule(Context & ctx): AK8_selections(ctx, "AK8_selections"),AK4_selections(ctx, "AK4_selections"){
     isMC = (ctx.get("dataset_type") == "MC");
-    channel_ = ctx.get("channel");
     version_ = ctx.get("dataset_version");
+    channel_ = TString(version_).Contains("ZZ")?"signal":"background";
     // If running in SFrame, the keys "dataset_version", "dataset_type", "dataset_lumi",
     // and "target_lumi" are set to the according values in the xml file. For CMSSW, these are
     // not set automatically, but can be set in the python config file.
