@@ -392,8 +392,10 @@ namespace uhh2examples {
     h_AK4N2sel->fill(event);
     h_AK8jets_AK4N2sel->fill(event);
     h_AK4jets_AK4N2sel->fill(event);
+    //________________________________________check
+      //h_Kin_AK8->fill(event);
     if(EXTRAOUT)std::cout << "N_AK4 Cut done!"<<std::endl;
-
+  
     //OppositeEtaSign_Ak4 Cut
     // if(!EtaSignAK4_selection) return false;
     h_OpSignsel->fill(event);
@@ -406,7 +408,7 @@ namespace uhh2examples {
     h_detaAk4sel->fill(event);
     if(channel_=="signal"){
       h_MjjHistsdetaAk4sel->fill(event);
-      //________________________________new for eta/pT check
+      //________________________________________check
      // h_Kin_AK8->fill(event);
     }
     h_AK8jets_detaAk4sel->fill(event);
@@ -422,8 +424,8 @@ namespace uhh2examples {
     h_invMAk4sel_1p0->fill(event);
     if(channel_=="signal"){
       h_MjjHistsinvMAk4sel_1p0->fill(event);
-    //________________________________________new
-      h_Kin_AK8->fill(event);
+    //________________________________________check
+    h_Kin_AK8->fill(event);
     }
     
     h_AK8jets_invMAk4sel_1p0->fill(event);
