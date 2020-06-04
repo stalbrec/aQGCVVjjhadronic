@@ -406,6 +406,8 @@ namespace uhh2examples {
     h_detaAk4sel->fill(event);
     if(channel_=="signal"){
       h_MjjHistsdetaAk4sel->fill(event);
+      //________________________________new for eta/pT check
+     // h_Kin_AK8->fill(event);
     }
     h_AK8jets_detaAk4sel->fill(event);
     h_AK4jets_detaAk4sel->fill(event);
@@ -423,9 +425,7 @@ namespace uhh2examples {
     //________________________________________new
       h_Kin_AK8->fill(event);
     }
-    //somethings missing here ?.
-  //  h_Kin_AK8->fill(event);
-    //______________________________________I am so proud if it works now...sad story..maybe now
+    
     h_AK8jets_invMAk4sel_1p0->fill(event);
     h_AK4jets_invMAk4sel_1p0->fill(event);
 
