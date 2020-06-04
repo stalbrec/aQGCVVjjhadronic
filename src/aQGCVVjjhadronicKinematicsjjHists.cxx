@@ -374,10 +374,10 @@ void aQGCVVjjhadronicKinematicsjjHists::fill(const Event & event){
     for(unsigned int i=0; i<reweight_names.size(); i++){
     std::string hist_name="tau21_12_"+reweight_names.at(i);
     auto fillweight=event.weight * event.genInfo->systweights().at(i+N_pdfwgt) / event.genInfo->originalXWGTUP();
-    hist(hist_name.c_str())->Fill(AK8_1.tau2()/AK8_2.tau1(),fillweight);
+    hist(hist_name.c_str())->Fill(AK8_1.tau2()/AK8_1.tau1(),fillweight);
     hist(hist_name.c_str())->Fill(AK8_2.tau2()/AK8_2.tau1(),fillweight);
     }
-
+  
   }
 
   }
