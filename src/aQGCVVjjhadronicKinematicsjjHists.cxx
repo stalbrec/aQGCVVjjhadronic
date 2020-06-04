@@ -77,11 +77,14 @@ aQGCVVjjhadronicKinematicsjjHists::aQGCVVjjhadronicKinematicsjjHists(Context & c
   }
   //Selection Criteria AK4 _______________________________________________________****************************
   book<TH1F>("N_AK4", "N_{AK4 jets}", 20, 0, 20);  
-
+  
   book<TH1F>("pT_AK4_1", "p_{T}^{1st AK4 jet} [GeV/c]", 40 ,0 ,4000);
   book<TH1F>("eta_AK4_1", "#eta^{1st AK4 jet}", 40, -6.5, 6.5);
   book<TH1F>("pT_AK4_2", "p_{T}^{2nd AK4 jet} [GeV/c]", 40 ,0 ,4000);
   book<TH1F>("eta_AK4_2", "#eta^{2nd AK4 jet}", 40, -6.5, 6.5);
+  //_____________________________________________________________________________2D_compare pT and eta
+  book<TH2F>("pT_AK4_1_vs_pT_AK4_2", "pT_AK4_1_vs_pT_AK4_2",40,0,4000,40,0,4000);
+  book<TH2F>("eta_AK4_1_vs_eta_AK4_2", "eta_AK4_1_vs_eta_AK4_2",40,-6.5,6.5,40,-6.5,6.5);
 
   book<TH1F>("pT_AK4_12", "p_{T}^{leading AK4 jets} [GeV/c]", 40 ,0 ,4000);
   book<TH1F>("eta_AK4_12", "#eta^{leading AK4 jets}", 40, -6.5, 6.5);
@@ -133,6 +136,9 @@ aQGCVVjjhadronicKinematicsjjHists::aQGCVVjjhadronicKinematicsjjHists(Context & c
     std::string AK4_eta_1_hist_name="eta_AK4_1_"+reweight_names.at(i);
     std::string AK4_pT_2_hist_name="pT_AK4_2_"+reweight_names.at(i);
     std::string AK4_eta_2_hist_name="eta_AK4_2_"+reweight_names.at(i);
+    //__________________________________________________________________________________sure??
+    std::string AK4_pT_1_vs_pT_2_hist_name="pT_AK4_1_vs_pT_AK4_2_"+reweight_names.at(i);
+    std::string AK4_eta_1_vs_eta_2_hist_name="eta_AK4_1_vs_eta_AK4_2_"+reweight_names.at(i);
 
     std::string AK4_pT_hist_name="pT_AK4_12_"+reweight_names.at(i);
     std::string AK4_eta_hist_name="eta_AK4_12_"+reweight_names.at(i);
@@ -158,9 +164,6 @@ aQGCVVjjhadronicKinematicsjjHists::aQGCVVjjhadronicKinematicsjjHists(Context & c
     std::string AK8_tau_21_1_hist_name="tau21_1_"+reweight_names.at(i);
     std::string AK8_tau_21_2_hist_name="tau21_2_"+reweight_names.at(i);
     std::string AK8_tau_21_12_hist_name="tau21_12_"+reweight_names.at(i);
-  /*
-  only if I it rains...(CalorimeterNoise)
-  */
 
   book<TH1F>(AK4_N_hist_name, "N_{AK4 jets}", 20, 0, 20);  
   
@@ -168,6 +171,9 @@ aQGCVVjjhadronicKinematicsjjHists::aQGCVVjjhadronicKinematicsjjHists(Context & c
   book<TH1F>(AK4_eta_1_hist_name, "#eta^{1st AK4 jet}", 40, -6.5, 6.5);
   book<TH1F>(AK4_pT_2_hist_name, "p_{T}^{2nd AK4 jet} [GeV/c^{2}]", 40 ,0 ,4000);
   book<TH1F>(AK4_eta_2_hist_name, "#eta^{2nd AK4 jet}", 40, -6.5, 6.5);
+
+  book<TH2F>(AK4_pT_1_vs_pT_2_hist_name,"pT_AK4_1_vs_pT_AK4_2 [GeV/c^{2}]",40,0,4000,40,0,4000);
+  book<TH2F>(AK4_eta_1_vs_eta_2_hist_name, "#eta _AK4_1_vs_ #eta _AK4_2",40,-6.5,6.5,40,-6.5,6.5);
 
   book<TH1F>(AK4_pT_hist_name, "p_{T}^{leading AK4 jets} [GeV/c^{2}]", 40 ,0 ,4000);
   book<TH1F>(AK4_eta_hist_name, "#eta^{leading AK4 jets}", 40, -6.5, 6.5);
@@ -247,6 +253,8 @@ void aQGCVVjjhadronicKinematicsjjHists::fill(const Event & event){
   hist("pT_AK4_2")->Fill(AK4Jets->at(1).pt(),weight); 
   hist("eta_AK4_2")->Fill(AK4Jets->at(1).eta(),weight);
 
+  ((TH2D*)hist("pt_AK4_1_vs_pt_AK4_2")->Fill(AK4_1.pt(),AK4_2.pt(),weight);
+
   hist("pT_AK4_12")->Fill(AK4Jets->at(1).pt(),weight);
   hist("pT_AK4_12")->Fill(AK4Jets->at(0).pt(),weight);
 
@@ -269,6 +277,17 @@ void aQGCVVjjhadronicKinematicsjjHists::fill(const Event & event){
     auto fillweight=event.weight * event.genInfo->systweights().at(i+N_pdfwgt) / event.genInfo -> originalXWGTUP();
     hist(hist_name.c_str())->Fill((AK4Jets->at(1).eta()), fillweight);
     }
+  //_____________________________________________________________pT_AK4_1_vs_2
+    for(unsigned int i=0; i<reweight_names.size();i++){
+    std::string hist_name="pT_AK4_1_vs_pT_AK4_2_"+reweight_names.at(i);
+    auto fillweight=event.weight * event.genInfo->systweights().at(i+N_pdfwgt) / event.genInfo -> originalXWGTUP();
+    (TH2D*)hist(hist_name.c_str())->Fill(AK4_1.pt(), AK4_2.pt(),fillweight);
+  //_____________________________________________________________eta_Ak4_1vs_2
+    for(unsigned int i=0; i<reweight_names.size();i++){
+    std::string hist_name="eta_AK4_1_vs_eta_AK4_2_"+reweight_names.at(i);
+    auto fillweight=event.weight * event.genInfo->systweights().at(i+N_pdfwgt) / event.genInfo -> originalXWGTUP();
+    (TH2D*)hist(hist_name.c_str())->Fill(AK4_1.eta(), AK4_2.eta(),fillweight);
+
   //_____________________________________________________________pT_AK4
   for(unsigned int i=0; i<reweight_names.size(); i++){
   std::string hist_name="pT_AK4_12_"+reweight_names.at(i);
