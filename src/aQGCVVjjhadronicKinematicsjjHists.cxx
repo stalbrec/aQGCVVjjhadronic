@@ -3,6 +3,7 @@
 #include "UHH2/core/include/Event.h"
 #include "UHH2/aQGCVVjjhadronic/include/aQGCVVjjhadronicKinematicsjjHists.h"
 
+#include "TH2D.h"
 #include "TH1F.h"
 #include <iostream>
 #include <math.h>
@@ -83,8 +84,8 @@ aQGCVVjjhadronicKinematicsjjHists::aQGCVVjjhadronicKinematicsjjHists(Context & c
   book<TH1F>("pT_AK4_2", "p_{T}^{2nd AK4 jet} [GeV/c]", 40 ,0 ,4000);
   book<TH1F>("eta_AK4_2", "#eta^{2nd AK4 jet}", 40, -6.5, 6.5);
   //_____________________________________________________________________________2D_compare pT and eta
-  book<TH2F>("pT_AK4_1_vs_pT_AK4_2", "pT_AK4_1_vs_pT_AK4_2",40,0,4000,40,0,4000);
-  book<TH2F>("eta_AK4_1_vs_eta_AK4_2", "eta_AK4_1_vs_eta_AK4_2",40,-6.5,6.5,40,-6.5,6.5);
+  book<TH2D>("pT_AK4_1_vs_pT_AK4_2", "pT_AK4_1_vs_pT_AK4_2",40,0,4000,40,0,4000);
+  book<TH2D>("eta_AK4_1_vs_eta_AK4_2", "eta_AK4_1_vs_eta_AK4_2",40,-6.5,6.5,40,-6.5,6.5);
 
   book<TH1F>("pT_AK4_12", "p_{T}^{leading AK4 jets} [GeV/c]", 40 ,0 ,4000);
   book<TH1F>("eta_AK4_12", "#eta^{leading AK4 jets}", 40, -6.5, 6.5);
@@ -172,8 +173,8 @@ aQGCVVjjhadronicKinematicsjjHists::aQGCVVjjhadronicKinematicsjjHists(Context & c
   book<TH1F>(AK4_pT_2_hist_name, "p_{T}^{2nd AK4 jet} [GeV/c^{2}]", 40 ,0 ,4000);
   book<TH1F>(AK4_eta_2_hist_name, "#eta^{2nd AK4 jet}", 40, -6.5, 6.5);
 
-  book<TH2F>(AK4_pT_1_vs_pT_2_hist_name,"pT_AK4_1_vs_pT_AK4_2 [GeV/c^{2}]",40,0,4000,40,0,4000);
-  book<TH2F>(AK4_eta_1_vs_eta_2_hist_name, "#eta _AK4_1_vs_ #eta _AK4_2",40,-6.5,6.5,40,-6.5,6.5);
+  book<TH2D>(AK4_pT_1_vs_pT_2_hist_name,"pT_AK4_1_vs_pT_AK4_2 [GeV/c^{2}]",40,0,4000,40,0,4000);
+  book<TH2D>(AK4_eta_1_vs_eta_2_hist_name, "#eta _AK4_1_vs_ #eta _AK4_2",40,-6.5,6.5,40,-6.5,6.5);
 
   book<TH1F>(AK4_pT_hist_name, "p_{T}^{leading AK4 jets} [GeV/c^{2}]", 40 ,0 ,4000);
   book<TH1F>(AK4_eta_hist_name, "#eta^{leading AK4 jets}", 40, -6.5, 6.5);
@@ -254,7 +255,7 @@ void aQGCVVjjhadronicKinematicsjjHists::fill(const Event & event){
 
   const auto & AK4_1=event.jets->at(0); 
   const auto & AK4_2=event.jets->at(1); 
-  //D -> F ?
+  //________________________________________________________________________special case
   ((TH2D*)hist("pt_AK4_1_vs_pt_AK4_2"))->Fill(AK4_1.pt(),AK4_2.pt(),weight);
   ((TH2D*)hist("eta_AK4_1_vs_eta_AK4_2"))->Fill(AK4_1.eta(),AK4_2.eta(),weight);
 
