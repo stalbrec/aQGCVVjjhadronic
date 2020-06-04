@@ -256,7 +256,7 @@ void aQGCVVjjhadronicKinematicsjjHists::fill(const Event & event){
   const auto & AK4_1=event.jets->at(0); 
   const auto & AK4_2=event.jets->at(1); 
   //________________________________________________________________________special case
-  ((TH2D*)hist("pt_AK4_1_vs_pt_AK4_2"))->Fill(AK4_1.pt(),AK4_2.pt(),weight);
+  ((TH2D*)hist("pT_AK4_1_vs_pT_AK4_2"))->Fill(AK4_1.pt(),AK4_2.pt(),weight);
   ((TH2D*)hist("eta_AK4_1_vs_eta_AK4_2"))->Fill(AK4_1.eta(),AK4_2.eta(),weight);
 
   hist("pT_AK4_12")->Fill(AK4Jets->at(1).pt(),weight);
