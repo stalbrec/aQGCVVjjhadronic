@@ -249,11 +249,14 @@ void aQGCVVjjhadronicKinematicsjjHists::fill(const Event & event){
     auto fillweight=event.weight * event.genInfo->systweights().at(i+N_pdfwgt) / event.genInfo -> originalXWGTUP();
     hist(hist_name.c_str())->Fill(N_AK4, fillweight);
   }
-
   hist("pT_AK4_2")->Fill(AK4Jets->at(1).pt(),weight); 
   hist("eta_AK4_2")->Fill(AK4Jets->at(1).eta(),weight);
 
-  ((TH2D*)hist("pt_AK4_1_vs_pt_AK4_2")->Fill(AK4_1.pt(),AK4_2.pt(),weight);
+  const auto & AK4_1=event.jets->at(0); 
+  const auto & AK4_2=event.jets->at(1); 
+  //D -> F ?
+  ((TH2D*)hist("pt_AK4_1_vs_pt_AK4_2"))->Fill(AK4_1.pt(),AK4_2.pt(),weight);
+  ((TH2D*)hist("eta_AK4_1_vs_eta_AK4_2"))->Fill(AK4_1.eta(),AK4_2.eta(),weight);
 
   hist("pT_AK4_12")->Fill(AK4Jets->at(1).pt(),weight);
   hist("pT_AK4_12")->Fill(AK4Jets->at(0).pt(),weight);
@@ -281,13 +284,14 @@ void aQGCVVjjhadronicKinematicsjjHists::fill(const Event & event){
     for(unsigned int i=0; i<reweight_names.size();i++){
     std::string hist_name="pT_AK4_1_vs_pT_AK4_2_"+reweight_names.at(i);
     auto fillweight=event.weight * event.genInfo->systweights().at(i+N_pdfwgt) / event.genInfo -> originalXWGTUP();
-    (TH2D*)hist(hist_name.c_str())->Fill(AK4_1.pt(), AK4_2.pt(),fillweight);
+    ((TH2D*)hist(hist_name.c_str()))->Fill(AK4_1.pt(), AK4_2.pt(),fillweight);
+    }
   //_____________________________________________________________eta_Ak4_1vs_2
     for(unsigned int i=0; i<reweight_names.size();i++){
     std::string hist_name="eta_AK4_1_vs_eta_AK4_2_"+reweight_names.at(i);
     auto fillweight=event.weight * event.genInfo->systweights().at(i+N_pdfwgt) / event.genInfo -> originalXWGTUP();
-    (TH2D*)hist(hist_name.c_str())->Fill(AK4_1.eta(), AK4_2.eta(),fillweight);
-
+    ((TH2D*)hist(hist_name.c_str()))->Fill(AK4_1.eta(), AK4_2.eta(),fillweight);
+    }
   //_____________________________________________________________pT_AK4
   for(unsigned int i=0; i<reweight_names.size(); i++){
   std::string hist_name="pT_AK4_12_"+reweight_names.at(i);
