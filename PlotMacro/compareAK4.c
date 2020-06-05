@@ -5,6 +5,11 @@
 //repeat this for the ones without Mjj cut...should be in another directory...No they wont, because the EFT applies only after the cut
 //repeat for the ones without EFT once with and without Mjj Ak4 cut
 // -> legend ass well
+/*  Different cuts
+    Kin_AK8;
+    Kin_AK4_N_cut;
+    Kin_AK4_deta_cut;
+*/
 void compareAK4(){
 gStyle -> SetOptStat(0);
 //gROOT->SetBatch();
@@ -25,7 +30,7 @@ h_pT_vs -> SetTitle("p_{T} AK4_{1} vs p_{T} AK4_{2}");
 //h_pT_vs -> Rebin(2);
 h_pT_vs -> Draw("COLZ");
 //gPad -> BuildLegend();
-pT4_vs -> SaveAs(".pdf");
+pT4_vs -> SaveAs(" NoOppositeEtaCutpT4.pdf");
 //__________________________________________________________AK4_eta_vs
 TCanvas * eta4_vs = new TCanvas("eta4_vs","eta4_vs", 500, 500);
 
@@ -40,5 +45,5 @@ h_eta_vs -> SetTitle("#eta AK4_{1} vs #eta AK4_{2}");
 //h_eta_vs -> Rebin(2);
 h_eta_vs -> Draw("COLZ");
 //gPad -> BuildLegend();
-eta4_vs -> SaveAs(".pdf");
+eta4_vs -> SaveAs(" NoOppositeEtaCuteta4.pdf");
 }
