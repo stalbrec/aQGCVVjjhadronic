@@ -153,6 +153,9 @@ namespace uhh2examples {
     std::unique_ptr<Hists> h_muon_invMAk4sel_1p0;
 //_________________________________________________new
     std::unique_ptr<Hists> h_Kin_AK8;
+    std::unique_ptr<Hists> h_Kin_AK4_N_cut;
+    std::unique_ptr<Hists> h_Kin_AK4_deta_cut;
+
 
     const int runNR_BCD = 276811;
     const int runNR_EF = 278802;
@@ -279,6 +282,8 @@ namespace uhh2examples {
     h_muon_invMAk4sel_1p0.reset(new MuonHists(ctx,"muon_invMAk4sel_1p0"));
 //_____________________________________________________________________1stTry
     h_Kin_AK8.reset(new aQGCVVjjhadronicKinematicsjjHists(ctx, "Kin_AK8"));
+    h_Kin_AK4_N_cut.reset(new aQGCVVjjhadronicKinematicsjjHists(ctx,"Kin_AK4_N_cut"));
+    h_Kin_AK4_deta_cut.reset(new aQGCVVjjhadronicKinematicsjjHists(ctx, "Kin_AK4_deta_cut"));
 
 
     if(EXTRAOUT){
@@ -393,7 +398,7 @@ namespace uhh2examples {
     h_AK8jets_AK4N2sel->fill(event);
     h_AK4jets_AK4N2sel->fill(event);
     //________________________________________check
-      //h_Kin_AK8->fill(event);
+    h_Kin_AK4_N_cut->fill(event);
     if(EXTRAOUT)std::cout << "N_AK4 Cut done!"<<std::endl;
   
     //OppositeEtaSign_Ak4 Cut
@@ -409,7 +414,7 @@ namespace uhh2examples {
     if(channel_=="signal"){
       h_MjjHistsdetaAk4sel->fill(event);
       //________________________________________check
-     // h_Kin_AK8->fill(event);
+    h_Kin_AK4_deta_cut->fill(event);
     }
     h_AK8jets_detaAk4sel->fill(event);
     h_AK4jets_detaAk4sel->fill(event);
