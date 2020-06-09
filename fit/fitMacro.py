@@ -7,13 +7,12 @@ from ROOT import RooRealVar, RooDataHist, RooPlot, RooGaussian, RooAbsData, RooF
 
 def fitMacro(File):
     #gROOT.SetBatch(True)
-#-----------------------------*************!!!file now in in SignalRegion/backup!!!!!!!!!!!!!***************
-# don't forget to add at bottomline as well 
+    # don't forget to add at bottomline as well 
     filename='/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/SignalRegion/uhh2.AnalysisModuleRunner.MC.MC_QCD.root'
     File=TFile(filename)
 
     VVHist_1GeV= File.Get('invMAk4sel_1p0/M_jj_AK8_highbin')#SM QCD BG
-    #VVEFT_1GeV= File.Get('Kin_AK8/MjjHists_invMAk4sel_1p0/M_jj_AK8_S2_5p0')
+    #VVHist_1GeV= File.Get('Kin_AK8/MjjHists_invMAk4sel_1p0/M_jj_AK8_S2_0p0')
     #VVHist_1GeV.Draw('PE1')
     #raw_input('press enter to continue')
 
@@ -90,7 +89,7 @@ def fitMacro(File):
 
     VVHist_100GeV.SetMarkerStyle(8)
     VVHist_100GeV.SetLineColor(1)
-    VVHist_100GeV.GetYaxis().SetRangeUser(10**(-6),10)
+    VVHist_100GeV.GetYaxis().SetRangeUser(10**(-6),10)#maybe rather 10^(-7)
     VVHist_100GeV.GetXaxis().SetTitle('M_{jj-AK8} [GeV/c^{2}]')
     VVHist_100GeV.GetYaxis().SetTitle(yTitle)
     VVHist_100GeV.GetYaxis().SetTitleOffset(2)

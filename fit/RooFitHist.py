@@ -2,6 +2,7 @@ from array import array
 from ROOT import gROOT, gStyle, gPad,TCanvas, TColor, TH1F,TF1, TFile, TLegend, THStack, TGraph, TMath, kTRUE, kFALSE
 from ROOT import RooRealVar, RooDataHist, RooPlot, RooGaussian, RooAbsData, RooFit, RooArgList,RooCBShape,RooVoigtian,RooBreitWigner,RooFFTConvPdf,RooLandau,RooBifurGauss,RooPolynomial,RooChebychev,RooMsgService
 import os,subprocess
+#from ROOT import RooNumConvPdf
 
 class color:
    PURPLE = '\033[95m'
@@ -25,8 +26,8 @@ if('root6/6.02' in module_list):
    # print(change_root_version.communicate())
    # exit()
 # gROOT.ProcessLine('.L RooFit/RooLogistics.cxx+')
-# gROOT.ProcessLine('.L RooFit/RooExpAndGauss.C+')
-# from ROOT import RooLogistics,RooExpAndGauss
+#gROOT.ProcessLine('.L RooFit/RooExpAndGauss.C+')
+#from ROOT import RooLogistics,RooExpAndGauss
 RooFit.SumW2Error(kTRUE)
 def RooFitHist(inputhist,title='title',path='.'):
    # RooFit.gErrorIgnoreLevel = RooFit.kInfo # <6.02
@@ -34,7 +35,7 @@ def RooFitHist(inputhist,title='title',path='.'):
    # RooMsgService().instance().SetSilentMode(kTRUE)
 
    fitbinning=array('d')
-   binwidth=200
+   binwidth=250
    #NBins=(14000/binwidth) - ( (1040/binwidth) + 1 )
    NBins=(14000/binwidth) - ( (1040/binwidth)+1 )#14000
    for i in range(NBins+1):
@@ -69,13 +70,13 @@ def RooFitHist(inputhist,title='title',path='.'):
    shapes.update({'Gauss':gauss})
 
    #Landau -- not good
-   landaumean=RooRealVar('#mu_{landau}','mean landau',meanstart,0,2*meanstart)
-   landausigma= RooRealVar('#sigma_{landau}','mass resolution',sigmastart,0,2*sigmastart)#bzw8
+   landaumean=RooRealVar('#mu_{landau}','mean landau',meanstart,0,meanstart*2)
+   landausigma= RooRealVar('#sigma_{landau}','mass resolution',sigmastart,35,8*sigmastart)#bzw8
    landau=RooLandau('landau','landau',mjj,landaumean,landausigma)
    shapes.update({'Landau':landau})
 
    #CrystalBall -> this is close to be good but matrix error :( 
-   mean = RooRealVar('#mu','mean',meanstart,0,2*meanstart)
+   mean = RooRealVar('#mu','mean',1000,0,2*meanstart)
    sigma= RooRealVar('#sigma','sigma',sigmastart,0,2*sigmastart)
    alpha=RooRealVar('#alpha','Gaussian tail',-1000,0)
    n=RooRealVar('n','Normalization',-1000,1000)            
@@ -102,16 +103,16 @@ def RooFitHist(inputhist,title='title',path='.'):
    # shapes.update({'Logistics':logistics})
 
    #ExpAndGauss
-   # expgaussmean=RooRealVar('#mu_{expgauss}','mean expgauss',meanstart,0,2*meanstart)
-   # expgausssigma= RooRealVar('#sigma_{expgauss}','mass resolution',sigmastart,0,2*sigmastart)
-   # expgausstrans= RooRealVar('trans','trans',0,100)
-   # expgauss=RooExpAndGauss('expgauss','expgauss',mjj,expgaussmean,expgausssigma,expgausstrans)
-   # shapes.update({'ExpAndGauss':expgauss})
+   #expgaussmean=RooRealVar('#mu_{expgauss}','mean expgauss',meanstart,0,2*meanstart)
+   #expgausssigma= RooRealVar('#sigma_{expgauss}','mass resolution',sigmastart,0,2*sigmastart)
+   #expgausstrans= RooRealVar('trans','trans',0,100)
+   #ExpAndGauss=RooExpndGauss('expgauss','expgauss',mjj,expgaussmean,expgausssigma,expgausstrans)
+   #shapes.update({'ExpAndGauss':ExpAndGauss})
    
    #BifurGauss -bad
-   BifurGaussmean=RooRealVar('#mu_{BifurGauss}','mean BifurGauss',meanstart,0,meanstart*2)
+   BifurGaussmean=RooRealVar('#mu_{BifurGauss}','mean BifurGauss',meanstart,0,2*meanstart)
    BifurGausslsigma= RooRealVar('#sigma_{left}','mass resolution',sigmastart,0,2*sigmastart)#2*sigmastart
-   BifurGaussrsigma= RooRealVar('#sigma_{right}','mass resolution',sigmastart,300,sigmastart*3)
+   BifurGaussrsigma= RooRealVar('#sigma_{right}','mass resolution',sigmastart,0,sigmastart*2)
    BifurGauss=RooBifurGauss('BifurGauss','BifurGauss',mjj,BifurGaussmean,BifurGausslsigma,BifurGaussrsigma)
    shapes.update({'BifurGauss':BifurGauss})
 
@@ -131,29 +132,44 @@ def RooFitHist(inputhist,title='title',path='.'):
    #___________________________________________________________We will see
    #Convolutions 
    #-> use bin > 1000 for better accuracy  -----cyclic trouble 
-   #-> Convolution depends on order!!!
-
+   #-> Convolution depends on order!!!  RooFFTConvPdf the first p.d.f. is the theory model and that the second p.d.f. is the resolution model
+   #
    #LandauGauss Convolution  - really bad                   
-   landaugauss=RooFFTConvPdf('landaugauss','landau x gauss',mjj,landau, gauss)            
+   landaugauss=RooFFTConvPdf('landaugauss','landau x gauss',mjj,landau, gauss) 
+   #landaugauss.setBufferFraction(126)           
    shapes.update({'LandauGauss':landaugauss})
 
-   #GaussLandau Convolution -> Better but not positiv definite...
-   gausslandau=RooFFTConvPdf('gausslandau','gauss x landau ',mjj,gauss,landau)            
+   #GaussLandau Convolution -> Better but NOT posdef. ...but for 100 it is
+   gausslandau=RooFFTConvPdf('gausslandau','gauss x landau ',mjj,gauss,landau)  
+   #gausslandau.setBufferFraction(126)          
    shapes.update({'GaussLandau':gausslandau})
    
    #CrystalBallLandau Convolution  cbshape x landau looks better -> status failed 
-   crystlandau=RooFFTConvPdf('crystallandau','cbshape x landau', mjj, cbshape, landau)
+   crystlandau=RooFFTConvPdf('crystallandau','cbshape x landau', mjj, landau, cbshape)
+   crystlandau.setBufferFraction(39)
    shapes.update({'CrystLandau': crystlandau})
-   #LandauCrsystal Convolution -> The other way around is ugly
 
-   #BifurGaussLandau Convolution -> Better in look, NO matrix error !!!!!!!! Yeei ********************
-   BifurGaussLandau=RooFFTConvPdf('bigurgausslandau','landau x bifurgauss',mjj,landau, BifurGauss)            
+   #BifurGaussLandau Convolution -> Better in look, NO matrix error for Binwidth 200
+   BifurGaussLandau=RooFFTConvPdf('bifurgausslandau','landau x bifurgauss',mjj,landau, BifurGauss)   
+   BifurGaussLandau.setBufferFraction(39) #against over cycling        
    shapes.update({'BifurGaussLandau':BifurGaussLandau})
 
-   #mjj.setRange("FitRange",1050.,10000.)
-   #for fname in ['landau']:       
+   #CrystalGauss Convolution   looks better -> status failed 
+   crystgauss=RooFFTConvPdf('crystalgauss','cbshape x gauss', mjj, cbshape, gauss)
+   #crystgauss.setBufferFraction(39)
+   shapes.update({'CrystGauss': crystgauss})
 
-   for fname in ['BifurGaussLandau']:    
+   #BreitWignerLandau Convolution (Breitwigner = Lorentz)-> status OK....
+   BreitWignerLandau=RooFFTConvPdf('breitwignerlandau','breitwigner x landau',mjj,landau,bw,3)
+   #BreitWignerLandau.setBufferFraction(48) #setBufferFraction(fraction of the sampling array size) ->cyclic behaviour fix
+   #crystgauss.setShift(0,0)
+   #s1 and s2 are the amounts by which the sampling ranges for pdf's are shifted respectively  
+   #(0,-(xmin+xmax)/2) replicates the default behavior
+   #(0,0) disables the shifting feature altogether        
+   shapes.update({'BreitWignerLandau':BreitWignerLandau}) 
+
+
+   for fname in ['Landau']:    
       plottitle='%s Fit of %s'%(fname,title)
       shape=shapes[fname]
      # shape.fitTo(dh,RooFit.Range("FitRange"),RooFit.SumW2Error(True))
@@ -167,9 +183,26 @@ def RooFitHist(inputhist,title='title',path='.'):
 
       ndof=dh.numEntries()-3      
 
+      print ('ndof', ndof)
+      
       #chiSquare legend
-      chi2 = frame.chiSquare()
-      probChi2 = TMath.Prob(chi2*ndof, ndof)
+      chi2 = frame.chiSquare()#there are 2 chiSquare. the 2cond returns chi2/ndf /// \return \f$ \chi^2 / \mathrm{ndf} \f$
+      print ('chi2', chi2)
+      probChi2 = TMath.Prob(chi2*ndof, ndof)# why chi2*ndof ?! makes no sense to me
+
+      #Double_t Prob(Double_t chi2, Int_t ndf)
+      #Computation of the probability for a certain Chi-squared (chi2)
+      #and number of degrees of freedom (ndf).
+
+      #P(a,x) represents the probability that the observed Chi-squared
+      #for a correct model should be less than the value chi2.
+
+      #The returned probability corresponds to 1-P(a,x),                !!!!
+      #which denotes the probability that an observed Chi-squared exceeds
+      #the value chi2 by chance, even for a correct model.
+      #--- NvE 14-nov-1998 UU-SAP Utrecht
+
+      #probChi2=TMath.Prob(chi2, ndof)
       chi2 = round(chi2,2)
       probChi2 = round(probChi2,2)
       leg = TLegend(0.5,0.5,0.9,0.65)
@@ -182,11 +215,11 @@ def RooFitHist(inputhist,title='title',path='.'):
       frame.addObject(leg)
       
       canv=TCanvas(plottitle,plottitle,700,700)
-      #canv.SetLogy()
+      canv.SetLogy()
       canv.SetLeftMargin(0.20) 
       canv.cd()
  
-      frame.SetMinimum(10**(-7))#from -3 -> -6
+      frame.SetMinimum(10**(-6))#from -3 -> -6
       frame.Draw()
       #canv.Print(path+'/%s__%sS2MoreLessY.pdf'%(title,fname))
       raw_input('press enter to continue')
@@ -197,7 +230,7 @@ if(__name__=="__main__"):
    #replace signal.root, histDir and histName with you respective paths and names!
    f = TFile("/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/SignalRegion/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic_2016v3.root")
    #SM----nope1 para
-   hist = f.Get("MjjHists_invMAk4sel_1p0/M_jj_AK8_T1_0p5")
+   hist = f.Get("MjjHists_invMAk4sel_1p0/M_jj_AK8_M1_0p70")
    #Variations
    #hist = f.Get("MjjHists_invMAk4sel_1p0/M_jj_AK8_S2_5p0")
    #hist = f.Get("MjjHists_invMAk4sel_1p0/M_jj_AK8_M1_0p70")
