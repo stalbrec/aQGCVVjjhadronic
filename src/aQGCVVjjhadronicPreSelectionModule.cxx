@@ -162,9 +162,9 @@ namespace uhh2examples {
 
    mcSpikeKiller.reset(new MCLargeWeightKiller(
 								 ctx,
-								 2, // maximum allowed ratio of leading reco jet pT / generator HT
+								 1.1, // maximum allowed ratio of leading reco jet pT / generator HT
                                  2, // maximum allowed ratio of leading gen jet pT / generator HT
-                                 2, // maximum allowed ratio of leading reco jet pT / Q scale
+                                 infinity, // maximum allowed ratio of leading reco jet pT / Q scale
                                  2, // maximum allowed ratio of PU maximum pTHat / gen HT (ensures scale of PU < scale of hard interaction)
                                  2, // maximum allowed ratio of leading reco jet pT / pTHat
                                  2 // maximum allowed ratio of leading gen jet pT / pTHat
