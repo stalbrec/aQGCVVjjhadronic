@@ -6,7 +6,7 @@
 void invMassPlot(){
 gStyle -> SetOptStat(0);
 //gROOT->SetBatch();
-  TFile * signal_region = new TFile("/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/SignalRegion/backup/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic_2016v3.root","READ");
+  TFile * signal_region = new TFile("/nfs/dust/cms/user/loemkerj/bachelor/CMSSW_10_2_16/src/UHH2/aQGCVVjjhadronic/SignalRegion/uhh2.AnalysisModuleRunner.MC.MC_aQGC_ZZjj_hadronic_2016v3.root","READ");
   TString hist_dir("MjjHists_invMAk4sel_1p0");
   TDirectory * full_selection = signal_region->GetDirectory(hist_dir);
   TIter next(full_selection->GetListOfKeys());
@@ -22,7 +22,7 @@ gStyle -> SetOptStat(0);
     //______check if the operator in Name string is equal to the current operator
     if (!TString(obj->GetName()).Contains(current_operator)){
     gPad -> BuildLegend();
-    canvas -> SaveAs(".pdf");
+    //canvas -> SaveAs(".pdf");
     //______make new canvas and replace current_operator if they are not the same
     current_operator=TString(obj->GetName())(9,2);
     canvas = new TCanvas(TString::Format("canvas_%s", current_operator.Data()),"",400,400);
@@ -41,5 +41,5 @@ gStyle -> SetOptStat(0);
     //_______for the last case:
     gPad -> BuildLegend();
 
-    //canvas -> SaveAs(".pdf");
+    canvas -> SaveAs(".pdf");
 }
