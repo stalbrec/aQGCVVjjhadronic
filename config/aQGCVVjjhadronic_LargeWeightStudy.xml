@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
+
+<!--                   Signal                   -->
+<!ENTITY aQGCZZ SYSTEM "/nfs/dust/cms/user/albrechs/VBS_aQGC/Ntuples/aQGC_ZJJZJJjj_EWK_LO_NPle1_mjj100_pTj10_13TeV_madgraphMLM_pythia8.xml">
+]>
+
+<!--
+<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="1" />
+<ConfigSGE RAM ="2" DISK ="2" Mail="steffen.albrecht@desy.de" Notification="as" Workdir="workdir_largeweightstudy"/>
+-->
+
+<!-- OutputLevel controls which messages are printed; set to VERBOSE or DEBUG for more verbosity, to WARNING or ERROR for less -->
+<JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
+  <Library Name="libSUHH2aQGCVVjjhadronic"/>
+  <Package Name="SUHH2aQGCVVjjhadronic.par" />
+
+  <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="/nfs/dust/cms/user/albrechs/VBS_aQGC/Analysis/UHH2Output/" PostFix="" TargetLumi="35867" >
+
+    <InputData Lumi="367851.527014455" NEventsMax="-1" Type="MC" Version="MC_aQGC_ZZjj_hadronic_2016v3" Cacheable="False">
+      &aQGCZZ;
+      <InputTree Name="AnalysisTree" />
+      <!-- <OutputTree Name="AnalysisTree" /> -->
+    </InputData>
+    
+    <UserConfig>
+      <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" />
+      <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
+      <Item Name="MuonCollection" Value="slimmedMuonsUSER" />
+
+      <Item Name="JetCollection" Value="jetsAk8Puppi" />
+      <Item Name="TopJetCollection" Value="jetsAk8PuppiSubstructure_SoftDropPuppi" />
+      <Item Name="additionalBranches" Value="jetsAk8Puppi" />
+      <Item Name="GenJetCollection" Value="slimmedGenJetsAK8" />
+      <Item Name="GenTopJetCollection" Value="genjetsAk8SubstructureSoftDrop" />
+
+      <Item Name="METName" Value="slimmedMETsPuppi" />
+      <Item Name="GenParticleCollection" Value="GenParticles" />
+      <Item Name="GenInfoName" Value="genInfo" />
+      <Item Name="channel" Value="signal" />
+
+      <!-- the class name of the AnalysisModule subclasses to run: -->
+      <Item Name="AnalysisModule" Value="aQGCVVjjhadronicLargeWeightStudy" />
+
+      <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
+	   MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
+	   event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
+      <Item Name="use_sframe_weight" Value="false" />
+
+      <!-- configuration for MCPileupReweight (run as part of CommonModules): -->
+
+      <Item Name="pileup_directory_data" Value="common/data/2016/MyDataPileupHistogram.root" />
+      <Item Name="pileup_directory" Value="common/data/2016/MyMCPileupHistogram.root" />
+
+      <!-- Some test configuration; see aQGCVVjjhadronicModule.cxx for how to access it: -->
+      <Item Name="TestKey" Value="TestKeyValue" />
+    </UserConfig>
+  </Cycle>
+</JobConfiguration>
