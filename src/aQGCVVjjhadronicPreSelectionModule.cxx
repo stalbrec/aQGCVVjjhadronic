@@ -199,12 +199,12 @@ namespace uhh2examples {
       AK8_JEC_MC->setup2018(std::make_shared<TopJetCorrector>(ctx, JERFiles::JECFilesMC(JEC_tag_2018, JEC_version_2018, AK8_jetcoll)));
 
 
-      const JERSmearing::SFtype1 AK8_JER_sf=JERSmearing::SF_13TeV_Summer16_25nsV1;
-      const TString resFilename="2016/Summer16_25nsV1_MC_PtResolution_AK8PFPuppi.txt";
-      AK4_jet_smearer.reset(new JetResolutionSmearer(ctx));
-      if(EXTRAOUT)std::cout << "AK4jetER_smearer set up!" << std::endl;
-      AK8_jet_smearer.reset(new GenericJetResolutionSmearer(ctx, "topjets","gentopjets", AK8_JER_sf, resFilename));
-      if(EXTRAOUT)std::cout << "AK8jetER_smearer set up!" << std::endl;
+      // const JERSmearing::SFtype1 AK8_JER_sf=JERSmearing::SF_13TeV_Summer16_25nsV1;
+      // const TString resFilename="2016/Summer16_25nsV1_MC_PtResolution_AK8PFPuppi.txt";
+      // AK4_jet_smearer.reset(new JetResolutionSmearer(ctx));
+      // if(EXTRAOUT)std::cout << "AK4jetER_smearer set up!" << std::endl;
+      // AK8_jet_smearer.reset(new GenericJetResolutionSmearer(ctx, "topjets","gentopjets", AK8_JER_sf, resFilename));
+      // if(EXTRAOUT)std::cout << "AK8jetER_smearer set up!" << std::endl;
     }else{
       AK4_JEC_Switcher_16.reset(new RunSwitcher(ctx, "2016"));
       for (const auto & runItr : runPeriods2016) {
